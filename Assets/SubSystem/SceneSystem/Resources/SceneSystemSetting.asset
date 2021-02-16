@@ -17,7 +17,7 @@ MonoBehaviour:
     - StartMenu
     - EnteringMuseum
     - Museum
-    - New Scene 1
-    - New Scene 1
-    - New Scene 1
-    - New Scene 1
+    - EnteringPainting
+    - EnteringMuseum
+    - Painting1
+    - EnteringMuseum
