@@ -507,7 +507,7 @@ GameObject:
   - component: {fileID: 549778700}
   - component: {fileID: 549778703}
   m_Layer: 5
-  m_Name: StartButton
+  m_Name: NewGameButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -869,7 +869,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 478d743cac91560489e2c5f732778564, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: 1
+  sceneToLoad: 2
   onPendingLoadScene:
     m_PersistentCalls:
       m_Calls:
@@ -1300,7 +1300,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Start
+  m_Text: New Game
 --- !u!222 &1821560653
 CanvasRenderer:
   m_ObjectHideFlags: 0

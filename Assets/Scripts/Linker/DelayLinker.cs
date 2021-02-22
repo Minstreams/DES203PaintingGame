@@ -10,6 +10,7 @@ namespace GameSystem.Linker
         // Data
         [MinsHeader("Data", SummaryType.Header, 2)]
         [Label] public float delay = 0.5f;
+        [Label] public bool invokeOnStart;
 
         // Output
         [MinsHeader("Output", SummaryType.Header, 3)]
@@ -23,5 +24,11 @@ namespace GameSystem.Linker
         }
         public void Invoke(float delay) => Invoke(nameof(DoInvoke), delay);
         void DoInvoke() => output?.Invoke();
+
+
+        void Start()
+        {
+            if (invokeOnStart) Invoke();
+        }
     }
 }

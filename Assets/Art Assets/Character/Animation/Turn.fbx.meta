@@ -38,8 +38,8 @@ ModelImporter:
       name: Turn
       takeName: mixamo.com
       internalID: 0
-      firstFrame: 0
-      lastFrame: 35
+      firstFrame: 6
+      lastFrame: 40
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

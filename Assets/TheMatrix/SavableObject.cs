@@ -8,6 +8,10 @@ namespace GameSystem.Savable
     public abstract class SavableObject : ScriptableObject
     {
         /// <summary>
+        /// The relative path of data on disk
+        /// </summary>
+        public abstract string GetPath();
+        /// <summary>
         /// 读取时将调用此方法，用于将对象中的数据应用到游戏中
         /// </summary>
         [ContextMenu("ApplyData")]

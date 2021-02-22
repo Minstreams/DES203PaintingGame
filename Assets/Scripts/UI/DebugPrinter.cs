@@ -10,9 +10,10 @@ namespace GameSystem.UI
 
         [ConditionalShow(AlwaysShow = true, Label = "输出")]
         public string debugStr = "";
+        [Label] public bool log;
 
         // Input
-        public void Print(string val) { Debug.Log(val); debugStr = val.ToString(); }
+        public void Print(string val) { if (log) Debug.Log(val); debugStr = val.ToString(); }
         public void Print(int val) { Print(val.ToString()); }
         public void Print(float val) { Print(val.ToString()); }
         public void Print(Vector2 val) { Print(val.ToString()); }

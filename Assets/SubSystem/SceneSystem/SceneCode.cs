@@ -5,6 +5,7 @@
     /// </summary>
     public enum SceneCode
     {
+        logo,
         startMenu,
         enteringMuseum,
         museum,

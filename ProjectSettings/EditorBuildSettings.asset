@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/TheMatrix/Scene/System.unity
     guid: e4aabc45ef56e0e48a79221a1cf0bff3
   - enabled: 1
+    path: Assets/Scenes/Logo.unity
+    guid: bdadeabf7b0ce824b8776d0e453f78d4
+  - enabled: 1
     path: Assets/Scenes/StartMenu.unity
     guid: 0977e78edf49dcd49a4d6117a328d682
   - enabled: 1
@@ -21,12 +24,12 @@ EditorBuildSettings:
     path: Assets/Scenes/EnteringPainting.unity
     guid: 2a98fec010d52ef4692897b8da0cf8fb
   - enabled: 1
-    path: Assets/Scenes/EnteringMuseum.unity
-    guid: bbcb2b3c0db9a084ba309f952ac31551
+    path: Assets/Scenes/EnteringPainting.unity
+    guid: 2a98fec010d52ef4692897b8da0cf8fb
   - enabled: 1
     path: Assets/Scenes/Painting1.unity
     guid: 2e1accc669add9745a2c764e0729b6a1
   - enabled: 1
-    path: Assets/Scenes/EnteringMuseum.unity
-    guid: bbcb2b3c0db9a084ba309f952ac31551
+    path: Assets/Scenes/Painting1.unity
+    guid: 2e1accc669add9745a2c764e0729b6a1
   m_configObjects: {}

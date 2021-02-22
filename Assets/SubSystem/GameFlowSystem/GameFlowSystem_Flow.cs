@@ -22,7 +22,7 @@ namespace GameSystem
             OnFlowStart?.Invoke();
             yield return 0;
             StartCoroutine(CheckExit());
-            StartCoroutine(StartMenu());
+            StartCoroutine(Logo());
         }
         static IEnumerator CheckExit()
         {
@@ -36,6 +36,20 @@ namespace GameSystem
                     yield break;
                 }
             }
+        }
+        static IEnumerator Logo()
+        {
+            SceneSystem.LoadScene(SceneCode.logo);
+            yield return 0;
+
+            ResetGameMessage();
+            while (true)
+            {
+                yield return 0;
+                if (GetGameMessage(GameMessage.Next)) break;
+            }
+
+            StartCoroutine(StartMenu());
         }
         static IEnumerator StartMenu()
         {
@@ -74,7 +88,43 @@ namespace GameSystem
             while (true)
             {
                 yield return 0;
+                if (GetGameMessage(GameMessage.Start))
+                {
+                    StartCoroutine(EnteringPainting(1));
+                    break;
+                }
+            }
+        }
 
+        static IEnumerator EnteringPainting(int index)
+        {
+            yield return SceneSystem.LoadSceneCoroutine(SceneCode.enteringPainting);
+            yield return 0;
+
+            ResetGameMessage();
+            while (true)
+            {
+                yield return 0;
+                if (GetGameMessage(GameMessage.Next)) break;
+            }
+
+            switch (index)
+            {
+                case 1:
+                    StartCoroutine(Painting1());
+                    break;
+                default: break;
+            }
+        }
+        static IEnumerator Painting1()
+        {
+            yield return SceneSystem.LoadSceneCoroutine(SceneCode.painting1);
+            yield return 0;
+
+            ResetGameMessage();
+            while (true)
+            {
+                yield return 0;
             }
         }
     }

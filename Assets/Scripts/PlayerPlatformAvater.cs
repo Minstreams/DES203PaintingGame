@@ -3,28 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using GameSystem;
 
-public class PlayerPlatformAvater : MonoBehaviour
+public class PlayerPlatformAvater : Character
 {
-    public float maxSpeed;
-    Animator anim;
-    void Awake()
-    {
-        anim = GetComponent<Animator>();
-    }
+    #region 【Parameters】
+    [MinsHeader("Attack")]
+    public Transform damageZoneAnchor;
+    public GameObject damageZonePrefab;
+    public float attackDelay;
+    #endregion
 
-    float speed;
-    void Update()
+    #region 【Input】
+    public void TempAttack()
     {
-        float input = 0;
-        if (InputSystem.GetKey(InputKey.Right)) input += 1;
-        if (InputSystem.GetKey(InputKey.Left)) input -= 1;
-        speed += (input - speed) * 0.1f;
-        transform.position += Vector3.right * speed * maxSpeed * Time.deltaTime;
-        anim.SetFloat("Speed", speed);
+        StartCoroutine(TempAttackCoroutine());
     }
+    IEnumerator TempAttackCoroutine()
+    {
+        onAttack?.Invoke();
+        yield return new WaitForSeconds(attackDelay);
+        Instantiate(damageZonePrefab, damageZoneAnchor.position, damageZoneAnchor.rotation).GetComponent<DamageZone>().attacker = gameObject;
+    }
+    #endregion
 
-    void OnGUI()
-    {
-        GUILayout.Label($"Speed:{speed}");
-    }
+    #region 【Output Events】
+    public SimpleEvent onAttack;
+    #endregion
 }

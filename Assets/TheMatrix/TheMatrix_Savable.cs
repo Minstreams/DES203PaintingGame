@@ -1,18 +1,82 @@
 ﻿using UnityEngine;
 using GameSystem.Savable;
+using System.IO;
 
 namespace GameSystem
 {
     public partial class TheMatrix : MonoBehaviour
     {
-        // 存档控制----------------------------
-        static void SaveTemporary(SavableObject data)
+        // File operation----------------------
+        public static string LoadFromFile(string path)
         {
-            // 此方法将数据保存到内存，但不保存到磁盘
+            string res = "";
+            try
+            {
+                StreamReader fr = new StreamReader(path);
+                res = fr.ReadToEnd();
+                fr.Close();
+                Log($"data 【{res}】 loaded from 【{path}】");
+            }
+            catch (FileNotFoundException)
+            {
+                Error("File not found: " + path);
+            }
+            catch (DirectoryNotFoundException)
+            {
+                Error("Directory not found: " + path);
+            }
+            return res;
+        }
+        public static void SaveToFile(string path, string data)
+        {
+            StreamWriter fw = new StreamWriter(path);
+            fw.Write(data);
+            fw.Close();
+            Log($"data 【{data}】 saved to 【{path}】");
+        }
+        public static void DeleteFile(string path)
+        {
+            if (!File.Exists(path))
+            {
+                Log($"data at path 【{path}】 already deleted");
+                return;
+            }
+            File.Delete(path);
+            Log($"data at path 【{path}】 deleted");
+        }
+
+        // 存档控制----------------------------
+        /// <summary>
+        /// 手动保存一个对象
+        /// </summary>
+        public static void Save(SavableObject data)
+        {
             data.UpdateData();
             string stream = JsonUtility.ToJson(data);
-            PlayerPrefs.SetString(data.ToString(), stream);
+            SaveToFile(data.GetPath(), stream);
             Log(data.name + " \tsaved!");
+        }
+        /// <summary>
+        /// 手动读取一个对象
+        /// </summary>
+        public static void Load(SavableObject data)
+        {
+            if (!File.Exists(data.GetPath()))
+            {
+                Log("No data found for " + data.name);
+                data.LoadDefault();
+                data.ApplyData();
+                return;
+            }
+            string stream = LoadFromFile(data.GetPath());
+            JsonUtility.FromJsonOverwrite(stream, data);
+            data.ApplyData();
+            Log(data.name + " \tloaded!");
+        }
+        public static void Clear(SavableObject data)
+        {
+            DeleteFile(data.GetPath());
+            Log(data.name + " \tcleared!");
         }
 
         [ContextMenu("Save All Data")]
@@ -21,11 +85,10 @@ namespace GameSystem
             if (Setting.dataAutoSave == null || Setting.dataAutoSave.Length == 0) return;
             foreach (SavableObject so in Setting.dataAutoSave)
             {
-                SaveTemporary(so);
+                Save(so);
             }
-            PlayerPrefs.Save();
-            Log("Data saved to disc.");
         }
+        [ContextMenu("Load All Data")]
         public void LoadAll()
         {
             foreach (SavableObject so in Setting.dataAutoSave)
@@ -33,39 +96,13 @@ namespace GameSystem
                 Load(so);
             }
         }
-        [ContextMenu("Delete All Data")]
-        public void DeleteAll()
+        [ContextMenu("Clear All Data")]
+        public void ClearAll()
         {
-            PlayerPrefs.DeleteAll();
-            PlayerPrefs.Save();
-            Dialog("All saved data deleted!");
-        }
-
-        /// <summary>
-        /// 手动保存一个对象
-        /// </summary>
-        public static void Save(SavableObject data)
-        {
-            SaveTemporary(data);
-            PlayerPrefs.Save();
-            Log("Data saved to disc.");
-        }
-        /// <summary>
-        /// 手动读取一个对象
-        /// </summary>
-        public static void Load(SavableObject data)
-        {
-            if (!PlayerPrefs.HasKey(data.ToString()))
+            foreach (SavableObject so in Setting.dataAutoSave)
             {
-                Log("No data found for " + data.name);
-                data.LoadDefault();
-                data.ApplyData();
-                return;
+                Clear(so);
             }
-            string stream = PlayerPrefs.GetString(data.ToString());
-            JsonUtility.FromJsonOverwrite(stream, data);
-            data.ApplyData();
-            Log(data.name + " \tloaded!");
         }
     }
 }

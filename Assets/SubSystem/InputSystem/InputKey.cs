@@ -11,6 +11,8 @@ namespace GameSystem
         Down,
         Left,
         Right,
+        Jump,
+        Attack,
         Action,
     }
 

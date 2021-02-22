@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneCodeMap:
     list:
+    - Logo
     - StartMenu
     - EnteringMuseum
     - Museum
     - EnteringPainting
-    - EnteringMuseum
+    - EnteringPainting
     - Painting1
-    - EnteringMuseum
+    - Painting1

@@ -22,6 +22,7 @@ public class MinsHeaderAttribute : PropertyAttribute
     public MinsHeaderAttribute(string summary)
     {
         this.Summary = summary;
+        this.Style = getStyle(SummaryType.Header);
     }
     public MinsHeaderAttribute(string summary, string style)
     {
