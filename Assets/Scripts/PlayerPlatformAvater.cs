@@ -59,10 +59,13 @@ public class PlayerPlatformAvater : Character
 
             @case.transform.position = transform.position + offset;
 
-            if (IInteract) break;
+            if (IInteract)
+            {
+                groundAttached = 1;
+                break;
+            }
             if (OffGround) break;
         }
         box.SetParent(@case.transform);
-        groundAttached--;
     }
 }
