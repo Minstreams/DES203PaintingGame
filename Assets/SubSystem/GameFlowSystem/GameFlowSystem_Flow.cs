@@ -125,7 +125,25 @@ namespace GameSystem
             while (true)
             {
                 yield return 0;
+                if (GetGameMessage(GameMessage.Return))
+                {
+                    StartCoroutine(ExitingPainting());
+                    break;
+                }
             }
+        }
+        static IEnumerator ExitingPainting()
+        {
+            yield return SceneSystem.LoadSceneCoroutine(SceneCode.exitingPainting);
+            yield return 0;
+
+            ResetGameMessage();
+            while (true)
+            {
+                yield return 0;
+                if (GetGameMessage(GameMessage.Next)) break;
+            }
+            StartCoroutine(Museum());
         }
     }
 }

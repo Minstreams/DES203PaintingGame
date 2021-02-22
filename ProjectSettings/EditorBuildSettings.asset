@@ -24,8 +24,8 @@ EditorBuildSettings:
     path: Assets/Scenes/EnteringPainting.unity
     guid: 2a98fec010d52ef4692897b8da0cf8fb
   - enabled: 1
-    path: Assets/Scenes/EnteringPainting.unity
-    guid: 2a98fec010d52ef4692897b8da0cf8fb
+    path: Assets/Scenes/ExitingPainting.unity
+    guid: 3d3c4f48bb846a944b096b5b864894cb
   - enabled: 1
     path: Assets/Scenes/Painting1.unity
     guid: 2e1accc669add9745a2c764e0729b6a1

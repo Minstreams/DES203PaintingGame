@@ -27,6 +27,7 @@ public class PlayerPlatformController : MonoBehaviour
         IMovingX = movingX;
 
         if (InputSystem.GetKeyDown(InputKey.Jump)) SetInputTrigger("Jump");
+        if (InputSystem.GetKeyDown(InputKey.Action)) SetInputTrigger("Interact");
 
         if (InputSystem.GetKeyDown(InputKey.Attack)) avater.TempAttack();
     }

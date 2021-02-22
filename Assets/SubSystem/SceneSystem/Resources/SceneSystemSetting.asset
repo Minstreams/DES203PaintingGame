@@ -19,6 +19,6 @@ MonoBehaviour:
     - EnteringMuseum
     - Museum
     - EnteringPainting
-    - EnteringPainting
+    - ExitingPainting
     - Painting1
     - Painting1

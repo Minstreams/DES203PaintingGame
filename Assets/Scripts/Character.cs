@@ -38,6 +38,7 @@ public class Character : GDestroyable
 
     public float IMovingX { get; set; } = 0;
     protected bool IJump => GetInputTrigger("Jump");
+    protected bool IInteract => GetInputTrigger("Interact");
     #endregion
 
     #region 【Output Events】
@@ -51,9 +52,9 @@ public class Character : GDestroyable
     #endregion
 
     #region 【Properties】
-    bool OnGround => groundAttached > 0;
-    bool OffGround => groundAttached == 0;
-    float MovingForce => OnGround ? movingForceOnGround : movingForceOffGround;
+    protected bool OnGround => groundAttached > 0;
+    protected bool OffGround => groundAttached == 0;
+    protected float MovingForce => OnGround ? movingForceOnGround : movingForceOffGround;
     #endregion
 
     #region 【State Machine】
@@ -71,7 +72,7 @@ public class Character : GDestroyable
         ClearInputTrigger();
         while (true)
         {
-            yield return 0;
+            yield return MoveCondition();
             rig.AddForce(Vector2.right * IMovingX * MovingForce - rig.velocity * Setting.groundDrag, ForceMode2D.Force);
             var v = rig.velocity;
             onMoving?.Invoke(Mathf.Abs(v.x));
@@ -101,6 +102,8 @@ public class Character : GDestroyable
             }
         }
     }
+    protected virtual IEnumerator MoveCondition() { yield return 0; }
+
     float facingX;
     IEnumerator Turn()
     {
@@ -153,13 +156,14 @@ public class Character : GDestroyable
 
         onDebug?.Invoke($"SpeedX:{rig.velocity}\n" +
             $"OnGround:{OnGround}\n" +
+            $"groundAttached:{groundAttached}\n" +
             $"FacingRight:{facingRight}\n" +
             $"Health:{Health}");
     }
     #endregion
 
     #region 【Reactions】
-    int groundAttached = 0; //the number of attached grounds
+    protected int groundAttached = 0; //the number of attached grounds
     Vector2 normal = Vector2.down;
     void OnCollisionEnter2D(Collision2D collision)
     {
