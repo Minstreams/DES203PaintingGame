@@ -26,5 +26,8 @@ namespace GameSystem
 
         // API---------------------------------
         //public static void SomeFunction(){}
+
+
+        public static PlayerPlatformAvater CurrentPlayer { get; set; } = null;
     }
 }

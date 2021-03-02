@@ -60,6 +60,7 @@ public class Character : GDestroyable
     #region 【State Machine】
     protected override void Start()
     {
+        base.Start();
         StartCoroutine(Move());
         facingRight = true;
         facingX = 1;

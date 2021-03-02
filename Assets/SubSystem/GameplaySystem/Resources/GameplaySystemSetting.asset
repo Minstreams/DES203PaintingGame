@@ -13,3 +13,7 @@ MonoBehaviour:
   m_Name: GameplaySystemSetting
   m_EditorClassIdentifier: 
   groundDrag: 2
+  hasPinkCrystal: 1
+  hasRedCrystal: 1
+  hasGreenCrystal: 1
+  hasYellowCrystal: 1

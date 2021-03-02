@@ -51,10 +51,9 @@ public class GDestroyable : GAttackable
     {
         _health = defaultHealth;
     }
-
-    protected override void OnAttacked(float damage)
+    public override void OnAttacked(float damage, Vector2 direction)
     {
-        base.OnAttacked(damage);
+        base.OnAttacked(damage, direction);
         Health -= damage;
     }
 

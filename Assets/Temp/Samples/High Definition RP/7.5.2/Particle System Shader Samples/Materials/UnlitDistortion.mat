@@ -160,7 +160,7 @@ Material:
     - _DistortionEnable: 0
     - _DistortionScale: 1
     - _DistortionSrcBlend: 0
-    - _DistortionStrength: 0.24894346
+    - _DistortionStrength: 0
     - _DistortionVectorBias: -1
     - _DistortionVectorScale: 2
     - _DoubleSidedEnable: 0

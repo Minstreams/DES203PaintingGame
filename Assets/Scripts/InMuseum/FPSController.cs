@@ -10,6 +10,9 @@ public class FPSController : MonoBehaviour
     [Label] Transform camPoint;
     [Label] public float interactionDistance;
     [Label] public TextMesh tipText;
+    [Label] public Animator anim;
+    [Label] public float turnFactor;
+    [Label] public float turnRate;
 
     public Transform paintingParticle;
     public Material partMat;
@@ -20,7 +23,9 @@ public class FPSController : MonoBehaviour
     {
         camPoint = transform.GetChild(0);
         Cursor.visible = false;
+        anim.SetBool("OnGround", true);
     }
+    float turn = 0;
 
     void Update()
     {
@@ -33,6 +38,9 @@ public class FPSController : MonoBehaviour
         var x = Input.GetAxis("Horizontal");
         var y = Input.GetAxis("Vertical");
         transform.Translate(new Vector3(x, 0, y) * speed * Time.deltaTime);
+        anim.SetFloat("SpeedX", y * speed);
+        turn += (mx * turnFactor - turn) * turnRate;
+        anim.SetFloat("Turn", turn);
 
         RaycastHit info;
         if (Physics.Raycast(camPoint.position, camPoint.forward, out info, interactionDistance, 1 << LayerMask.NameToLayer("Interactable")))

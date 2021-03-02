@@ -10,5 +10,12 @@ namespace GameSystem.Setting
 
         [MinsHeader("Data", SummaryType.Header), Space(16)]
         [Label] public float groundDrag = 2f;
+
+
+        [MinsHeader("Player Data")]
+        [Label] public bool hasPinkCrystal;
+        [Label] public bool hasRedCrystal;
+        [Label] public bool hasGreenCrystal;
+        [Label] public bool hasYellowCrystal;
     }
 }

@@ -14,6 +14,7 @@ public class PlayerPlatformController : MonoBehaviour
     {
         avater = GetComponent<PlayerPlatformAvater>();
         instance = this;
+        GameplaySystem.CurrentPlayer = avater;
     }
 
     float IMovingX { set => avater.IMovingX = value; }

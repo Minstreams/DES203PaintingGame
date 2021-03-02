@@ -14,6 +14,7 @@ namespace GameSystem
         Jump,
         Attack,
         Action,
+        Pause,
     }
 
     [System.Serializable]

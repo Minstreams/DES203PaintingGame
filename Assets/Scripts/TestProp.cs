@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class TestProp : GAttackable
 {
-    protected override void OnAttacked(float damage)
+    public override void OnAttacked(float damage, Vector2 direction)
     {
-        base.OnAttacked(damage);
+        base.OnAttacked(damage, direction);
         Debug.Log($"aaa:{damage}");
     }
 }

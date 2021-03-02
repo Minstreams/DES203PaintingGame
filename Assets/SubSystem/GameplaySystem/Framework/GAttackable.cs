@@ -10,10 +10,12 @@ public class GAttackable : GSavable
 {
     [MinsHeader("Attackable", SummaryType.Header)]
     [Label] public FloatEvent onAttacked;
+    [Label] public Vec2Event onAttackedDir;
 
-    protected virtual void OnAttacked(float damage)
+    public virtual void OnAttacked(float damage, Vector2 direction)
     {
         onAttacked?.Invoke(damage);
+        onAttackedDir?.Invoke(direction);
         SmartCamera.ReactBack();
     }
 
@@ -22,7 +24,7 @@ public class GAttackable : GSavable
         if (collision.gameObject.layer == LayerMask.NameToLayer("DamageZone"))
         {
             var dz = collision.GetComponent<DamageZone>();
-            if (dz.attacker != gameObject) OnAttacked(dz.damage);
+            if (dz.attacker != gameObject) OnAttacked(dz.damage, ((Vector2)(dz.transform.localToWorldMatrix * dz.direction)).normalized);
         }
     }
 }

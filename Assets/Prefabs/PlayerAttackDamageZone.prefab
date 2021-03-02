@@ -4859,6 +4859,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifeTime: 0.5
   damage: 1
+  direction: {x: 1, y: 0}
   onStart:
     m_PersistentCalls:
       m_Calls:
