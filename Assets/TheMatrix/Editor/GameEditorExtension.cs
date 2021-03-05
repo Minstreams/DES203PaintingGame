@@ -109,7 +109,7 @@ namespace GameSystem.Setting
         //[MinsHeader(" + "\"" + name + " Setting\", SummaryType.Title, -2)]" + @"
         //[MinsHeader(" + "\"" + comment + "\", SummaryType.CommentCenter, -1)]" + @"
 
-        //[MinsHeader(" + "\"Data\", SummaryType.Header), Space(16)]" + @"
+        //[MinsHeader(" + "\"Data\", SummaryType.Header)]" + @"
 
     }
 }");

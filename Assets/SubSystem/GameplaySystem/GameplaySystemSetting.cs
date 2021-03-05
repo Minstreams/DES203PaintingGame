@@ -8,7 +8,7 @@ namespace GameSystem.Setting
         [MinsHeader("GameplaySystem Setting", SummaryType.Title, -2)]
         [MinsHeader("Gameplay System. Provides global settings for gameplay.", SummaryType.CommentCenter, -1)]
 
-        [MinsHeader("Data", SummaryType.Header), Space(16)]
+        [MinsHeader("Data", SummaryType.Header)]
         [Label] public float groundDrag = 2f;
 
 
