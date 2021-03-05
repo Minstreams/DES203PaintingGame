@@ -24,7 +24,7 @@ public class BasicEnemy : GDestroyable
     {
         if (collision.collider.CompareTag("Player"))
         {
-            GameplaySystem.CurrentPlayer.OnAttacked(1, rig.velocity.normalized);
+            GameplaySystem.CurrentPlayer.Avatar.OnAttacked(1, rig.velocity.normalized);
             rig.velocity = -((Vector2)(GameplaySystem.CurrentPlayer.transform.position + Vector3.up * 1.6f - transform.position)).normalized * backforce;
         }
     }

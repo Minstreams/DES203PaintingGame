@@ -21,13 +21,11 @@ namespace GameSystem
         static void OnGameStart()
         {
             // 在System场景加载后调用
+            // TODO: 设定不同物理层的碰撞权限
         }
 
 
-        // API---------------------------------
-        //public static void SomeFunction(){}
 
-
-        public static PlayerAvatar CurrentPlayer { get; set; } = null;
+        public static PlayerAvatarController CurrentPlayer { get; set; } = null;
     }
 }

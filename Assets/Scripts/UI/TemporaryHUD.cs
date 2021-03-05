@@ -12,7 +12,7 @@ public class TemporaryHUD : UIBase
     public GUIStyle yellow;
     protected override void OnUI()
     {
-        GUILayout.Label("Health: " + (GameplaySystem.CurrentPlayer == null ? 0 : GameplaySystem.CurrentPlayer.Health));
+        GUILayout.Label("Health: " + (GameplaySystem.CurrentPlayer == null ? 0 : GameplaySystem.CurrentPlayer.Avatar.Health));
         GUILayout.BeginHorizontal(boxStyle,GUILayout.MinHeight(32));
         {
             GUILayout.Label("");

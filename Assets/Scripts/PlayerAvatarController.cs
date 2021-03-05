@@ -11,18 +11,15 @@ public class PlayerAvatarController : MonoBehaviour
     [Label] public float walkingForce;
     [Label] public float runningForce;
 
-    public static PlayerAvatarController instance;
-
-    PlayerAvatar avatar;
+    public PlayerAvatar Avatar { get; private set; }
 
     void Awake()
     {
-        avatar = GetComponent<PlayerAvatar>();
-        instance = this;
-        GameplaySystem.CurrentPlayer = avatar;
+        Avatar = GetComponent<PlayerAvatar>();
+        GameplaySystem.CurrentPlayer = this;
     }
 
-    void SetInputTrigger(string input) => avatar.SetInputTrigger(input);
+    void SetInputTrigger(string input) => Avatar.SetInputTrigger(input);
 
     void Update()
     {
@@ -32,9 +29,9 @@ public class PlayerAvatarController : MonoBehaviour
         if (InputSystem.GetKey(InputKey.Up)) input.z += 1;
         if (InputSystem.GetKey(InputKey.Down)) input.z -= 1;
         input = input.normalized * Mathf.Max(Mathf.Abs(input.x), Mathf.Abs(input.z));
-        avatar.Move(Camera.main.transform.rotation * input * (InputSystem.GetKey(InputKey.Run) ? runningForce : walkingForce));
+        Avatar.Move(Camera.main.transform.rotation * input * (InputSystem.GetKey(InputKey.Run) ? runningForce : walkingForce));
 
-        if (InputSystem.GetKeyDown(InputKey.Jump)) avatar.Jump(jumpForce);
+        if (InputSystem.GetKeyDown(InputKey.Jump)) Avatar.Jump(jumpForce);
         if (InputSystem.GetKeyDown(InputKey.Interact)) SetInputTrigger("Interact");
         //if (InputSystem.GetKeyDown(InputKey.Attack)) avater.TempAttack();
     }

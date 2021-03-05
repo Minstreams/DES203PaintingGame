@@ -14,11 +14,11 @@ TagManager:
   - 
   - 
   - PostProcessing
-  - Player
+  - Living
   - Ground
   - DamageZone
   - Interactable
-  - Enemy
+  - InvisibleWall
   - 
   - 
   - 
