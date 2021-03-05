@@ -6,15 +6,17 @@ using GameSystem;
 public class GDestroyable : GAttackable
 {
     #region 【Parameters】
+    [Separator]
+    [MinsHeader("G Destroyable", SummaryType.Title,-1)]
+    [MinsHeader("This Component can be destroyed.",SummaryType.CommentCenter)]
     [Label] public float maxHealth;
     [Label] public float defaultHealth;
     #endregion
 
     #region 【Output Events】
-    [MinsHeader("Events")]
-    public FloatEvent onDamaged;
-    public FloatEvent onHealed;
-    public SimpleEvent onDie;
+    [Label] public FloatEvent onDamaged;
+    [Label] public FloatEvent onHealed;
+    [Label] public SimpleEvent onDie;
     #endregion
 
     #region 【Properties】

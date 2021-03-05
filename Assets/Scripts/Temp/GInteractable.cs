@@ -15,7 +15,7 @@ public class GInteractable : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             pendingInteract = true;
-            tipTextMesh.text = $"[{InputSystem.Setting.MainKeys[InputKey.Action].ToString()}] {tipText}";
+            tipTextMesh.text = $"[{InputSystem.Setting.MainKeys[InputKey.Interact].ToString()}] {tipText}";
         }
     }
     void OnTriggerExit2D(Collider2D collision)
@@ -33,7 +33,7 @@ public class GInteractable : MonoBehaviour
 
     void Update()
     {
-        if (pendingInteract && InputSystem.GetKeyDown(InputKey.Action))
+        if (pendingInteract && InputSystem.GetKeyDown(InputKey.Interact))
         {
             OnInteracted();
         }

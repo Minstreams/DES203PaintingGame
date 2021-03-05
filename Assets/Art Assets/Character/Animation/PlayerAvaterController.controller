@@ -114,24 +114,24 @@ AnimatorController:
   m_Name: PlayerAvaterController
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: SpeedX
+  - m_Name: Speed
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Turn
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: OnGround
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -207,7 +207,7 @@ BlendTree:
     m_CycleOffset: 0
     m_DirectBlendParameter: SpeedX
     m_Mirror: 0
-  m_BlendParameter: SpeedX
+  m_BlendParameter: Speed
   m_BlendParameterY: SpeedX
   m_MinThreshold: 0
   m_MaxThreshold: 10.286624
@@ -225,7 +225,7 @@ BlendTree:
   - serializedVersion: 2
     m_Motion: {fileID: 2667949614841947897, guid: d1360471c4e2f3f49b76ce7e14b0b511,
       type: 3}
-    m_Threshold: -1
+    m_Threshold: -180
     m_Position: {x: 0, y: 0}
     m_TimeScale: -8
     m_CycleOffset: 0
@@ -242,7 +242,7 @@ BlendTree:
   - serializedVersion: 2
     m_Motion: {fileID: 2667949614841947897, guid: d1360471c4e2f3f49b76ce7e14b0b511,
       type: 3}
-    m_Threshold: 1
+    m_Threshold: 180
     m_Position: {x: 0, y: 0}
     m_TimeScale: 8
     m_CycleOffset: 0
@@ -250,9 +250,9 @@ BlendTree:
     m_Mirror: 0
   m_BlendParameter: Turn
   m_BlendParameterY: Blend
-  m_MinThreshold: -1
-  m_MaxThreshold: 1
-  m_UseAutomaticThresholds: 1
+  m_MinThreshold: -180
+  m_MaxThreshold: 180
+  m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0
   m_BlendType: 0
 --- !u!1101 &7466421006533135341

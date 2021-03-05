@@ -28,6 +28,6 @@ namespace GameSystem
         //public static void SomeFunction(){}
 
 
-        public static PlayerPlatformAvater CurrentPlayer { get; set; } = null;
+        public static PlayerAvatar CurrentPlayer { get; set; } = null;
     }
 }

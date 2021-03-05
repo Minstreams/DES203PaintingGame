@@ -8,7 +8,9 @@ using GameSystem;
 /// </summary>
 public class GAttackable : GSavable
 {
-    [MinsHeader("Attackable", SummaryType.Header)]
+    [Space(8, order = -2)]
+    [MinsHeader("G Attackable", SummaryType.Title, -1)]
+    [MinsHeader("This Component can be attacked.", SummaryType.CommentCenter)]
     [Label] public FloatEvent onAttacked;
     [Label] public Vec2Event onAttackedDir;
 

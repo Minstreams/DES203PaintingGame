@@ -14,7 +14,6 @@ public class PlayerPlatformController : MonoBehaviour
     {
         avater = GetComponent<PlayerPlatformAvater>();
         instance = this;
-        GameplaySystem.CurrentPlayer = avater;
     }
 
     float IMovingX { set => avater.IMovingX = value; }
@@ -28,7 +27,7 @@ public class PlayerPlatformController : MonoBehaviour
         IMovingX = movingX;
 
         if (InputSystem.GetKeyDown(InputKey.Jump)) SetInputTrigger("Jump");
-        if (InputSystem.GetKeyDown(InputKey.Action)) SetInputTrigger("Interact");
+        if (InputSystem.GetKeyDown(InputKey.Interact)) SetInputTrigger("Interact");
 
         if (InputSystem.GetKeyDown(InputKey.Attack)) avater.TempAttack();
     }

@@ -45,8 +45,8 @@ public class FPSController : MonoBehaviour
         RaycastHit info;
         if (Physics.Raycast(camPoint.position, camPoint.forward, out info, interactionDistance, 1 << LayerMask.NameToLayer("Interactable")))
         {
-            tipText.text = $"[{InputSystem.Setting.MainKeys[InputKey.Action].ToString()}] " + info.collider.GetComponent<MInteractable>().GetTipText();
-            if (InputSystem.GetKeyDown(InputKey.Action))
+            tipText.text = $"[{InputSystem.Setting.MainKeys[InputKey.Interact].ToString()}] " + info.collider.GetComponent<MInteractable>().GetTipText();
+            if (InputSystem.GetKeyDown(InputKey.Interact))
             {
                 info.collider.GetComponent<MInteractable>().OnInteracted();
             }

@@ -13,7 +13,7 @@ public class PaintingPortal : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             acting = true;
-            tipText.text = $"[{InputSystem.Setting.MainKeys[InputKey.Action].ToString()}] Enter Portal";
+            tipText.text = $"[{InputSystem.Setting.MainKeys[InputKey.Interact].ToString()}] Enter Portal";
         }
     }
     void OnTriggerExit2D(Collider2D collision)
@@ -27,7 +27,7 @@ public class PaintingPortal : MonoBehaviour
 
     private void Update()
     {
-        if (acting && InputSystem.GetKeyDown(InputKey.Action))
+        if (acting && InputSystem.GetKeyDown(InputKey.Interact))
         {
             GameFlowSystem.SendGameMessage(GameMessage.Return);
         }

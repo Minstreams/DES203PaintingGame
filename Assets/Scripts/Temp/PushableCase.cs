@@ -10,7 +10,7 @@ public class PushableCase : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            tipText.text = $"[{InputSystem.Setting.MainKeys[InputKey.Action].ToString()}] Grab";
+            tipText.text = $"[{InputSystem.Setting.MainKeys[InputKey.Interact].ToString()}] Grab";
             PlayerPlatformAvater.caseNearby = this;
         }
     }
