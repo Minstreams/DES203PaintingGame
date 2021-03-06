@@ -12,6 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22a12f14ecc13ac4ea7785a39b06cb4c, type: 3}
   m_Name: GameplaySystemSetting
   m_EditorClassIdentifier: 
+  sideScrollingPathWidth: 1
+  invisibleWallDepth: 2
+  invisibleWallHeight: 128
+  playerFocusHeight: 1.6
+  sideScrollingCameraPointPrefab: {fileID: 928533210815114227, guid: 2b958d88ce1caec4887903bf65e3b45f,
+    type: 3}
+  characterMesh: {fileID: -3702037217650275473, guid: 4793e0c8a281caf40a642ae3b119476e,
+    type: 3}
   groundDrag: 2
   hasPinkCrystal: 0
   hasRedCrystal: 0

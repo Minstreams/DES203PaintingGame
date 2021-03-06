@@ -64,6 +64,7 @@ public class GCharacter : GDestroyable
     /// <param name="jumpForce">force applied upward</param>
     public void Jump(float jumpForce)
     {
+        if (OffGround) return;
         onJump?.Invoke();
         rig.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
     }

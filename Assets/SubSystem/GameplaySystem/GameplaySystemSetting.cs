@@ -8,6 +8,20 @@ namespace GameSystem.Setting
         [MinsHeader("GameplaySystem Setting", SummaryType.Title, -2)]
         [MinsHeader("Gameplay System. Provides global settings for gameplay.", SummaryType.CommentCenter, -1)]
 
+        [MinsHeader("Camera Relevant")]
+        [Label(true)] public float sideScrollingPathWidth;
+        [Label(true)] public float invisibleWallDepth;
+        [Label(true)] public float invisibleWallHeight;
+        [Label] public float playerFocusHeight;
+
+        [MinsHeader("Editor-only")]
+        [Label] public GameObject sideScrollingCameraPointPrefab;
+        [Label] public Mesh characterMesh;
+
+
+
+
+        // Temp
         [MinsHeader("Data", SummaryType.Header)]
         [Label] public float groundDrag = 2f;
 
