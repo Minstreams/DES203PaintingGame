@@ -16,6 +16,7 @@ public class SideScrollingZoneEditor : Editor
     static SceneView CurrentDrawingSceneView { get; set; } = null;
     static bool ShowCameraPanelInSceneView { get; set; } = false;
     static bool ShowCameraPreviewInSceneView { get; set; } = true;
+    static bool CameraPitchEditable { get; set; } = false;
     static float SnapValue { get; set; } = 1f;
     static float AngleSnapValue { get; set; } = 5;
 
@@ -151,6 +152,7 @@ public class SideScrollingZoneEditor : Editor
             GUILayout.Space(16);
             if (GUILayout.Button((ShowCameraPanelInSceneView ? "Hide" : "Show") + " Camera Panel in Scene View")) ShowCameraPanelInSceneView = !ShowCameraPanelInSceneView;
             if (GUILayout.Button((ShowCameraPreviewInSceneView ? "Hide" : "Show") + " Camera Preview in Scene View")) ShowCameraPreviewInSceneView = !ShowCameraPreviewInSceneView;
+            if (GUILayout.Button((CameraPitchEditable ? "Disable" : "Enable") + " Camera Pitch Editting")) CameraPitchEditable = !CameraPitchEditable;
         }
     }
 
@@ -486,29 +488,33 @@ public class SideScrollingZoneEditor : Editor
 
                 // edit Rotation
 
-                EditorGUI.BeginChangeCheck();
-                var rot = Handles.FreeRotateHandle(p.transform.rotation, p.transform.position, sizeFactor * 0.8f);
-                if (EditorGUI.EndChangeCheck())
+                if (CameraPitchEditable || Event.current.control)
                 {
-                    Undo.RecordObject(p, "Edit Camera Pitch");
-                    Undo.RecordObject(p.transform, "Edit Camera Pitch");
-
-                    rot = Quaternion.Inverse(Zone.transform.rotation) * rot;
-                    var pitch = rot.eulerAngles.x;
-                    while (pitch > 180) pitch -= 360;
-                    if (pitch > 72) pitch = 72;
-                    if (pitch < -72) pitch = -72;
-
-                    if (Event.current.control)
+                    EditorGUI.BeginChangeCheck();
+                    var rot = Handles.FreeRotateHandle(p.transform.rotation, p.transform.position, sizeFactor * 0.8f);
+                    if (EditorGUI.EndChangeCheck())
                     {
-                        pitch = Snap(pitch, AngleSnapValue * 2);
-                    }
-                    rot = Quaternion.AngleAxis(pitch, Vector3.right);
-                    p.transform.localRotation = rot;
-                    p.Offset = (Vector3)(p.transform.parent.worldToLocalMatrix * (targetPos - p.FocusPoint));
+                        Undo.RecordObject(p, "Edit Camera Pitch");
+                        Undo.RecordObject(p.transform, "Edit Camera Pitch");
 
-                    Camera.main.transform.rotation = p.transform.rotation;
+                        rot = Quaternion.Inverse(Zone.transform.rotation) * rot;
+                        var pitch = rot.eulerAngles.x;
+                        while (pitch > 180) pitch -= 360;
+                        if (pitch > 72) pitch = 72;
+                        if (pitch < -72) pitch = -72;
+
+                        if (Event.current.control)
+                        {
+                            pitch = Snap(pitch, AngleSnapValue * 2);
+                        }
+                        rot = Quaternion.AngleAxis(pitch, Vector3.right);
+                        p.transform.localRotation = rot;
+                        p.Offset = (Vector3)(p.transform.parent.worldToLocalMatrix * (targetPos - p.FocusPoint));
+
+                        Camera.main.transform.rotation = p.transform.rotation;
+                    }
                 }
+
                 // Camera Panel
                 if (ShowCameraPanelInSceneView || Event.current.control)
                 {
