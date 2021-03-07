@@ -17,7 +17,7 @@ public class SideScrollingZoneEditor : Editor
     static bool ShowCameraPanelInSceneView { get; set; } = false;
     static bool ShowCameraPreviewInSceneView { get; set; } = true;
     static float SnapValue { get; set; } = 1f;
-    static float FovSnapValue { get; set; } = 5;
+    static float AngleSnapValue { get; set; } = 5;
 
     // Consts
     const float entryPointCaptureSize = 0.2f;
@@ -29,7 +29,7 @@ public class SideScrollingZoneEditor : Editor
     const float camFovCaptureRadius = 0.7f;
     const float camFovCaptureSize = 0.1f;
     const float camGUIPanelWidth = 156;
-    const float camGUIPanelHeight = 202;
+    const float camGUIPanelHeight = 276;
     const int camPreviewHeight = 100;
 
     readonly Color entryPointCaptureColor = new Color(0, 1, 0, 1);
@@ -89,6 +89,8 @@ public class SideScrollingZoneEditor : Editor
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
+
+        if (EditorApplication.isPlaying) return;
         GUILayout.Space(16);
         GUILayout.Label("", "ProfilerDetailViewBackground");
         GUILayout.Label("Editor", "LODRendererRemove");
@@ -116,17 +118,17 @@ public class SideScrollingZoneEditor : Editor
         {
             GUILayout.BeginVertical();
             GUILayout.Space(14);
-            if (GUILayout.Button(GUIContent.none, "OL Minus")) FovSnapValue *= 0.5f;
+            if (GUILayout.Button(GUIContent.none, "OL Minus")) AngleSnapValue *= 0.5f;
             GUILayout.EndVertical();
 
             GUILayout.BeginVertical();
-            GUILayout.Label(FovSnapValue.ToString(), "LODLevelNotifyText");
-            GUILayout.Label("FOV Snap Value", "MeTimeLabel");
+            GUILayout.Label(AngleSnapValue.ToString(), "LODLevelNotifyText");
+            GUILayout.Label("Angle Snap Value", "MeTimeLabel");
             GUILayout.EndVertical();
 
             GUILayout.BeginVertical();
             GUILayout.Space(14);
-            if (GUILayout.Button(GUIContent.none, "OL Plus")) FovSnapValue *= 2;
+            if (GUILayout.Button(GUIContent.none, "OL Plus")) AngleSnapValue *= 2;
             GUILayout.EndVertical();
         }
         GUILayout.EndHorizontal();
@@ -178,16 +180,30 @@ public class SideScrollingZoneEditor : Editor
     {
         var p = CurrentEditingPoint;
         GUIStyle labelStyle = "FrameBox";
-        p.fov = EditorGUILayout.FloatField("fov\t:", p.fov, labelStyle);
+        //p.fov = EditorGUILayout.FloatField("fov\t:", p.fov, labelStyle);
+        GUILayout.Label($"fov\t: {(int)p.fov}", labelStyle);
         GUILayout.Label($"pos\t: {(Vector2)p.transform.localPosition}", labelStyle);
-        GUILayout.Label($"depth\t: {(-p.transform.localPosition.z)}", labelStyle);
+        GUILayout.Label($"depth\t: {(p.Depth)}", labelStyle);
+        GUILayout.Label($"pitch\t: {(p.transform.localRotation.eulerAngles.x)}", labelStyle);
         if (GUILayout.Button("Focus on Camera Point", "button"))
         {
             CurrentDrawingSceneView.LookAt(p.transform.position);
         }
         if (GUILayout.Button("Focus on Scroll View", "button"))
         {
-            CurrentDrawingSceneView.LookAt(p.transform.position - transform.forward * p.transform.localPosition.z, transform.rotation);
+            CurrentDrawingSceneView.LookAt(p.FocusPoint, transform.rotation);
+        }
+        if (GUILayout.Button("Reset Pitch", "button"))
+        {
+            Undo.RecordObject(p.transform, "Reset Camera Pitch");
+            var targetPos = p.PlayerTargetPosition;
+            p.transform.localRotation = Quaternion.identity;
+            p.Offset = (Vector3)(p.transform.parent.worldToLocalMatrix * (targetPos - p.FocusPoint));
+        }
+        if (GUILayout.Button("Reset FOV", "button"))
+        {
+            Undo.RecordObject(p, "Reset Camera FOV");
+            p.fov = Setting.camDefaultFov;
         }
         if (GUILayout.Button("Duplicate this Camera", "button"))
         {
@@ -267,6 +283,7 @@ public class SideScrollingZoneEditor : Editor
 
     void OnSceneGUI()
     {
+        if (EditorApplication.isPlaying) return;
         if (CurrentDrawingSceneView == null) CurrentDrawingSceneView = SceneView.currentDrawingSceneView;
 
         Color c = Handles.color;
@@ -341,7 +358,7 @@ public class SideScrollingZoneEditor : Editor
                 }
                 else
                 {
-                    CurrentDrawingSceneView.LookAt(CurrentEditingPoint.transform.position - transform.forward * CurrentEditingPoint.transform.localPosition.z, transform.rotation, -CurrentEditingPoint.transform.localPosition.z);
+                    CurrentDrawingSceneView.LookAt(CurrentEditingPoint.FocusPoint, transform.rotation, -CurrentEditingPoint.transform.localPosition.z);
 
                     Camera.main.transform.position = CurrentEditingPoint.transform.position;
                     Camera.main.transform.rotation = CurrentEditingPoint.transform.rotation;
@@ -357,8 +374,8 @@ public class SideScrollingZoneEditor : Editor
             {
                 Vector3 pos;
                 var sizeFactor = HandleUtility.GetHandleSize(p.transform.position);
-                var focusPos = p.transform.position - transform.forward * p.transform.localPosition.z;
-                var targetPos = p.GetPlayerTargetPosition();
+                var focusPos = p.FocusPoint;
+                var targetPos = p.PlayerTargetPosition;
 
                 // edit target point
 
@@ -372,12 +389,12 @@ public class SideScrollingZoneEditor : Editor
                         pos -= transform.right * HalfFracSnapped(Vector3.Dot(transform.right, pos - transform.position));
                         pos.y = Snap(pos.y - Setting.playerFocusHeight) + Setting.playerFocusHeight;
                     }
-                    p.Offset = (Vector3)(p.transform.parent.worldToLocalMatrix * (pos - p.transform.position));
+                    p.Offset = (Vector3)(p.transform.parent.worldToLocalMatrix * (pos - focusPos));
                 }
 
                 // edit cam point
                 EditorGUI.BeginChangeCheck();
-                pos = ToPlane(Handles.FreeMoveHandle(p.transform.position, Quaternion.identity, -p.transform.localPosition.z, Vector3.zero, CamPosCapture), p.transform.position, transform.forward);
+                pos = ToPlane(Handles.FreeMoveHandle(p.transform.position, Quaternion.identity, p.Depth, Vector3.zero, CamPosCapture), p.transform.position, transform.forward);
                 if (EditorGUI.EndChangeCheck())
                 {
                     Undo.RecordObject(p, "Move Camera Point");
@@ -394,7 +411,31 @@ public class SideScrollingZoneEditor : Editor
                     else if (local.x > Zone.distance + Zone.cameraOverflow) local.x = Zone.distance + Zone.cameraOverflow;
                     local.z = preLocalZ;
                     p.transform.localPosition = local;
-                    p.Offset = (Vector3)(p.transform.parent.worldToLocalMatrix * (targetPos - p.transform.position));
+                    p.Offset = (Vector3)(p.transform.parent.worldToLocalMatrix * (targetPos - p.FocusPoint));
+
+                    Camera.main.transform.position = p.transform.position;
+                    Camera.main.transform.rotation = p.transform.rotation;
+                }
+
+                EditorGUI.BeginChangeCheck();
+                pos = ToPlane(Handles.FreeMoveHandle(focusPos, Quaternion.identity, p.Depth, Vector3.zero, CamFocusCapture), transform.position, transform.forward);
+                if (EditorGUI.EndChangeCheck())
+                {
+                    Undo.RecordObject(p, "Move Camera Point");
+                    Undo.RecordObject(p.transform, "Move Camera Point");
+                    if (Event.current.control)
+                    {
+                        pos -= transform.right * HalfFracSnapped(Vector3.Dot(transform.right, pos - transform.position));
+                        pos.y = Snap(pos.y);
+                    }
+                    var preLocalZ = p.transform.localPosition.z;
+                    p.transform.position += pos - focusPos;
+                    var local = p.transform.localPosition;
+                    if (local.x < -Zone.cameraOverflow) local.x = -Zone.cameraOverflow;
+                    else if (local.x > Zone.distance + Zone.cameraOverflow) local.x = Zone.distance + Zone.cameraOverflow;
+                    local.z = preLocalZ;
+                    p.transform.localPosition = local;
+                    p.Offset = (Vector3)(p.transform.parent.worldToLocalMatrix * (targetPos - p.FocusPoint));
 
                     Camera.main.transform.position = p.transform.position;
                     Camera.main.transform.rotation = p.transform.rotation;
@@ -405,7 +446,7 @@ public class SideScrollingZoneEditor : Editor
                 Handles.DrawLine(targetPos, focusPos);
 
                 EditorGUI.BeginChangeCheck();
-                pos = ToPlane(Handles.FreeMoveHandle(p.transform.position, Quaternion.identity, -p.transform.localPosition.z, Vector3.zero, CamZCapture), p.transform.position, Vector3.Cross(transform.forward, Vector3.Cross(p.transform.position - Camera.current.transform.position, transform.forward)).normalized);
+                pos = ToPlane(Handles.FreeMoveHandle(p.transform.position, Quaternion.identity, p.Depth, Vector3.zero, CamZCapture), p.transform.position, Vector3.Cross(transform.forward, Vector3.Cross(p.transform.position - Camera.current.transform.position, transform.forward)).normalized);
                 if (EditorGUI.EndChangeCheck())
                 {
                     Undo.RecordObject(p.transform, "Move Camera Point");
@@ -418,7 +459,6 @@ public class SideScrollingZoneEditor : Editor
                     p.transform.localPosition = local;
 
                     Camera.main.transform.position = p.transform.position;
-                    Camera.main.transform.rotation = p.transform.rotation;
                 }
 
                 // edit fov
@@ -437,13 +477,38 @@ public class SideScrollingZoneEditor : Editor
                     if (angle < 0) angle += 360;
                     if (Event.current.control)
                     {
-                        angle = Snap(angle, FovSnapValue * 2);
+                        angle = Snap(angle, AngleSnapValue * 2);
                     }
                     p.fov = angle * 0.5f;
 
                     Camera.main.fieldOfView = p.fov;
                 }
 
+                // edit Rotation
+
+                EditorGUI.BeginChangeCheck();
+                var rot = Handles.FreeRotateHandle(p.transform.rotation, p.transform.position, sizeFactor * 0.8f);
+                if (EditorGUI.EndChangeCheck())
+                {
+                    Undo.RecordObject(p, "Edit Camera Pitch");
+                    Undo.RecordObject(p.transform, "Edit Camera Pitch");
+
+                    rot = Quaternion.Inverse(Zone.transform.rotation) * rot;
+                    var pitch = rot.eulerAngles.x;
+                    while (pitch > 180) pitch -= 360;
+                    if (pitch > 72) pitch = 72;
+                    if (pitch < -72) pitch = -72;
+
+                    if (Event.current.control)
+                    {
+                        pitch = Snap(pitch, AngleSnapValue * 2);
+                    }
+                    rot = Quaternion.AngleAxis(pitch, Vector3.right);
+                    p.transform.localRotation = rot;
+                    p.Offset = (Vector3)(p.transform.parent.worldToLocalMatrix * (targetPos - p.FocusPoint));
+
+                    Camera.main.transform.rotation = p.transform.rotation;
+                }
                 // Camera Panel
                 if (ShowCameraPanelInSceneView || Event.current.control)
                 {
@@ -489,7 +554,7 @@ public class SideScrollingZoneEditor : Editor
                         var color = gridZAxisColor;
                         var alpha = color.a;
                         var segment = Mathf.FloorToInt(gridZAxisRadius / SnapValue);
-                        var center = p.transform.position + transform.forward * HalfFracSnapped(-p.transform.localPosition.z);
+                        var center = p.transform.position + transform.forward * HalfFracSnapped(p.Depth);
 
                         Vector3 P(int i) => center + i * transform.forward * SnapValue;
                         void CrossP(Vector3 point)
@@ -517,9 +582,9 @@ public class SideScrollingZoneEditor : Editor
                     {
                         var color = gridFovColor;
                         var alpha = color.a;
-                        var segment = Mathf.FloorToInt(gridFovRange / FovSnapValue);
-                        var centerDir = camFovCaptureRadius * sizeFactor * 1.5f * (Quaternion.AngleAxis(2 * Snap(p.fov, FovSnapValue), -transform.forward) * Vector3.up);
-                        var baseI = Mathf.FloorToInt(p.fov / FovSnapValue);
+                        var segment = Mathf.FloorToInt(gridFovRange / AngleSnapValue);
+                        var centerDir = camFovCaptureRadius * sizeFactor * 1.5f * (Quaternion.AngleAxis(2 * Snap(p.fov, AngleSnapValue), -transform.forward) * Vector3.up);
+                        var baseI = Mathf.FloorToInt(p.fov / AngleSnapValue);
 
                         for (int i = -segment; i <= segment; ++i)
                         {
@@ -527,7 +592,7 @@ public class SideScrollingZoneEditor : Editor
                             color.a = alpha * a * a;
                             if (((i + baseI) & 1) != 0) color.a *= 0.2f;
                             Handles.color = color;
-                            Handles.DrawLine(p.transform.position, p.transform.position + Quaternion.AngleAxis(2 * FovSnapValue * i, -transform.forward) * centerDir);
+                            Handles.DrawLine(p.transform.position, p.transform.position + Quaternion.AngleAxis(2 * AngleSnapValue * i, -transform.forward) * centerDir);
                         }
                     }
                 }
@@ -579,13 +644,16 @@ public class SideScrollingZoneEditor : Editor
         var size = camPosSize * sizeFactor;
         Handles.CircleHandleCap(controlID, position, transform.rotation, size, eventType);
         Handles.CircleHandleCap(controlID, position, transform.rotation, size * 0.9f, eventType);
-        Handles.CircleHandleCap(controlID, position + transform.forward * z, transform.rotation, sizeFactor * focusCircleSize, eventType);
+    }
+    void CamFocusCapture(int controlID, Vector3 position, Quaternion rotation, float z, EventType eventType)
+    {
+        Handles.CircleHandleCap(controlID, CurrentEditingPoint.FocusPoint, transform.rotation, focusCircleSize, eventType);
     }
     void CamZCapture(int controlID, Vector3 position, Quaternion rotation, float z, EventType eventType)
     {
         var sizeFactor = HandleUtility.GetHandleSize(position);
 
-        Handles.ArrowHandleCap(controlID, position + transform.forward * (sizeFactor * 0.4f), Quaternion.LookRotation(-transform.forward), sizeFactor * camZSize, eventType);
+        Handles.ArrowHandleCap(controlID, position + CurrentEditingPoint.transform.forward * (sizeFactor * 0.4f), Quaternion.LookRotation(-CurrentEditingPoint.transform.forward), sizeFactor * camZSize, eventType);
     }
     void CamFovCapture(int controlID, Vector3 position, Quaternion rotation, float fov, EventType eventType)
     {

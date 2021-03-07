@@ -4,72 +4,122 @@ using GameSystem.Setting;
 
 public class SideScrollingCameraPoint : MonoBehaviour
 {
+    // Panel
     [Label, SerializeField] Vector2 offset;
     [LabelRange(15, 90)] public float fov = 60;
-    GameplaySystemSetting Setting => GameplaySystem.Setting;
 
+    // Fields
+    [System.NonSerialized] public float weight = 0;
+
+    // Properties
+    public float Depth => -transform.localPosition.z;
     public Vector2 Offset
     {
         get => offset;
         set
         {
-            float theta = fov * Mathf.PI / 360f;
-            float height = -transform.localPosition.z * Mathf.Tan(theta);
+            var rot = Zone.transform.rotation;
+            var focus = transform.localRotation * Vector3.forward;
+            focus *= Depth / focus.z;
+            var target = focus + (Vector3)value;
+            target = Quaternion.Inverse(transform.localRotation) * target;
+            target *= Depth / target.z;
+
+            float height = Depth * Mathf.Tan(fov * Mathf.PI / 360f);
             float width = height * Camera.main.aspect;
-            if (value.y > height) value.y = height;
-            if (value.y < -height) value.y = -height;
-            if (value.x > width) value.x = width;
-            if (value.x < -width) value.x = -width;
-            offset = value;
+
+            if (target.y > height) target.y = height;
+            if (target.y < -height) target.y = -height;
+            if (target.x > width) target.x = width;
+            if (target.x < -width) target.x = -width;
+
+            target = transform.localRotation * target;
+            target *= Depth / target.z;
+            target -= focus;
+
+            offset = target;
         }
     }
-
-    private void Start()
+    public Vector3 RelativePosition
     {
-        //SmartCamera.cameraPoints.Add(new SmartCamera.SmartCameraPoint((Vector2)transform.position + offset, -offset, transform.position.z, fov));
+        get
+        {
+            var rot = Zone.transform.rotation;
+            var focus = transform.localRotation * Vector3.forward;
+            focus *= Depth / focus.z;
+            focus += (Vector3)offset;
+            return Quaternion.Inverse(transform.localRotation) * (-focus);
+        }
     }
-    public Vector3 GetPlayerTargetPosition()
+    public Vector3 FocusPoint
     {
-        var focusPoint = transform.position - transform.forward * transform.localPosition.z;
-        return focusPoint + transform.rotation * offset;
+        get
+        {
+            var rot = Zone.transform.rotation;
+            var focus = transform.localRotation * Vector3.forward;
+            focus *= Depth / focus.z;
+            focus = P + rot * focus;
+            return focus;
+        }
     }
+    public Vector3 PlayerTargetPosition => FocusPoint + Zone.transform.rotation * offset;
+    SideScrollingZone zone = null;
+    SideScrollingZone Zone
+    {
+        get
+        {
+            if (zone == null)
+            {
+                zone = GetComponentInParent<SideScrollingZone>();
+            }
+            return zone;
+        }
+    }
+    Vector3 P => transform.position;
 
-    private void OnDrawGizmos()
+    // Debug
+    GameplaySystemSetting Setting => GameplaySystem.Setting;
+    void OnDrawGizmos()
     {
         if (!Camera.main) return;
-        SideScrollingZone zone = GetComponentInParent<SideScrollingZone>();
-        if (zone == null) return;
-        float theta = fov * Mathf.PI / 360f;
-        float height = -transform.localPosition.z * Mathf.Tan(theta);
-        float width = height * Camera.main.aspect;
+        if (Zone == null) return;
+
+        float y = Mathf.Tan(fov * Mathf.PI / 360f);
+        float x = y * Camera.main.aspect;
+
+        Vector3 topLeft = transform.localRotation * new Vector3(-x, y, 1);
+        Vector3 botLeft = transform.localRotation * new Vector3(-x, -y, 1);
+        topLeft *= Depth / topLeft.z;
+        botLeft *= Depth / botLeft.z;
+        Vector3 topRight = new Vector3(-topLeft.x, topLeft.y, Depth);
+        Vector3 botRight = new Vector3(-botLeft.x, botLeft.y, Depth);
+
+        var rot = Zone.transform.rotation;
+        topLeft = P + rot * topLeft;
+        botLeft = P + rot * botLeft;
+        topRight = P + rot * topRight;
+        botRight = P + rot * botRight;
 
         if (transform.localPosition.z > 0) Gizmos.color = Color.red;
         else Gizmos.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
 
-        var focusPoint = transform.position - transform.forward * transform.localPosition.z;
-        var playerPoint = focusPoint + transform.rotation * offset;
-        Gizmos.DrawWireMesh(Setting.characterMesh, playerPoint + Setting.playerFocusHeight * Vector3.down, transform.rotation);
+        Gizmos.DrawWireMesh(Setting.characterMesh, PlayerTargetPosition + Setting.playerFocusHeight * Vector3.down, Zone.transform.rotation);
 
-        var sizeY = height * Vector3.up;
-        var sizeX = width * transform.right;
-        Gizmos.DrawLine(focusPoint - sizeX - sizeY, focusPoint + sizeX - sizeY);
-        Gizmos.DrawLine(focusPoint - sizeX - sizeY, focusPoint - sizeX + sizeY);
-        Gizmos.DrawLine(focusPoint + sizeX + sizeY, focusPoint + sizeX - sizeY);
-        Gizmos.DrawLine(focusPoint + sizeX + sizeY, focusPoint - sizeX + sizeY);
-
+        Gizmos.DrawLine(topLeft, topRight);
+        Gizmos.DrawLine(botLeft, botRight);
+        Gizmos.DrawLine(topLeft, botLeft);
+        Gizmos.DrawLine(topRight, botRight);
         if (transform.localPosition.z > 0)
         {
-            Gizmos.DrawLine(focusPoint - sizeX - sizeY, focusPoint);
-            Gizmos.DrawLine(focusPoint - sizeX + sizeY, focusPoint);
-            Gizmos.DrawLine(focusPoint + sizeX - sizeY, focusPoint);
-            Gizmos.DrawLine(focusPoint + sizeX + sizeY, focusPoint);
+            Gizmos.DrawLine(topLeft, botRight);
+            Gizmos.DrawLine(topRight, botLeft);
         }
         else
         {
-            Gizmos.DrawLine(focusPoint - sizeX - sizeY, transform.position);
-            Gizmos.DrawLine(focusPoint - sizeX + sizeY, transform.position);
-            Gizmos.DrawLine(focusPoint + sizeX - sizeY, transform.position);
-            Gizmos.DrawLine(focusPoint + sizeX + sizeY, transform.position);
+            Gizmos.DrawLine(topLeft, P);
+            Gizmos.DrawLine(botLeft, P);
+            Gizmos.DrawLine(topRight, P);
+            Gizmos.DrawLine(botRight, P);
         }
     }
 }

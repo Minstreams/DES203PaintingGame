@@ -16,6 +16,10 @@ MonoBehaviour:
   invisibleWallDepth: 2
   invisibleWallHeight: 128
   playerFocusHeight: 1.6
+  camInterpolatingRate: 0.97
+  camInterpolatingRateMouseRotation: 0.2
+  camDefaultRelativePostiion: {x: 0.2, y: 0, z: -1.5}
+  camDefaultFov: 60
   sideScrollingCameraPointPrefab: {fileID: 928533210815114227, guid: 2b958d88ce1caec4887903bf65e3b45f,
     type: 3}
   characterMesh: {fileID: -3702037217650275473, guid: 4793e0c8a281caf40a642ae3b119476e,

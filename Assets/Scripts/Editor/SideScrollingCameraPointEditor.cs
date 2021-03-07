@@ -8,6 +8,8 @@ public class SideScrollingCameraPointEditor : Editor
 
     void OnSceneGUI()
     {
+        if (EditorApplication.isPlaying) return;
+
         var zone = Point.GetComponentInParent<SideScrollingZone>();
         if (zone == null)
         {
@@ -17,7 +19,7 @@ public class SideScrollingCameraPointEditor : Editor
             {
                 GUILayout.BeginArea(HandleUtility.WorldPointToSizedRect(Point.transform.position, warning, style), warning, style);
                 {
-                    if(GUILayout.Button("Destroy this component."))
+                    if (GUILayout.Button("Destroy this component."))
                     {
                         Editor.DestroyImmediate(Point);
                     }

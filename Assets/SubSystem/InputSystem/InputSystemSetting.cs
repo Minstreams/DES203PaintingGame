@@ -13,11 +13,16 @@ namespace GameSystem.Setting
 
         [MinsHeader("KeyBoard", SummaryType.SubTitle), Space(16)]
         [MinsHeader("主要按键", SummaryType.Header, 1)]
-        public InputKeyMap MainKeys;
+        [Label] public InputKeyMap MainKeys;
         /// <summary>
         /// 次要按键
         /// </summary>
         [MinsHeader("次要按键", SummaryType.Header)]
-        public InputKeyMap SideKeys;
+        [Label] public InputKeyMap SideKeys;
+
+        [MinsHeader("Mouse", SummaryType.SubTitle, -1), Space(16)]
+        [MinsHeader("ThirdPersonalView")]
+        [Label] public Vector2 mouseSensitivity;
+
     }
 }

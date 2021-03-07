@@ -13,12 +13,14 @@ namespace GameSystem.Setting
         [Label(true)] public float invisibleWallDepth;
         [Label(true)] public float invisibleWallHeight;
         [Label] public float playerFocusHeight;
+        [LabelRange] public float camInterpolatingRate;
+        [LabelRange] public float camInterpolatingRateMouseRotation;
+        [Label(true)] public Vector3 camDefaultRelativePostiion;
+        [Label(true)] public float camDefaultFov;
 
         [MinsHeader("Editor-only")]
         [Label] public GameObject sideScrollingCameraPointPrefab;
         [Label] public Mesh characterMesh;
-
-
 
 
         // Temp

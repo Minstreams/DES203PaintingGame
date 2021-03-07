@@ -27,7 +27,7 @@ public class PlayerAvatarController : MonoBehaviour
         if (InputSystem.GetKey(InputKey.Up)) input.z += 1;
         if (InputSystem.GetKey(InputKey.Down)) input.z -= 1;
         input = input.normalized * Mathf.Max(Mathf.Abs(input.x), Mathf.Abs(input.z));
-        Avatar.Move(Camera.main.transform.rotation * input * (InputSystem.GetKey(InputKey.Run) ? runningForce : walkingForce));
+        Avatar.Move(Quaternion.LookRotation(Vector3.Cross(GameplaySystem.CurrentCamera.transform.right, Vector3.up), Vector3.up) * input * (InputSystem.GetKey(InputKey.Run) ? runningForce : walkingForce));
 
         if (InputSystem.GetKeyDown(InputKey.Jump)) Avatar.Jump(jumpForce);
         if (InputSystem.GetKeyDown(InputKey.Interact)) SetInputTrigger("Interact");

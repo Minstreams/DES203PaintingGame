@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using GameSystem;
 using GameSystem.Setting;
 
@@ -19,7 +21,12 @@ public class SideScrollingZone : MonoBehaviour
     [Label] public SimpleEvent onExitZone;
 
     GameplaySystemSetting Setting => GameplaySystem.Setting;
+    PlayerAvatarController CurrentPlayer => GameplaySystem.CurrentPlayer;
+    CameraController CurrentCamera => GameplaySystem.CurrentCamera;
 
+    readonly SortedList<float, SideScrollingCameraPoint> cameraList = new SortedList<float, SideScrollingCameraPoint>();
+
+    int playerPositionIndex;    // = index of the nearest camera point on the right
 
     void Start()
     {
@@ -36,6 +43,12 @@ public class SideScrollingZone : MonoBehaviour
         l_Wall.size = wallSize;
         r_Wall.center = new Vector3(centerX, centerY, -centerZ);
         r_Wall.size = wallSize;
+
+        var cams = cameraPoints.GetComponentsInChildren<SideScrollingCameraPoint>();
+        foreach (var c in cams)
+        {
+            cameraList.Add(c.transform.localPosition.x + c.Offset.x, c);
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -43,6 +56,18 @@ public class SideScrollingZone : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             onEnterZone?.Invoke();
+            CurrentCamera.ActiveSideScrollingZoneSet.Add(this);
+
+            var playerX = Vector3.Dot(transform.right, CurrentPlayer.transform.position - transform.position);
+            var camXList = cameraList.Keys;
+            var camPList = cameraList.Values;
+            // Initialize player position index
+            for (playerPositionIndex = 0; playerPositionIndex < camXList.Count && camXList[playerPositionIndex] < playerX; ++playerPositionIndex) ;
+            // register nearby camera points
+            if (playerPositionIndex > 0) CurrentCamera.CameraPointLeft = camPList[playerPositionIndex - 1];
+            if (playerPositionIndex < cameraList.Count) CurrentCamera.CameraPointRight = camPList[playerPositionIndex];
+
+            StartCoroutine(UpdateCameraWeight());
         }
     }
     void OnTriggerExit(Collider other)
@@ -50,9 +75,61 @@ public class SideScrollingZone : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             onExitZone?.Invoke();
+            CurrentCamera.ActiveSideScrollingZoneSet.Remove(this);
+
+            StopAllCoroutines();
+
+            // clear nearby camera points
+            //var camPList = cameraList.Values;
+            //if (playerPositionIndex > 0 && CurrentCamera.CameraPointLeft == camPList[playerPositionIndex - 1]) CurrentCamera.CameraPointLeft = null;
+            //if (playerPositionIndex < cameraList.Count && CurrentCamera.CameraPointRight == camPList[playerPositionIndex]) CurrentCamera.CameraPointRight = null;
         }
     }
 
+    readonly WaitForFixedUpdate interval = new WaitForFixedUpdate();
+
+    IEnumerator UpdateCameraWeight()
+    {
+        while (true)
+        {
+            var playerX = Vector3.Dot(transform.right, CurrentPlayer.transform.position - transform.position);
+            var camXList = cameraList.Keys;
+            var camPList = cameraList.Values;
+
+            if (playerPositionIndex > 0)
+            {
+                var camX = camXList[playerPositionIndex - 1];
+                var camP = camPList[playerPositionIndex - 1];
+                if (camX > playerX)
+                {
+                    --playerPositionIndex;
+                    CurrentCamera.CameraPointRight = camPList[playerPositionIndex];
+                    if (playerPositionIndex > 0) CurrentCamera.CameraPointLeft = camPList[playerPositionIndex - 1];
+                }
+                else
+                {
+                    camP.weight = GameplaySystem.CalculateCameraPointWeight(playerX - camX);
+                }
+            }
+            if (playerPositionIndex < cameraList.Count)
+            {
+                var camX = camXList[playerPositionIndex];
+                var camP = camPList[playerPositionIndex];
+                if (camX < playerX)
+                {
+                    ++playerPositionIndex;
+                    CurrentCamera.CameraPointLeft = camPList[playerPositionIndex - 1];
+                    if (playerPositionIndex < cameraList.Count) CurrentCamera.CameraPointRight = camPList[playerPositionIndex];
+                }
+                else
+                {
+                    camP.weight = GameplaySystem.CalculateCameraPointWeight(camX - playerX);
+                }
+            }
+
+            yield return interval;
+        }
+    }
 
 
     // Debug & GUI
@@ -80,7 +157,6 @@ public class SideScrollingZone : MonoBehaviour
         Gizmos.DrawRay(transform.position + yBias - offsetZ - wallSizeZ, wallSizeX);
         Gizmos.DrawRay(transform.position + yBias - offsetZ, wallSizeX);
         Gizmos.DrawRay(transform.position + yBias - offsetZ + wallSizeX, -wallSizeZ);
-
 
         Gizmos.color = Color.white;
     }
