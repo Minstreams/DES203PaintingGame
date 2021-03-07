@@ -12,12 +12,12 @@ public class CameraController : MonoBehaviour
     public HashSet<SideScrollingZone> ActiveSideScrollingZoneSet { get; } = new HashSet<SideScrollingZone>();
     public SideScrollingCameraPoint CameraPointLeft { get; set; } = null;
     public SideScrollingCameraPoint CameraPointRight { get; set; } = null;
+    public bool IsSideScrollingMode => ActiveSideScrollingZoneSet.Count > 0;
 
     // References
     GameplaySystemSetting Setting => GameplaySystem.Setting;
     PlayerAvatarController CurrentPlayer => GameplaySystem.CurrentPlayer;
     Vector3 PlayerFocusPoint => GameplaySystem.CurrentPlayer.transform.position + Setting.playerFocusHeight * Vector3.up;
-    bool IsSideScrollingMode => ActiveSideScrollingZoneSet.Count > 0;
 
     // Fields
     Camera cam;
@@ -103,38 +103,4 @@ public class CameraController : MonoBehaviour
     {
         camRelativePosition.z -= power;
     }
-
-    // Debug
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.cyan;
-        if (IsSideScrollingMode)
-        {
-            float weight = (CameraPointLeft == null ? 0 : CameraPointLeft.weight) + (CameraPointRight == null ? 0 : CameraPointRight.weight);
-            if (CameraPointLeft == CameraPointRight) weight *= 0.5f;
-            if (weight > 0)
-            {
-                var pOffset = 0.5f * Setting.playerFocusHeight * Vector3.down;
-                var pPlayer = PlayerFocusPoint;
-                Gizmos.DrawWireSphere(pPlayer + Vector3.down * 0.1f, 0.2f);
-                if (CameraPointLeft != null)
-                {
-                    var w = CameraPointLeft.weight / weight;
-                    var p = CameraPointLeft.PlayerTargetPosition;
-                    Gizmos.DrawLine(pPlayer, p);
-                    Gizmos.DrawWireSphere(p + pOffset * w, 0.5f * Setting.playerFocusHeight * w);
-                }
-                if (CameraPointRight != null)
-                {
-                    var w = CameraPointRight.weight / weight;
-                    var p = CameraPointRight.PlayerTargetPosition;
-                    Gizmos.DrawLine(pPlayer, p);
-                    Gizmos.DrawWireSphere(p + pOffset * w, 0.5f * Setting.playerFocusHeight * w);
-                }
-            }
-        }
-        Gizmos.color = Color.white;
-    }
-
-
 }

@@ -36,13 +36,16 @@ namespace GameSystem.Setting
         [Label] public float camFovArcRadius = 0.35f;
         [Label] public float camFovCaptureRadius = 0.7f;
         [Label] public float camFovCaptureSize = 0.1f;
-        [Label] public float camGUIPanelWidth = 156;
-        [Label] public float camGUIPanelHeight = 276;
+        [Label] public float camGUIPanelWidth;
+        [Label] public float camGUIPanelHeight;
+        [Label] public float camGUIPanelXOffset;
+        [Label] public float camGUIPanelYOffset;
         [Label] public int camPreviewHeight = 100;
         [Label] public int gridGroundRadius = 10;
         [Label] public int gridSideRadius = 6;
         [Label] public int gridZAxisRadius = 4;
         [Label] public int gridFovRange = 60;
+        [Label] public float gridFovRadius = 1;
         [MinsHeader("GUI Colors")]
         [Label] public Color entryPointCaptureColor = new Color(0, 1, 0, 1);
         [Label] public Color entryPointArrowColor = new Color(0, 1, 0, 1);
@@ -51,5 +54,24 @@ namespace GameSystem.Setting
         [Label] public Color gridSideColor = new Color(0.8f, 0.8f, 0.6f, 1);
         [Label] public Color gridZAxisColor = new Color(1, 1, 1, 1);
         [Label] public Color gridFovColor = new Color(1, 1, 1, 1);
+        [Label] public Color camTargetCaptureColor = Color.white;
+        [Label] public Color camPosCaptureColor = Color.white;
+        [Label] public Color camFocusCaptureColor = Color.white;
+        [Label] public Color camOffsetLineColor = Color.white;
+        [Label] public Color camZCaptureColor = Color.white;
+        [Label] public Color camFovCaptureColor = Color.white;
+        [Label] public Color camPitchCaptureColor;
+        [Label] public Color camPointSelectionColor = Color.white;
+        [Label] public Color camPointGizmosLineColor = Color.gray;
+        [Label] public Color camPointGizmosLineColorSelected = Color.gray;
+        [Label] public Color camPointGizmosBorderColor = Color.gray;
+        [Label] public Color camPointGizmosBorderColorSelected = Color.gray;
+        [Label] public Color camPointGizmosSphereColor = Color.gray;
+        [Label] public Color camPointGizmosModelColor = Color.gray;
+        [Label] public Color camPointGizmosModelColorSelected = Color.gray;
+        [Label] public Color camPointGizmosErrorColor = Color.red;
+        [Label] public Color zonePointColor;
+        [Label] public Color zonePathColor;
+        [Label] public Color zoneWallColor;
     }
 }

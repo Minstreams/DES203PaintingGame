@@ -9,8 +9,8 @@ public class SideScrollingZoneEditor : Editor
     // References
     SideScrollingZone Zone => target as SideScrollingZone;
     Transform transform => Zone.transform;
-    GameplaySystemSetting Setting => GameplaySystem.Setting;
-    TheMatrixEditorSetting EditorSetting => TheMatrix.EditorSetting;
+    static GameplaySystemSetting Setting => GameplaySystem.Setting;
+    static TheMatrixEditorSetting EditorSetting => TheMatrix.EditorSetting;
 
     // Static Properties
     public static SideScrollingCameraPoint CurrentEditingPoint { private get; set; } = null;
@@ -263,6 +263,7 @@ public class SideScrollingZoneEditor : Editor
         // Entry & Exit Points
         if (CurrentEditingPoint == null)
         {
+            Handles.color = EditorSetting.entryPointCaptureColor;
 
             EditorGUI.BeginChangeCheck();
             {
@@ -349,176 +350,6 @@ public class SideScrollingZoneEditor : Editor
                 var focusPos = p.FocusPoint;
                 var targetPos = p.PlayerTargetPosition;
 
-                // edit target point
-
-                EditorGUI.BeginChangeCheck();
-                pos = ToPlane(Handles.FreeMoveHandle(targetPos, Quaternion.identity, 0.3f, Vector3.zero, CamTargetCapture), transform.position, transform.forward);
-                if (EditorGUI.EndChangeCheck())
-                {
-                    Undo.RecordObject(p, "Move Camera Point");
-                    if (Event.current.control)
-                    {
-                        pos -= transform.right * HalfFracSnapped(Vector3.Dot(transform.right, pos - transform.position));
-                        pos.y = Snap(pos.y - Setting.playerFocusHeight) + Setting.playerFocusHeight;
-                    }
-                    p.Offset = (Vector3)(p.transform.parent.worldToLocalMatrix * (pos - focusPos));
-                }
-
-                // edit cam point
-                EditorGUI.BeginChangeCheck();
-                pos = ToPlane(Handles.FreeMoveHandle(p.transform.position, Quaternion.identity, p.Depth, Vector3.zero, CamPosCapture), p.transform.position, transform.forward);
-                if (EditorGUI.EndChangeCheck())
-                {
-                    Undo.RecordObject(p, "Move Camera Point");
-                    Undo.RecordObject(p.transform, "Move Camera Point");
-                    if (Event.current.control)
-                    {
-                        pos -= transform.right * HalfFracSnapped(Vector3.Dot(transform.right, pos - transform.position));
-                        pos.y = Snap(pos.y);
-                    }
-                    var preLocalZ = p.transform.localPosition.z;
-                    p.transform.position = pos;
-                    var local = p.transform.localPosition;
-                    if (local.x < -Zone.cameraOverflow) local.x = -Zone.cameraOverflow;
-                    else if (local.x > Zone.distance + Zone.cameraOverflow) local.x = Zone.distance + Zone.cameraOverflow;
-                    local.z = preLocalZ;
-                    p.transform.localPosition = local;
-                    p.Offset = (Vector3)(p.transform.parent.worldToLocalMatrix * (targetPos - p.FocusPoint));
-
-                    Camera.main.transform.position = p.transform.position;
-                    Camera.main.transform.rotation = p.transform.rotation;
-                }
-
-                EditorGUI.BeginChangeCheck();
-                pos = ToPlane(Handles.FreeMoveHandle(focusPos, Quaternion.identity, p.Depth, Vector3.zero, CamFocusCapture), transform.position, transform.forward);
-                if (EditorGUI.EndChangeCheck())
-                {
-                    Undo.RecordObject(p, "Move Camera Point");
-                    Undo.RecordObject(p.transform, "Move Camera Point");
-                    if (Event.current.control)
-                    {
-                        pos -= transform.right * HalfFracSnapped(Vector3.Dot(transform.right, pos - transform.position));
-                        pos.y = Snap(pos.y);
-                    }
-                    var preLocalZ = p.transform.localPosition.z;
-                    p.transform.position += pos - focusPos;
-                    var local = p.transform.localPosition;
-                    if (local.x < -Zone.cameraOverflow) local.x = -Zone.cameraOverflow;
-                    else if (local.x > Zone.distance + Zone.cameraOverflow) local.x = Zone.distance + Zone.cameraOverflow;
-                    local.z = preLocalZ;
-                    p.transform.localPosition = local;
-                    p.Offset = (Vector3)(p.transform.parent.worldToLocalMatrix * (targetPos - p.FocusPoint));
-
-                    Camera.main.transform.position = p.transform.position;
-                    Camera.main.transform.rotation = p.transform.rotation;
-                }
-
-                // edit cam Z
-                Handles.DrawLine(p.transform.position, focusPos);
-                Handles.DrawLine(targetPos, focusPos);
-
-                EditorGUI.BeginChangeCheck();
-                pos = ToPlane(Handles.FreeMoveHandle(p.transform.position, Quaternion.identity, p.Depth, Vector3.zero, CamZCapture), p.transform.position, Vector3.Cross(transform.forward, Vector3.Cross(p.transform.position - Camera.current.transform.position, transform.forward)).normalized);
-                if (EditorGUI.EndChangeCheck())
-                {
-                    Undo.RecordObject(p.transform, "Move Camera Point");
-                    var local = p.transform.localPosition;
-                    local.z = Vector3.Dot(pos - transform.position, transform.forward);
-                    if (Event.current.control)
-                    {
-                        local.z = Snap(local.z);
-                    }
-                    p.transform.localPosition = local;
-
-                    Camera.main.transform.position = p.transform.position;
-                }
-
-                // edit fov
-                var angleRot = Quaternion.AngleAxis(p.fov * 2, -transform.forward);
-                var handlePos = p.transform.position + sizeFactor * EditorSetting.camFovCaptureRadius * (angleRot * Vector3.up);
-
-                Handles.DrawSolidArc(p.transform.position, -transform.forward, Vector3.up, p.fov * 2, sizeFactor * EditorSetting.camFovArcRadius);
-                Handles.DrawLine(p.transform.position, handlePos);
-
-                EditorGUI.BeginChangeCheck();
-                pos = ToPlane(Handles.FreeMoveHandle(handlePos, Quaternion.identity, p.fov, Vector3.zero, CamFovCapture), p.transform.position, transform.forward);
-                if (EditorGUI.EndChangeCheck())
-                {
-                    Undo.RecordObject(p, "Edit Camera fov");
-                    var angle = Vector3.SignedAngle(Vector3.up, pos - p.transform.position, -transform.forward);
-                    if (angle < 0) angle += 360;
-                    if (Event.current.control)
-                    {
-                        angle = Snap(angle, EditorSetting.angleSnapValue * 2);
-                    }
-                    p.fov = angle * 0.5f;
-
-                    Camera.main.fieldOfView = p.fov;
-                }
-
-                // edit Rotation
-
-                if (EditorSetting.cameraPitchAlwayEditable || Event.current.control)
-                {
-                    EditorGUI.BeginChangeCheck();
-                    var rot = Handles.FreeRotateHandle(p.transform.rotation, p.transform.position, sizeFactor * 0.8f);
-                    if (EditorGUI.EndChangeCheck())
-                    {
-                        Undo.RecordObject(p, "Edit Camera Pitch");
-                        Undo.RecordObject(p.transform, "Edit Camera Pitch");
-
-                        rot = Quaternion.Inverse(Zone.transform.rotation) * rot;
-                        var pitch = rot.eulerAngles.x;
-                        while (pitch > 180) pitch -= 360;
-                        if (pitch > 72) pitch = 72;
-                        if (pitch < -72) pitch = -72;
-
-                        if (Event.current.control)
-                        {
-                            pitch = Snap(pitch, EditorSetting.angleSnapValue * 2);
-                        }
-                        rot = Quaternion.AngleAxis(pitch, Vector3.right);
-                        p.transform.localRotation = rot;
-                        p.Offset = (Vector3)(p.transform.parent.worldToLocalMatrix * (targetPos - p.FocusPoint));
-
-                        Camera.main.transform.rotation = p.transform.rotation;
-                    }
-                }
-
-                // Camera Panel
-                if (EditorSetting.alwaysShowCameraPanelInSceneView || Event.current.control)
-                {
-                    GUIStyle areaStyle = "window";
-                    Rect areaRect = HandleUtility.WorldPointToSizedRect(p.transform.position + sizeFactor * (EditorSetting.camFovCaptureRadius + EditorSetting.camFovCaptureSize + 0.3f) * (Camera.current.transform.right + Vector3.up * 0.5f), GUIContent.none, areaStyle);
-                    areaRect.width = EditorSetting.camGUIPanelWidth;
-                    areaRect.height = EditorSetting.camGUIPanelHeight;
-                    Handles.BeginGUI();
-                    {
-                        GUILayout.BeginArea(areaRect, "Camera Point", areaStyle);
-                        CameraPanel();
-                        GUILayout.EndArea();
-                    }
-                    Handles.EndGUI();
-                }
-
-                // Preview Panel
-                if (EditorSetting.alwaysShowCameraPreviewInSceneView || Event.current.control)
-                {
-                    Camera.main.targetTexture = cameraPreviewTexture;
-                    Camera.main.Render();
-                    Camera.main.targetTexture = null;
-
-                    Rect previewRect = new Rect(4, 4, EditorSetting.camPreviewHeight * Camera.main.aspect, EditorSetting.camPreviewHeight);
-                    Handles.BeginGUI();
-                    {
-                        GUI.DrawTexture(previewRect, cameraPreviewTexture);
-                    }
-                    Handles.EndGUI();
-                }
-
-
-                if (CurrentEditingPoint == null) return;    // Handle the situation where the current editting point is destroyed
-
                 // Drawings
                 if (Event.current.control)
                 {
@@ -553,13 +384,117 @@ public class SideScrollingZoneEditor : Editor
                             CrossP(P(-i + 1));
                         }
                     }
+                }
+
+                // edit target point
+                {
+                    Handles.color = EditorSetting.camTargetCaptureColor;
+
+                    EditorGUI.BeginChangeCheck();
+                    pos = ToPlane(Handles.FreeMoveHandle(targetPos, Quaternion.identity, 0.3f, Vector3.zero, CamTargetCapture), transform.position, transform.forward);
+                    if (EditorGUI.EndChangeCheck())
+                    {
+                        Undo.RecordObject(p, "Move Camera Point");
+                        if (Event.current.control)
+                        {
+                            pos -= transform.right * HalfFracSnapped(Vector3.Dot(transform.right, pos - transform.position));
+                            pos.y = Snap(pos.y - Setting.playerFocusHeight) + Setting.playerFocusHeight;
+                        }
+                        p.Offset = (Vector3)(p.transform.parent.worldToLocalMatrix * (pos - focusPos));
+                    }
+                }
+
+                // edit cam point
+                {
+                    Handles.color = EditorSetting.camPosCaptureColor;
+
+                    EditorGUI.BeginChangeCheck();
+                    pos = ToPlane(Handles.FreeMoveHandle(p.transform.position, Quaternion.identity, p.Depth, Vector3.zero, CamPosCapture), p.transform.position, transform.forward);
+                    if (EditorGUI.EndChangeCheck())
+                    {
+                        Undo.RecordObject(p, "Move Camera Point");
+                        Undo.RecordObject(p.transform, "Move Camera Point");
+                        if (Event.current.control)
+                        {
+                            pos -= transform.right * HalfFracSnapped(Vector3.Dot(transform.right, pos - transform.position));
+                            pos.y = Snap(pos.y);
+                        }
+                        var preLocalZ = p.transform.localPosition.z;
+                        p.transform.position = pos;
+                        var local = p.transform.localPosition;
+                        if (local.x < -Zone.cameraOverflow) local.x = -Zone.cameraOverflow;
+                        else if (local.x > Zone.distance + Zone.cameraOverflow) local.x = Zone.distance + Zone.cameraOverflow;
+                        local.z = preLocalZ;
+                        p.transform.localPosition = local;
+                        p.Offset = (Vector3)(p.transform.parent.worldToLocalMatrix * (targetPos - p.FocusPoint));
+
+                        Camera.main.transform.position = p.transform.position;
+                        Camera.main.transform.rotation = p.transform.rotation;
+                    }
+
+                    Handles.color = EditorSetting.camFocusCaptureColor;
+
+                    EditorGUI.BeginChangeCheck();
+                    pos = ToPlane(Handles.FreeMoveHandle(focusPos, Quaternion.identity, p.Depth, Vector3.zero, CamFocusCapture), transform.position, transform.forward);
+                    if (EditorGUI.EndChangeCheck())
+                    {
+                        Undo.RecordObject(p, "Move Camera Point");
+                        Undo.RecordObject(p.transform, "Move Camera Point");
+                        if (Event.current.control)
+                        {
+                            pos -= transform.right * HalfFracSnapped(Vector3.Dot(transform.right, pos - transform.position));
+                            pos.y = Snap(pos.y);
+                        }
+                        var preLocalZ = p.transform.localPosition.z;
+                        p.transform.position += pos - focusPos;
+                        var local = p.transform.localPosition;
+                        if (local.x < -Zone.cameraOverflow) local.x = -Zone.cameraOverflow;
+                        else if (local.x > Zone.distance + Zone.cameraOverflow) local.x = Zone.distance + Zone.cameraOverflow;
+                        local.z = preLocalZ;
+                        p.transform.localPosition = local;
+                        p.Offset = (Vector3)(p.transform.parent.worldToLocalMatrix * (targetPos - p.FocusPoint));
+
+                        Camera.main.transform.position = p.transform.position;
+                        Camera.main.transform.rotation = p.transform.rotation;
+                    }
+                    Handles.color = EditorSetting.camOffsetLineColor;
+                    Handles.DrawLine(targetPos, focusPos);
+                }
+
+                // edit fov
+                {
+                    var angleRot = Quaternion.AngleAxis(p.fov * 2, -transform.forward);
+                    var handlePos = p.transform.position + sizeFactor * EditorSetting.camFovCaptureRadius * (angleRot * Vector3.up);
+
+                    Handles.color = EditorSetting.camFovCaptureColor;
+
+                    EditorGUI.BeginChangeCheck();
+                    pos = ToPlane(Handles.FreeMoveHandle(handlePos, Quaternion.identity, p.fov, Vector3.zero, CamFovCapture), p.transform.position, transform.forward);
+                    if (EditorGUI.EndChangeCheck())
+                    {
+                        Undo.RecordObject(p, "Edit Camera fov");
+                        var angle = Vector3.SignedAngle(Vector3.up, pos - p.transform.position, -transform.forward);
+                        if (angle < 0) angle += 360;
+                        if (Event.current.control)
+                        {
+                            angle = Snap(angle, EditorSetting.angleSnapValue * 2);
+                        }
+                        p.fov = angle * 0.5f;
+
+                        Camera.main.fieldOfView = p.fov;
+                    }
+
+                    Handles.color = EditorSetting.camFovCaptureColor;
+                    Handles.DrawSolidArc(p.transform.position, -transform.forward, Vector3.up, p.fov * 2, sizeFactor * EditorSetting.camFovArcRadius);
+                    Handles.DrawLine(p.transform.position, handlePos);
 
                     // Draw Grid Fov
+                    if (Event.current.control)
                     {
                         var color = EditorSetting.gridFovColor;
                         var alpha = color.a;
                         var segment = Mathf.FloorToInt(EditorSetting.gridFovRange / EditorSetting.angleSnapValue);
-                        var centerDir = EditorSetting.camFovCaptureRadius * sizeFactor * 1.5f * (Quaternion.AngleAxis(2 * Snap(p.fov, EditorSetting.angleSnapValue), -transform.forward) * Vector3.up);
+                        var centerDir = EditorSetting.gridFovRadius * sizeFactor * (Quaternion.AngleAxis(2 * Snap(p.fov, EditorSetting.angleSnapValue), -transform.forward) * Vector3.up);
                         var baseI = Mathf.FloorToInt(p.fov / EditorSetting.angleSnapValue);
 
                         for (int i = -segment; i <= segment; ++i)
@@ -572,11 +507,97 @@ public class SideScrollingZoneEditor : Editor
                         }
                     }
                 }
+
+                // edit cam Z
+                {
+                    Handles.color = EditorSetting.camZCaptureColor;
+
+                    EditorGUI.BeginChangeCheck();
+                    pos = ToPlane(Handles.FreeMoveHandle(p.transform.position, Quaternion.identity, p.Depth, Vector3.zero, CamZCapture), p.transform.position, Vector3.Cross(transform.forward, Vector3.Cross(p.transform.position - Camera.current.transform.position, transform.forward)).normalized);
+                    if (EditorGUI.EndChangeCheck())
+                    {
+                        Undo.RecordObject(p.transform, "Move Camera Point");
+                        var local = p.transform.localPosition;
+                        local.z = Vector3.Dot(pos - transform.position, transform.forward);
+                        if (Event.current.control)
+                        {
+                            local.z = Snap(local.z);
+                        }
+                        p.transform.localPosition = local;
+
+                        Camera.main.transform.position = p.transform.position;
+                    }
+                    Handles.color = EditorSetting.camZCaptureColor;
+                    Handles.DrawLine(p.transform.position, focusPos);
+                }
+
+                // edit Rotation
+                if (EditorSetting.cameraPitchAlwayEditable || Event.current.control)
+                {
+                    Handles.color = EditorSetting.camPitchCaptureColor;
+                    EditorGUI.BeginChangeCheck();
+                    var rot = Handles.FreeRotateHandle(p.transform.rotation, p.transform.position, sizeFactor * 0.8f);
+                    if (EditorGUI.EndChangeCheck())
+                    {
+                        Undo.RecordObject(p, "Edit Camera Pitch");
+                        Undo.RecordObject(p.transform, "Edit Camera Pitch");
+
+                        rot = Quaternion.Inverse(Zone.transform.rotation) * rot;
+                        var pitch = rot.eulerAngles.x;
+                        while (pitch > 180) pitch -= 360;
+                        if (pitch > 72) pitch = 72;
+                        if (pitch < -72) pitch = -72;
+
+                        if (Event.current.control)
+                        {
+                            pitch = Snap(pitch, EditorSetting.angleSnapValue * 2);
+                        }
+                        rot = Quaternion.AngleAxis(pitch, Vector3.right);
+                        p.transform.localRotation = rot;
+                        p.Offset = (Vector3)(p.transform.parent.worldToLocalMatrix * (targetPos - p.FocusPoint));
+
+                        Camera.main.transform.rotation = p.transform.rotation;
+                    }
+                }
+
+                // Camera Panel
+                if (EditorSetting.alwaysShowCameraPanelInSceneView || Event.current.shift)
+                {
+                    GUIStyle areaStyle = "window";
+                    Rect areaRect = HandleUtility.WorldPointToSizedRect(p.transform.position + sizeFactor * (EditorSetting.camFovCaptureRadius + EditorSetting.camFovCaptureSize) * (-Camera.current.transform.right + Vector3.up * 0.5f), GUIContent.none, areaStyle);
+                    areaRect.width = EditorSetting.camGUIPanelWidth;
+                    areaRect.height = EditorSetting.camGUIPanelHeight;
+                    areaRect.x += EditorSetting.camGUIPanelXOffset - EditorSetting.camGUIPanelWidth;
+                    areaRect.y += EditorSetting.camGUIPanelYOffset;
+                    Handles.BeginGUI();
+                    {
+                        GUILayout.BeginArea(areaRect, "Camera Point", areaStyle);
+                        CameraPanel();
+                        GUILayout.EndArea();
+                    }
+                    Handles.EndGUI();
+                }
+                if (CurrentEditingPoint == null) return;    // Handle the situation where the current editting point is destroyed
+
+                // Preview Panel
+                if (EditorSetting.alwaysShowCameraPreviewInSceneView || Event.current.control)
+                {
+                    Camera.main.targetTexture = cameraPreviewTexture;
+                    Camera.main.Render();
+                    Camera.main.targetTexture = null;
+
+                    Rect previewRect = new Rect(4, 4, EditorSetting.camPreviewHeight * Camera.main.aspect, EditorSetting.camPreviewHeight);
+                    Handles.BeginGUI();
+                    {
+                        GUI.DrawTexture(previewRect, cameraPreviewTexture);
+                    }
+                    Handles.EndGUI();
+                }
             }
             else
             {
-                Handles.color = new Color(1, 0.5f, 0, 0.7f);
-                if (Handles.Button(p.transform.position, Camera.current.transform.rotation, 0.2f, 0.2f, CircleCapture))
+                Handles.color = EditorSetting.camPointSelectionColor;
+                if (Handles.Button(p.transform.position, Camera.current.transform.rotation, 0.08f, 0.08f, CircleCapture))
                 {
                     CurrentEditingPoint = p;
                     SceneView.currentDrawingSceneView.LookAt(p.transform.position);
@@ -595,7 +616,6 @@ public class SideScrollingZoneEditor : Editor
     /// </summary>
     void EntryPointCapture(int controlID, Vector3 position, Quaternion rotation, float size, EventType eventType)
     {
-        Handles.color = EditorSetting.entryPointCaptureColor;
         var sizeFactor = HandleUtility.GetHandleSize(position);
         size *= sizeFactor;
         Handles.CircleHandleCap(controlID, position, rotation, size, eventType);
@@ -610,7 +630,7 @@ public class SideScrollingZoneEditor : Editor
         var footPos = position + Vector3.down * Setting.playerFocusHeight;
         var upRot = Quaternion.LookRotation(Vector3.up, Vector3.forward);
         Handles.ArrowHandleCap(controlID, footPos, upRot, Setting.playerFocusHeight * 0.8f, eventType);
-        Handles.SphereHandleCap(controlID, position, rotation, size, eventType);
+        //Handles.SphereHandleCap(controlID, position, rotation, size, eventType);
         Handles.CircleHandleCap(controlID, footPos, upRot, Setting.playerFocusHeight * 0.3f, eventType);
         Handles.CircleHandleCap(controlID, position + Setting.playerFocusHeight * 0.5f * Vector3.down, rotation, Setting.playerFocusHeight * 0.5f, eventType);
     }
@@ -637,5 +657,125 @@ public class SideScrollingZoneEditor : Editor
         var angleRot = Quaternion.AngleAxis(fov * 2, -transform.forward);
 
         Handles.CubeHandleCap(controlID, position, angleRot * transform.rotation, EditorSetting.camFovCaptureSize * sizeFactor, eventType);
+    }
+    [DrawGizmo(GizmoType.Selected | GizmoType.NonSelected | GizmoType.Pickable)]
+    static void ZoneGizmos(SideScrollingZone zone, GizmoType gizmoType)
+    {
+        var yBias = Vector3.up * 0.01f;
+        var p = zone.transform.position;
+        var pp = zone.transform.position + zone.transform.right * zone.distance;
+
+        Gizmos.color = EditorSetting.zonePointColor;
+        Gizmos.DrawSphere(p, EditorSetting.entryPointCaptureSize);
+        Gizmos.DrawSphere(pp, EditorSetting.entryPointCaptureSize);
+
+        Gizmos.color = EditorSetting.zonePathColor;
+        Gizmos.DrawLine(p + yBias, pp);
+
+        if (gizmoType.HasFlag(GizmoType.NonSelected))
+        {
+            var offsetZ = Setting.sideScrollingPathWidth * 0.5f * zone.transform.forward;
+            var wallSizeX = zone.distance * zone.transform.right;
+            var wallSizeZ = Setting.invisibleWallDepth * zone.transform.forward;
+            Gizmos.color = EditorSetting.zoneWallColor;
+            Gizmos.DrawRay(p + yBias + offsetZ, wallSizeZ);
+            Gizmos.DrawRay(p + yBias + offsetZ + wallSizeZ, wallSizeX);
+            Gizmos.DrawRay(p + yBias + offsetZ, wallSizeX);
+            Gizmos.DrawRay(p + yBias + offsetZ + wallSizeX, wallSizeZ);
+            Gizmos.DrawRay(p + yBias - offsetZ, -wallSizeZ);
+            Gizmos.DrawRay(p + yBias - offsetZ - wallSizeZ, wallSizeX);
+            Gizmos.DrawRay(p + yBias - offsetZ, wallSizeX);
+            Gizmos.DrawRay(p + yBias - offsetZ + wallSizeX, -wallSizeZ);
+        }
+
+        Gizmos.color = Color.white;
+    }
+
+    [DrawGizmo(GizmoType.NotInSelectionHierarchy | GizmoType.InSelectionHierarchy | GizmoType.Pickable)]
+    static void CameraPointGizmos(SideScrollingCameraPoint p, GizmoType gizmoType)
+    {
+        if (Camera.main == null) return;
+        var zone = p.GetComponentInParent<SideScrollingZone>();
+        if (zone == null) return;
+
+        bool error = p.transform.localPosition.z > 0;
+        bool selected = gizmoType.HasFlag(GizmoType.InSelectionHierarchy) && p == CurrentEditingPoint;
+
+        float y = Mathf.Tan(p.fov * Mathf.PI / 360f);
+        float x = y * Camera.main.aspect;
+        var pp = p.transform.position;
+
+        Vector3 topLeft = p.transform.localRotation * new Vector3(-x, y, 1);
+        Vector3 botLeft = p.transform.localRotation * new Vector3(-x, -y, 1);
+        topLeft *= p.Depth / topLeft.z;
+        botLeft *= p.Depth / botLeft.z;
+        Vector3 topRight = new Vector3(-topLeft.x, topLeft.y, p.Depth);
+        Vector3 botRight = new Vector3(-botLeft.x, botLeft.y, p.Depth);
+
+        var rot = zone.transform.rotation;
+        topLeft = pp + rot * topLeft;
+        botLeft = pp + rot * botLeft;
+        topRight = pp + rot * topRight;
+        botRight = pp + rot * botRight;
+
+        Gizmos.color = error ? EditorSetting.camPointGizmosErrorColor : selected ? EditorSetting.camPointGizmosModelColorSelected : EditorSetting.camPointGizmosModelColor;
+        Gizmos.DrawWireMesh(EditorSetting.characterMesh, p.PlayerTargetPosition + Setting.playerFocusHeight * Vector3.down, zone.transform.rotation);
+
+        Gizmos.color = error ? EditorSetting.camPointGizmosErrorColor : selected ? EditorSetting.camPointGizmosBorderColorSelected : EditorSetting.camPointGizmosBorderColor;
+        Gizmos.DrawLine(topLeft, topRight);
+        Gizmos.DrawLine(botLeft, botRight);
+        Gizmos.DrawLine(topLeft, botLeft);
+        Gizmos.DrawLine(topRight, botRight);
+
+        if (!selected)
+        {
+            Gizmos.color = error ? EditorSetting.camPointGizmosErrorColor : EditorSetting.camPointGizmosSphereColor;
+            Gizmos.DrawSphere(pp, 0.08f);
+        }
+
+        Gizmos.color = error ? EditorSetting.camPointGizmosErrorColor : selected ? EditorSetting.camPointGizmosLineColorSelected : EditorSetting.camPointGizmosLineColor;
+        if (p.transform.localPosition.z > 0)
+        {
+            Gizmos.DrawLine(topLeft, botRight);
+            Gizmos.DrawLine(topRight, botLeft);
+        }
+        else
+        {
+            Gizmos.DrawLine(topLeft, pp);
+            Gizmos.DrawLine(botLeft, pp);
+            Gizmos.DrawLine(topRight, pp);
+            Gizmos.DrawLine(botRight, pp);
+        }
+    }
+    [DrawGizmo(GizmoType.NonSelected | GizmoType.Selected)]
+    static void CameraGizmos(CameraController cam, GizmoType gizmoType)
+    {
+        if (!cam.IsSideScrollingMode) return;
+
+        float weight = (cam.CameraPointLeft == null ? 0 : cam.CameraPointLeft.weight) + (cam.CameraPointRight == null ? 0 : cam.CameraPointRight.weight);
+        if (cam.CameraPointLeft == cam.CameraPointRight) weight *= 0.5f;
+        if (weight > 0)
+        {
+            var pPlayer = GameplaySystem.CurrentPlayer.transform.position + Setting.playerFocusHeight * Vector3.up;
+            if (cam.CameraPointLeft != null)
+            {
+                var w = cam.CameraPointLeft.weight / weight;
+                var p = cam.CameraPointLeft.PlayerTargetPosition;
+                Gizmos.color = EditorSetting.camOffsetLineColor;
+                Gizmos.DrawLine(pPlayer, p + (1 - w) * Setting.playerFocusHeight * Vector3.down);
+                Gizmos.color = EditorSetting.camPointGizmosModelColorSelected;
+                Gizmos.DrawWireMesh(EditorSetting.characterMesh, p + Setting.playerFocusHeight * Vector3.down, GameplaySystem.CurrentPlayer.transform.rotation, Vector3.one * w);
+            }
+            if (cam.CameraPointRight != null)
+            {
+                var w = cam.CameraPointRight.weight / weight;
+                var p = cam.CameraPointRight.PlayerTargetPosition;
+                Gizmos.color = EditorSetting.camOffsetLineColor;
+                Gizmos.DrawLine(pPlayer, p + (1 - w) * Setting.playerFocusHeight * Vector3.down);
+                Gizmos.color = EditorSetting.camPointGizmosModelColorSelected;
+                Gizmos.DrawWireMesh(EditorSetting.characterMesh, p + Setting.playerFocusHeight * Vector3.down, GameplaySystem.CurrentPlayer.transform.rotation, Vector3.one * w);
+            }
+        }
+        Gizmos.color = Color.white;
     }
 }

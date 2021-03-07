@@ -14,4 +14,53 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fullTest: 0
   saveData: 0
-  debug: 0
+  debug: 1
+  sideScrollingCameraPointPrefab: {fileID: 928533210815114227, guid: 2b958d88ce1caec4887903bf65e3b45f,
+    type: 3}
+  characterMesh: {fileID: -3702037217650275473, guid: 4793e0c8a281caf40a642ae3b119476e,
+    type: 3}
+  alwaysShowCameraPanelInSceneView: 0
+  alwaysShowCameraPreviewInSceneView: 1
+  cameraPitchAlwayEditable: 0
+  snapValue: 1
+  angleSnapValue: 5
+  entryPointCaptureSize: 0.2
+  entryPointArrowSize: 0.1
+  focusCircleSize: 0.1
+  camPosSize: 0.5
+  camZSize: 0.7
+  camFovArcRadius: 0.35
+  camFovCaptureRadius: 0.7
+  camFovCaptureSize: 0.1
+  camGUIPanelWidth: 156
+  camGUIPanelHeight: 276
+  camGUIPanelXOffset: -54.51
+  camGUIPanelYOffset: -80
+  camPreviewHeight: 100
+  gridGroundRadius: 10
+  gridSideRadius: 6
+  gridZAxisRadius: 4
+  gridFovRange: 46
+  gridFovRadius: 2
+  entryPointCaptureColor: {r: 0, g: 1, b: 1, a: 1}
+  entryPointArrowColor: {r: 0, g: 1, b: 1, a: 1}
+  cameraOverflowLineColor: {r: 1, g: 0.3, b: 0, a: 0.6}
+  gridGroundColor: {r: 0, g: 0, b: 0, a: 1}
+  gridSideColor: {r: 0, g: 0, b: 0, a: 1}
+  gridZAxisColor: {r: 0, g: 0, b: 0, a: 1}
+  gridFovColor: {r: 0, g: 0.8712089, b: 1, a: 1}
+  camTargetCaptureColor: {r: 0, g: 1, b: 1, a: 0.42745098}
+  camPosCaptureColor: {r: 0, g: 0.7372549, b: 0.74509805, a: 0.5019608}
+  camFocusCaptureColor: {r: 0, g: 1, b: 1, a: 1}
+  camOffsetLineColor: {r: 1, g: 1, b: 0, a: 1}
+  camZCaptureColor: {r: 0, g: 0, b: 0, a: 1}
+  camFovCaptureColor: {r: 1, g: 1, b: 1, a: 1}
+  camPointSelectionColor: {r: 1, g: 1, b: 1, a: 1}
+  camPointGizmosLineColor: {r: 0, g: 0, b: 0, a: 0.19215687}
+  camPointGizmosBorderColor: {r: 1, g: 1, b: 0, a: 0.20392157}
+  camPointGizmosSphereColor: {r: 0, g: 0, b: 0, a: 0.31764707}
+  camPointGizmosModelColor: {r: 0.2688679, g: 0.9634795, b: 1, a: 0.007843138}
+  camPointGizmosErrorColor: {r: 1, g: 0, b: 0, a: 1}
+  zonePointColor: {r: 0.18396229, g: 1, b: 1, a: 0.40392157}
+  zonePathColor: {r: 0, g: 1, b: 1, a: 0.33333334}
+  zoneWallColor: {r: 1, g: 0, b: 0, a: 0.3254902}

@@ -130,34 +130,4 @@ public class SideScrollingZone : MonoBehaviour
             yield return interval;
         }
     }
-
-
-    // Debug & GUI
-    void OnDrawGizmos()
-    {
-        Gizmos.color = new Color(0.3f, 0.3f, 0.3f, 0.3f);
-        var yBias = Vector3.up * 0.01f;
-
-        var p = transform.position + transform.right * distance;
-        Gizmos.DrawWireSphere(transform.position, 0.3f);
-        Gizmos.DrawWireSphere(p, 0.3f);
-
-        Gizmos.color = new Color(0, 0.6f, 0, 0.7f);
-        Gizmos.DrawLine(transform.position + yBias, p);
-
-        var offsetZ = Setting.sideScrollingPathWidth * 0.5f * transform.forward;
-        var wallSizeX = distance * transform.right;
-        var wallSizeZ = Setting.invisibleWallDepth * transform.forward;
-        Gizmos.color = new Color(0.6f, 0.1f, 0, 0.7f);
-        Gizmos.DrawRay(transform.position + yBias + offsetZ, wallSizeZ);
-        Gizmos.DrawRay(transform.position + yBias + offsetZ + wallSizeZ, wallSizeX);
-        Gizmos.DrawRay(transform.position + yBias + offsetZ, wallSizeX);
-        Gizmos.DrawRay(transform.position + yBias + offsetZ + wallSizeX, wallSizeZ);
-        Gizmos.DrawRay(transform.position + yBias - offsetZ, -wallSizeZ);
-        Gizmos.DrawRay(transform.position + yBias - offsetZ - wallSizeZ, wallSizeX);
-        Gizmos.DrawRay(transform.position + yBias - offsetZ, wallSizeX);
-        Gizmos.DrawRay(transform.position + yBias - offsetZ + wallSizeX, -wallSizeZ);
-
-        Gizmos.color = Color.white;
-    }
 }
