@@ -18,7 +18,7 @@ public class GAttackable : GSavable
     {
         onAttacked?.Invoke(damage);
         onAttackedDir?.Invoke(direction);
-        SmartCamera.ReactBack();
+        GameplaySystem.CurrentCamera.ReactBack();
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)

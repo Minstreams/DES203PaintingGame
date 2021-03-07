@@ -17,6 +17,7 @@ namespace GameSystem.Setting
         [LabelRange] public float camInterpolatingRateMouseRotation;
         [Label(true)] public Vector3 camDefaultRelativePostiion;
         [Label(true)] public float camDefaultFov;
+        [Label] public float camReactDefaultPower;
 
         [MinsHeader("Editor-only")]
         [Label] public GameObject sideScrollingCameraPointPrefab;

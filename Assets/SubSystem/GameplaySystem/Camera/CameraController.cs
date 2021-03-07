@@ -79,7 +79,6 @@ public class CameraController : MonoBehaviour
         }
         transform.position = PlayerFocusPoint + transform.rotation * camRelativePosition;
     }
-
     void Update()
     {
         if (IsSideScrollingMode) return;
@@ -99,6 +98,12 @@ public class CameraController : MonoBehaviour
         transform.position = PlayerFocusPoint + transform.rotation * camRelativePosition;
     }
 
+    public void ReactBack() => ReactBack(Setting.camReactDefaultPower);
+    public void ReactBack(float power)
+    {
+        camRelativePosition.z -= power;
+    }
+
     // Debug
     void OnDrawGizmos()
     {
@@ -111,7 +116,7 @@ public class CameraController : MonoBehaviour
             {
                 var pOffset = 0.5f * Setting.playerFocusHeight * Vector3.down;
                 var pPlayer = PlayerFocusPoint;
-                Gizmos.DrawSphere(pPlayer + Vector3.down * 0.1f, 0.2f);
+                Gizmos.DrawWireSphere(pPlayer + Vector3.down * 0.1f, 0.2f);
                 if (CameraPointLeft != null)
                 {
                     var w = CameraPointLeft.weight / weight;
