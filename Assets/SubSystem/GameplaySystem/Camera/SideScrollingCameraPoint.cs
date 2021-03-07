@@ -103,7 +103,9 @@ public class SideScrollingCameraPoint : MonoBehaviour
         if (transform.localPosition.z > 0) Gizmos.color = Color.red;
         else Gizmos.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
 
-        Gizmos.DrawWireMesh(Setting.characterMesh, PlayerTargetPosition + Setting.playerFocusHeight * Vector3.down, Zone.transform.rotation);
+#if UNITY_EDITOR
+        Gizmos.DrawWireMesh(TheMatrix.EditorSetting.characterMesh, PlayerTargetPosition + Setting.playerFocusHeight * Vector3.down, Zone.transform.rotation);
+#endif
 
         Gizmos.DrawLine(topLeft, topRight);
         Gizmos.DrawLine(botLeft, botRight);

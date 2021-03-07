@@ -614,6 +614,11 @@ namespace GameSystem.UI
     {
         GUILayout.Label("", "RL DragHandle", GUILayout.ExpandWidth(true));
     }
+    void SeparatorSmall()
+    {
+        GUILayout.Label(GUIContent.none, "ProfilerDetailViewBackground");
+        GUILayout.Space(-14);
+    }
     void SectionHeader(string title)
     {
         Separator();
@@ -630,11 +635,8 @@ namespace GameSystem.UI
         GUILayout.EndHorizontal();
         return result;
     }
-    void Label(string text)
-    {
-        GUILayout.Label(text, LabelStyle);
-    }
-
+    void Label(string text) => GUILayout.Label(text, LabelStyle);
+    bool Button(string text) => GUILayout.Button(text, BtnStyle);
 
 
     void OnEnable()
@@ -645,10 +647,14 @@ namespace GameSystem.UI
 
     void OnGUI()
     {
+        GUILayout.Space(8);
+        GUILayout.Label("TheMatrix Tool of Minstreams", "WarningOverlay");
+        GUILayout.Space(8);
         GUILayout.BeginVertical("GameViewBackground", GUILayout.ExpandHeight(true));
-        SectionHeader("数据导航");
-        if (GUILayout.Button("System Setting", BtnStyle)) NavToSystemConfig();
-        if (GUILayout.Button("System Setting", BtnStyle)) Selection.activeObject = TheMatrix.EditorSetting;
+        SectionHeader("数据导航 Data Navigation");
+        if (Button("System Setting")) NavToSystemConfig();
+        if (Button("Editor Setting")) Selection.activeObject = TheMatrix.EditorSetting;
+        SeparatorSmall();
         if (subSystemSettings != null)
         {
             for (int i = 0; i < subSystemSettings.Length; ++i)
@@ -663,13 +669,14 @@ namespace GameSystem.UI
                 }
             }
         }
-        if (GUILayout.Button("刷新", BtnStyle)) ScanSubSystem();
+        SeparatorSmall();
+        if (Button("刷新")) ScanSubSystem();
 
-        SectionHeader("自动测试");
-        if (GUILayout.Button("测试全部场景", BtnStyle)) DebugAll();
-        if (GUILayout.Button("测试当前场景", BtnStyle)) DebugCurrent();
+        SectionHeader("自动测试 Auto Test");
+        if (Button("测试全部场景")) DebugAll();
+        if (Button("测试当前场景")) DebugCurrent();
 
-        SectionHeader("自动化代码生成");
+        SectionHeader("自动化代码生成 Code Generation");
         GUILayout.BeginHorizontal(TabBGStyle);
         {
             if (GUILayout.Button("SubSystem", editorMode == EditorMode.SubSystem ? TabLabelStyle : TabStyle)) editorMode = EditorMode.SubSystem;
@@ -687,8 +694,8 @@ namespace GameSystem.UI
                 subSystemComment = TextArea("Comment", subSystemComment, 64);
                 Label("自动生成一个子系统 Sub System");
                 Label("由于实在无法把生成代码与生成配置文件功能做到一起，生成新系统时，请依次点这两个按钮。");
-                if (GUILayout.Button("Add", BtnStyle)) AddSubSystem(subSystemName, subSystemComment);
-                if (GUILayout.Button("Create Setting Asset", BtnStyle)) { CreateSettingAsset(); ScanSubSystem(); }
+                if (Button("Add")) AddSubSystem(subSystemName, subSystemComment);
+                if (Button("Create Setting Asset")) { CreateSettingAsset(); ScanSubSystem(); }
                 break;
             case EditorMode.Linker:
                 EditorGUI.BeginChangeCheck();
@@ -697,8 +704,8 @@ namespace GameSystem.UI
                 linkerTitle = TextArea("Linker Title", linkerTitle);
                 linkerComment = TextArea("Comment", linkerComment, 64);
                 Label("自动生成一个连接节点 Linker，用于连接和处理数据。");
-                if (GUILayout.Button("Add", BtnStyle)) AddLinker(linkerName, linkerTitle, linkerComment);
-                if (GUILayout.Button("Add To Current SubSystem", BtnStyle))
+                if (Button("Add")) AddLinker(linkerName, linkerTitle, linkerComment);
+                if (Button("Add To Current SubSystem"))
                 {
                     if (string.IsNullOrWhiteSpace(subSystemName)) EditorUtility.DisplayDialog(DialogTitle, "请先在‘数据导航’一栏中选择子系统", "好的");
                     else AddLinker(linkerName, linkerTitle, linkerComment, subSystemName);
@@ -711,8 +718,8 @@ namespace GameSystem.UI
                 operatorTitle = TextArea("Operator Title", operatorTitle);
                 operatorComment = TextArea("Comment", operatorComment, 64);
                 Label("自动生成一个操作节点 Operator，用于执行具体动作。");
-                if (GUILayout.Button("Add", BtnStyle)) AddOperator(operatorName, operatorTitle, operatorComment);
-                if (GUILayout.Button("Add To Current SubSystem", BtnStyle))
+                if (Button("Add")) AddOperator(operatorName, operatorTitle, operatorComment);
+                if (Button("Add To Current SubSystem"))
                 {
                     if (string.IsNullOrWhiteSpace(subSystemName)) EditorUtility.DisplayDialog(DialogTitle, "请先在‘数据导航’一栏中选择子系统", "好的");
                     else AddOperator(operatorName, operatorTitle, operatorComment, subSystemName);
@@ -725,8 +732,8 @@ namespace GameSystem.UI
                 savableTitle = TextArea("Savable Title", savableTitle);
                 savableComment = TextArea("Comment", savableComment, 64);
                 Label("自动生成一个可存储对象SavableObject，用于持久化存储数据。");
-                if (GUILayout.Button("Add", BtnStyle)) AddSavable(savableName, savableTitle, savableComment);
-                if (GUILayout.Button("Add To Current SubSystem", BtnStyle))
+                if (Button("Add")) AddSavable(savableName, savableTitle, savableComment);
+                if (Button("Add To Current SubSystem"))
                 {
                     if (string.IsNullOrWhiteSpace(subSystemName)) EditorUtility.DisplayDialog(DialogTitle, "请先在‘数据导航’一栏中选择子系统", "好的");
                     else AddSavable(savableName, savableTitle, savableComment, subSystemName);
@@ -739,8 +746,8 @@ namespace GameSystem.UI
                 uiTitle = TextArea("UI Title", uiTitle);
                 uiComment = TextArea("Comment", uiComment, 64);
                 Label("自动生成一个UI组件。");
-                if (GUILayout.Button("Add", BtnStyle)) AddUI(uiName, uiTitle, uiComment);
-                if (GUILayout.Button("Add To Current SubSystem", BtnStyle))
+                if (Button("Add")) AddUI(uiName, uiTitle, uiComment);
+                if (Button("Add To Current SubSystem"))
                 {
                     if (string.IsNullOrWhiteSpace(subSystemName)) EditorUtility.DisplayDialog(DialogTitle, "请先在‘数据导航’一栏中选择子系统", "好的");
                     else AddUI(uiName, uiTitle, uiComment, subSystemName);

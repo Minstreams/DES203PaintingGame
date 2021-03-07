@@ -19,11 +19,6 @@ namespace GameSystem.Setting
         [Label(true)] public float camDefaultFov;
         [Label] public float camReactDefaultPower;
 
-        [MinsHeader("Editor-only")]
-        [Label] public GameObject sideScrollingCameraPointPrefab;
-        [Label] public Mesh characterMesh;
-
-
         // Temp
         [MinsHeader("Data", SummaryType.Header)]
         [Label] public float groundDrag = 2f;
