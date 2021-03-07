@@ -9,7 +9,7 @@ namespace GameSystem
         public static void Log(string msg)
         {
 #if UNITY_EDITOR
-            if (!Setting.debug) return;
+            if (!EditorSetting.debug) return;
 #endif
             msg = "【TheMatrix Debug】" + msg;
             Debug.Log(msg);

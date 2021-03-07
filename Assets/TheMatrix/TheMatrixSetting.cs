@@ -12,11 +12,5 @@ namespace GameSystem.Setting
         [MinsHeader("所有要自动保存的数据", SummaryType.Header)]
         [Label("Savable", true)] public SavableObject[] dataAutoSave;
         [Label] public int targetFrameRate;
-
-#if UNITY_EDITOR
-        [HideInInspector] public bool fullTest;
-        [HideInInspector] public bool saveData;
-        [HideInInspector] public bool debug;
-#endif
     }
 }

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using GameSystem;
+using GameSystem.Setting;
 
 [CustomEditor(typeof(TheMatrix))]
 public class TheMatrixEditor : Editor

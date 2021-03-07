@@ -39,7 +39,7 @@ public sealed class GUIStyleExampleWindow : EditorWindow
 
     Vector2 mScrollPos;
 
-    [MenuItem("MatrixTool/GUIStyle 样例窗口")]
+    [MenuItem("MatrixTool/GUIStyle 样例窗口", false, 20)]
     static void Example()
     {
         var w = GetWindow<GUIStyleExampleWindow>();
@@ -49,7 +49,7 @@ public sealed class GUIStyleExampleWindow : EditorWindow
         w.titleContent = new GUIContent("GUIStyle 样例窗口");
         w.Init(false);
     }
-    [MenuItem("MatrixTool/GUIStyle 样例窗口 - InGameSkin")]
+    [MenuItem("MatrixTool/GUIStyle 样例窗口 - InGameSkin", false, 21)]
     static void Example_InGameSkin()
     {
         var w = GetWindow<GUIStyleExampleWindow>();

@@ -24,7 +24,7 @@ namespace GameSystem
         {
             // 在System场景加载后调用
 #if UNITY_EDITOR
-            if (!TheMatrix.Setting.fullTest) QuickTest();
+            if (!TheMatrix.EditorSetting.fullTest) QuickTest();
             else
             {
 #endif

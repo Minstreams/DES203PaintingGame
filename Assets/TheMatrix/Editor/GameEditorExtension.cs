@@ -14,7 +14,7 @@ public class GameEditorExtension : EditorWindow
 
 
     // 这里是一些编辑器方法
-    [MenuItem("MatrixTool/Open Tool Window 打开工具箱 #F1")]
+    [MenuItem("MatrixTool/Open Tool Window 打开工具箱 #F1", false, 0)]
     public static void OpenToolWindow()
     {
         var comfirmWindow = EditorWindow.GetWindow<GameEditorExtension>(DialogTitle);
@@ -22,15 +22,15 @@ public class GameEditorExtension : EditorWindow
     /// <summary>
     /// 导航到系统配置文件
     /// </summary>
-    [MenuItem("MatrixTool/System Config 系统配置 _F2")]
+    [MenuItem("MatrixTool/System Setting 系统配置 _F2", false, 1)]
     public static void NavToSystemConfig()
     {
-        Selection.activeObject = AssetDatabase.LoadAssetAtPath<Object>("Assets/TheMatrix/Resources/TheMatrixSetting.asset");
+        Selection.activeObject = TheMatrix.Setting;
     }
     /// <summary>
     /// 测试当前场景
     /// </summary>
-    [MenuItem("MatrixTool/Debug Current Scene 测试当前场景 #F5")]
+    [MenuItem("MatrixTool/Debug Current Scene 测试当前场景 #F5", false, 2)]
     public static void DebugCurrent()
     {
         if (EditorApplication.isPlaying)
@@ -41,16 +41,15 @@ public class GameEditorExtension : EditorWindow
         EditorSceneManager.SaveOpenScenes();
         var sysScene = EditorSceneManager.OpenScene(SystemScene, OpenSceneMode.Additive);
 
-        var setting = Resources.Load<TheMatrixSetting>("TheMatrixSetting");
-        setting.fullTest = false;
-        EditorUtility.SetDirty(setting);
+        TheMatrix.EditorSetting.fullTest = false;
+        EditorUtility.SetDirty(TheMatrix.EditorSetting);
 
         EditorApplication.isPlaying = true;
     }
     /// <summary>
     /// 测试全部场景
     /// </summary>
-    [MenuItem("MatrixTool/Debug All Scenea 测试全部场景 _F5")]
+    [MenuItem("MatrixTool/Debug All Scenea 测试全部场景 _F5", false, 3)]
     public static void DebugAll()
     {
         if (EditorApplication.isPlaying)
@@ -61,9 +60,8 @@ public class GameEditorExtension : EditorWindow
         EditorSceneManager.SaveOpenScenes();
         EditorSceneManager.OpenScene(SystemScene, OpenSceneMode.Single);
 
-        var setting = Resources.Load<TheMatrixSetting>("TheMatrixSetting");
-        setting.fullTest = true;
-        EditorUtility.SetDirty(setting);
+        TheMatrix.EditorSetting.fullTest = true;
+        EditorUtility.SetDirty(TheMatrix.EditorSetting);
 
         var scenes = EditorBuildSettings.scenes;
         for (int i = 1; i < scenes.Length; ++i)
@@ -649,7 +647,8 @@ namespace GameSystem.UI
     {
         GUILayout.BeginVertical("GameViewBackground", GUILayout.ExpandHeight(true));
         SectionHeader("数据导航");
-        if (GUILayout.Button("系统配置", BtnStyle)) NavToSystemConfig();
+        if (GUILayout.Button("System Setting", BtnStyle)) NavToSystemConfig();
+        if (GUILayout.Button("System Setting", BtnStyle)) Selection.activeObject = TheMatrix.EditorSetting;
         if (subSystemSettings != null)
         {
             for (int i = 0; i < subSystemSettings.Length; ++i)
