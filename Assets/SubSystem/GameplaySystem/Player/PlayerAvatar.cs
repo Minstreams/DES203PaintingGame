@@ -5,6 +5,14 @@ using GameSystem;
 
 public class PlayerAvatar : GCharacter
 {
+    [Label] public PaintBrush brush;
+
+    public override void Attack()
+    {
+        base.Attack();
+    }
+
+
     #region 【Debug】
     [Separator]
     [MinsHeader("Player Avatar", SummaryType.Title, -2)]

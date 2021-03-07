@@ -23,7 +23,7 @@ MonoBehaviour:
   alwaysShowCameraPreviewInSceneView: 1
   cameraPitchAlwayEditable: 0
   snapValue: 1
-  angleSnapValue: 5
+  angleSnapValue: 10
   entryPointCaptureSize: 0.2
   entryPointArrowSize: 0.1
   focusCircleSize: 0.1
@@ -34,32 +34,36 @@ MonoBehaviour:
   camFovCaptureSize: 0.1
   camGUIPanelWidth: 156
   camGUIPanelHeight: 276
-  camGUIPanelXOffset: -54.51
-  camGUIPanelYOffset: -80
+  camGUIPanelXOffset: -2.61
+  camGUIPanelYOffset: -61.6
   camPreviewHeight: 100
   gridGroundRadius: 10
   gridSideRadius: 6
   gridZAxisRadius: 4
-  gridFovRange: 46
-  gridFovRadius: 2
+  gridFovRange: 43
+  gridFovRadius: 0.45
   entryPointCaptureColor: {r: 0, g: 1, b: 1, a: 1}
   entryPointArrowColor: {r: 0, g: 1, b: 1, a: 1}
   cameraOverflowLineColor: {r: 1, g: 0.3, b: 0, a: 0.6}
   gridGroundColor: {r: 0, g: 0, b: 0, a: 1}
   gridSideColor: {r: 0, g: 0, b: 0, a: 1}
-  gridZAxisColor: {r: 0, g: 0, b: 0, a: 1}
-  gridFovColor: {r: 0, g: 0.8712089, b: 1, a: 1}
+  gridZAxisColor: {r: 1, g: 1, b: 1, a: 1}
+  gridFovColor: {r: 0, g: 0, b: 0, a: 1}
   camTargetCaptureColor: {r: 0, g: 1, b: 1, a: 0.42745098}
-  camPosCaptureColor: {r: 0, g: 0.7372549, b: 0.74509805, a: 0.5019608}
+  camPosCaptureColor: {r: 0, g: 0, b: 0, a: 0.9019608}
   camFocusCaptureColor: {r: 0, g: 1, b: 1, a: 1}
-  camOffsetLineColor: {r: 1, g: 1, b: 0, a: 1}
+  camOffsetLineColor: {r: 1, g: 0.5803922, b: 0, a: 1}
   camZCaptureColor: {r: 0, g: 0, b: 0, a: 1}
-  camFovCaptureColor: {r: 1, g: 1, b: 1, a: 1}
-  camPointSelectionColor: {r: 1, g: 1, b: 1, a: 1}
+  camFovCaptureColor: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 0.27058825}
+  camPitchCaptureColor: {r: 0, g: 0, b: 0, a: 0.84313726}
+  camPointSelectionColor: {r: 0, g: 1, b: 1, a: 0.5803922}
   camPointGizmosLineColor: {r: 0, g: 0, b: 0, a: 0.19215687}
-  camPointGizmosBorderColor: {r: 1, g: 1, b: 0, a: 0.20392157}
+  camPointGizmosLineColorSelected: {r: 0.4528302, g: 0.4528302, b: 0.4528302, a: 0.3254902}
+  camPointGizmosBorderColor: {r: 0, g: 0, b: 0, a: 0.4745098}
+  camPointGizmosBorderColorSelected: {r: 1, g: 1, b: 1, a: 0.7176471}
   camPointGizmosSphereColor: {r: 0, g: 0, b: 0, a: 0.31764707}
   camPointGizmosModelColor: {r: 0.2688679, g: 0.9634795, b: 1, a: 0.007843138}
+  camPointGizmosModelColorSelected: {r: 1, g: 1, b: 1, a: 0.015686275}
   camPointGizmosErrorColor: {r: 1, g: 0, b: 0, a: 1}
   zonePointColor: {r: 0.18396229, g: 1, b: 1, a: 0.40392157}
   zonePathColor: {r: 0, g: 1, b: 1, a: 0.33333334}

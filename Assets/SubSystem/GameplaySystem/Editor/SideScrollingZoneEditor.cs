@@ -152,7 +152,6 @@ public class SideScrollingZoneEditor : Editor
     {
         var p = CurrentEditingPoint;
         GUIStyle labelStyle = "FrameBox";
-        //p.fov = EditorGUILayout.FloatField("fov\t:", p.fov, labelStyle);
         GUILayout.Label($"fov\t: {(int)p.fov}", labelStyle);
         GUILayout.Label($"pos\t: {(Vector2)p.transform.localPosition}", labelStyle);
         GUILayout.Label($"depth\t: {(p.Depth)}", labelStyle);

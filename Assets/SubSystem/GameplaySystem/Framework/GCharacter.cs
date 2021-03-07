@@ -44,6 +44,7 @@ public class GCharacter : GDestroyable
     [Label] public SimpleEvent onJump;      // invoked when input jump
     [Label] public SimpleEvent onLeavingGround; // invoked when actually leaving off ground
     [Label] public FloatEvent onLandingGround;  // passing the relevant speed landing
+    [Label] public SimpleEvent onAttack;
     #endregion
 
     #region 【Input】
@@ -74,6 +75,12 @@ public class GCharacter : GDestroyable
     public void Interact()
     {
         SetInputTrigger("Interact");
+    }
+
+    public virtual void Attack()
+    {
+        onAttack?.Invoke();
+        anim.SetTrigger("Attack");
     }
 
     // protected

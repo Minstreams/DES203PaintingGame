@@ -31,6 +31,6 @@ public class PlayerAvatarController : MonoBehaviour
 
         if (InputSystem.GetKeyDown(InputKey.Jump)) Avatar.Jump(jumpForce);
         if (InputSystem.GetKeyDown(InputKey.Interact)) SetInputTrigger("Interact");
-        //if (InputSystem.GetKeyDown(InputKey.Attack)) avater.TempAttack();
+        if (InputSystem.GetKeyDown(InputKey.Attack)) Avatar.Attack();
     }
 }
