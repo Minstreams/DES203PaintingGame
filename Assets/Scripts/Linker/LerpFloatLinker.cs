@@ -14,7 +14,7 @@ namespace GameSystem.Linker
 
         // Output
         [MinsHeader("Output", SummaryType.Header, 3)]
-        public FloatEvent output;
+        [Label] public FloatEvent output;
 
         // Input
         public void Invoke(float input)

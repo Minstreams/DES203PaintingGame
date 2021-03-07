@@ -16,7 +16,7 @@ namespace GameSystem.Linker
 
         // Output
         [MinsHeader("Output", SummaryType.Header, 3)]
-        public Vec3Event output;
+        [Label] public Vec3Event output;
 
         // Input
         public void Invoke(float input)

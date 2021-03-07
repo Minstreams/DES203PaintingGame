@@ -18,7 +18,7 @@ namespace GameSystem.Operator
         // Output
         [MinsHeader("Output", SummaryType.Header, 3)]
         [ConditionalShow("sendMovementEvent", true)]
-        public FloatEvent movementOutput;
+        [Label] public FloatEvent movementOutput;
 
 
         [ContextMenu("MoveToInTime")]
