@@ -1169,6 +1169,56 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onSpecialAnimation:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 764300779541679545}
+        m_MethodName: set_SpecialAnimation
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 764300778528432028}
+        m_MethodName: set_applyRootMotion
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  onNormalAnimation:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 764300779541679545}
+        m_MethodName: set_SpecialAnimation
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 764300778528432028}
+        m_MethodName: set_applyRootMotion
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &764300778545269050
 GameObject:
   m_ObjectHideFlags: 0
@@ -2963,12 +3013,12 @@ MonoBehaviour:
   onTeabagged:
     m_PersistentCalls:
       m_Calls: []
+  model: {fileID: 764300778528432029}
   movingOffGroundFactor: 0.38
   turningSpeedThreshold: 0.1
   turningRatePerSecond: 0.993
   groundOverlapSphereOffset: {x: 0, y: 0, z: 0}
   groundOverlapSphereRadius: 0.05
-  model: {fileID: 764300778528432029}
   onMoving:
     m_PersistentCalls:
       m_Calls:

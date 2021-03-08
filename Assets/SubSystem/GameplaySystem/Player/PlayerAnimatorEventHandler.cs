@@ -8,10 +8,13 @@ public class PlayerAnimatorEventHandler : MonoBehaviour
     [Label] public IntEvent onRecordAttack;
     [Label] public IntEvent onEndAttack;
     [Label] public IntEvent onAttackSound;
+    [Label] public SimpleEvent onSpecialAnimation;
+    [Label] public SimpleEvent onNormalAnimation;
 
     public void DoStep() => onStep?.Invoke();
     public void DoRecordAttack(int val) => onRecordAttack?.Invoke(val);
     public void DoEndAttack(int val) => onEndAttack?.Invoke(val);
     public void DoAttackSound(int val) => onAttackSound?.Invoke(val);
-
+    public void DoSpecialAnimation() => onSpecialAnimation?.Invoke();
+    public void DoNormalAnimation() => onNormalAnimation?.Invoke();
 }

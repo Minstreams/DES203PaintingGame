@@ -14,6 +14,9 @@ public class GCharacter : GDestroyable
     [MinsHeader("G Character", SummaryType.Title, -2)]
     [MinsHeader("This is a character.", SummaryType.CommentCenter, -1)]
 
+    [MinsHeader("References")]
+    [Label] public Transform model;
+
     [MinsHeader("Move")]
     [Tooltip("The factor multiplied to the force applied off ground")]
     [LabelRange] public float movingOffGroundFactor;
@@ -92,10 +95,14 @@ public class GCharacter : GDestroyable
     protected bool IInteract => GetInputTrigger("Interact");
     #endregion
 
+
     #region 【Physics】
-    bool onGround;
+    bool onGround = false;
     protected bool OnGround => onGround;
     protected bool OffGround => !onGround;
+    bool specialAnimation = false;
+    public bool SpecialAnimation { get => specialAnimation; set => specialAnimation = value; }
+
 
     void OnCollisionEnter(Collision collision)
     {
@@ -125,18 +132,29 @@ public class GCharacter : GDestroyable
     }
     void FixedUpdate()
     {
-        rig.AddForce(IMovingForce * (OnGround ? 1 : movingOffGroundFactor), ForceMode.Force);
-        var v = new Vector3(rig.velocity.x, 0, rig.velocity.z);
-        //anim.SetFloat("Speed", Vector3.Dot(v, transform.forward));
-        if (v.sqrMagnitude > turningSpeedThreshold)
+        if (!SpecialAnimation)
         {
-            var angle = Vector3.SignedAngle(transform.forward, v, Vector3.up);
-            //anim.SetFloat("Turn", angle);
-            transform.Rotate(Vector3.up, angle * (1 - Mathf.Pow(1 - turningRatePerSecond, Time.deltaTime)), Space.World);
+            rig.AddForce(IMovingForce * (OnGround ? 1 : movingOffGroundFactor), ForceMode.Force);
+            var v = new Vector3(rig.velocity.x, 0, rig.velocity.z);
+            anim.SetFloat("Speed", Vector3.Dot(v, transform.forward));
+            if (v.sqrMagnitude > turningSpeedThreshold)
+            {
+                var angle = Vector3.SignedAngle(transform.forward, v, Vector3.up);
+                anim.SetFloat("Turn", angle);
+                transform.Rotate(Vector3.up, angle * (1 - Mathf.Pow(1 - turningRatePerSecond, Time.deltaTime)), Space.World);
+            }
         }
-
-
-
+        if (SpecialAnimation)
+        {
+            var l = model.localPosition;
+            var v = rig.velocity.magnitude;
+            l.z = l.z < v ? 0 : l.z - v;
+            model.localPosition = l;
+            transform.position = model.position;
+            transform.rotation = model.rotation;
+            model.localPosition = Vector3.zero;
+            model.localRotation = Quaternion.identity;
+        }
     }
     #endregion
 

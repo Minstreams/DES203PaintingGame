@@ -11,7 +11,6 @@ public class PlayerAvatar : GCharacter
     [MinsHeader("Parameters")]
     [Label] public PaintBrush brush;
     [Label] public float attackerPointOffsetY;
-    [Label] public Transform model;
 
     [System.Serializable]
     public struct AttackInfo
@@ -55,11 +54,6 @@ public class PlayerAvatar : GCharacter
     void Update()
     {
         onDebug?.Invoke($"onGround:{OnGround}");
-        // Test
-        //transform.position = model.position;
-        //transform.rotation = model.rotation;
-        //model.localPosition = Vector3.zero;
-        //model.localRotation = Quaternion.identity;
     }
 
     protected override void OnDrawGizmos()
