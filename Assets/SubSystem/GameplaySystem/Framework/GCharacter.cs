@@ -48,6 +48,7 @@ public class GCharacter : GDestroyable
     [Label] public SimpleEvent onLeavingGround; // invoked when actually leaving off ground
     [Label] public FloatEvent onLandingGround;  // passing the relevant speed landing
     [Label] public SimpleEvent onAttack;
+    [Label] public SimpleEvent onBreak;
     #endregion
 
     #region 【Input】
@@ -61,6 +62,19 @@ public class GCharacter : GDestroyable
     public void Move(Vector3 force)
     {
         IMovingForce = force;
+    }
+    public void Dash(Vector3 force)
+    {
+        rig.AddForce(force, ForceMode.Impulse);
+        anim.SetTrigger("Dash");
+        onBreak?.Invoke();
+    }
+    public void Dodge(Vector3 force)
+    {
+        rig.AddForce(force, ForceMode.Impulse);
+        anim.SetTrigger("Dodge");
+        SpecialAnimation = true;
+        onBreak?.Invoke();
     }
     /// <summary>
     /// Perform a jump action
@@ -101,7 +115,18 @@ public class GCharacter : GDestroyable
     protected bool OnGround => onGround;
     protected bool OffGround => !onGround;
     bool specialAnimation = false;
-    public bool SpecialAnimation { get => specialAnimation; set => specialAnimation = value; }
+    public bool SpecialAnimation
+    {
+        get => specialAnimation;
+        set
+        {
+            if (value)
+            {
+                anim.SetFloat("Speed", 0);
+            }
+            specialAnimation = value;
+        }
+    }
 
 
     void OnCollisionEnter(Collision collision)
@@ -132,29 +157,32 @@ public class GCharacter : GDestroyable
     }
     void FixedUpdate()
     {
-        if (!SpecialAnimation)
+        if (SpecialAnimation) return;
+        rig.AddForce(IMovingForce * (OnGround ? 1 : movingOffGroundFactor), ForceMode.Force);
+        var v = new Vector3(rig.velocity.x, 0, rig.velocity.z);
+        anim.SetFloat("Speed", Vector3.Dot(v, transform.forward));
+        if (v.sqrMagnitude > turningSpeedThreshold)
         {
-            rig.AddForce(IMovingForce * (OnGround ? 1 : movingOffGroundFactor), ForceMode.Force);
-            var v = new Vector3(rig.velocity.x, 0, rig.velocity.z);
-            anim.SetFloat("Speed", Vector3.Dot(v, transform.forward));
-            if (v.sqrMagnitude > turningSpeedThreshold)
-            {
-                var angle = Vector3.SignedAngle(transform.forward, v, Vector3.up);
-                anim.SetFloat("Turn", angle);
-                transform.Rotate(Vector3.up, angle * (1 - Mathf.Pow(1 - turningRatePerSecond, Time.deltaTime)), Space.World);
-            }
+            var angle = Vector3.SignedAngle(transform.forward, v, Vector3.up);
+            anim.SetFloat("Turn", angle);
+            transform.Rotate(Vector3.up, angle * (1 - Mathf.Pow(1 - turningRatePerSecond, Time.deltaTime)), Space.World);
         }
-        if (SpecialAnimation)
+        else
         {
-            var l = model.localPosition;
-            var v = rig.velocity.magnitude;
-            l.z = l.z < v ? 0 : l.z - v;
-            model.localPosition = l;
-            transform.position = model.position;
-            transform.rotation = model.rotation;
-            model.localPosition = Vector3.zero;
-            model.localRotation = Quaternion.identity;
+            anim.SetFloat("Turn", 0);
         }
+    }
+    void LateUpdate()
+    {
+        if (!SpecialAnimation) return;
+        var l = model.localPosition;
+        var v = rig.velocity.magnitude;
+        l.z = l.z < v ? 0 : l.z - v;
+        model.localPosition = l;
+        transform.position = model.position;
+        transform.rotation = model.rotation;
+        model.localPosition = Vector3.zero;
+        model.localRotation = Quaternion.identity;
     }
     #endregion
 

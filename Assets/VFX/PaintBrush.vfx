@@ -19,9 +19,9 @@ MonoBehaviour:
   uiBounds:
     serializedVersion: 2
     x: -856
-    y: -133
+    y: -253
     width: 2223
-    height: 2736
+    height: 2856
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -253,24 +253,23 @@ VisualEffectResource:
       \"Packages/com.unity.visualeffectgraph/Shaders/Common/VFXCommonCompute.hlsl\"\n#include
       \"Packages/com.unity.visualeffectgraph/Shaders/VFXCommon.hlsl\"\n\n\r\n\r\nvoid
       Force_0(inout float3 velocity, float mass, float3 Force, float deltaTime) /*Mode:Absolute
-      */\n{\n    velocity += (Force / mass) * deltaTime;\n}\nvoid Turbulence_18D(float3
+      */\n{\n    velocity += (Force / mass) * deltaTime;\n}\nvoid Turbulence_0(float3
       position, inout float3 velocity, float mass, float4x4 InvFieldTransform, float4x4
-      FieldTransform, float Intensity, float Drag, float frequency, int octaves,
-      float roughness, float lacunarity, float deltaTime) /*Mode:Relative NoiseType:Value
-      */\n{\n    float3 vectorFieldCoord = mul(InvFieldTransform, float4(position,1.0f)).xyz;\n   
+      FieldTransform, float Intensity, float frequency, int octaves, float roughness,
+      float lacunarity, float deltaTime) /*Mode:Absolute NoiseType:Value */\n{\n   
+      float3 vectorFieldCoord = mul(InvFieldTransform, float4(position,1.0f)).xyz;\n   
       \n    float3 value = GenerateValueCurlNoise(vectorFieldCoord + 0.5f, frequency,
       octaves, roughness, lacunarity);\n    value = mul(FieldTransform,float4(value,0.0f)).xyz
-      * Intensity;\n    \n    velocity += (value - velocity) * min(1.0f,Drag * deltaTime
-      / mass);\n}\nvoid SetAttribute_D5151642(inout float scaleX, inout float scaleY,
-      inout float scaleZ, float3 Scale) /*attribute:scale Composition:Overwrite Source:Slot
-      Random:Off channels:XYZ */\n{\n    scaleX = Scale.x;\n    scaleY = Scale.y;\n   
-      scaleZ = Scale.z;\n}\nvoid AttributeFromCurve_39BD5D15(inout float3 color,
-      inout float alpha, float Color, float SampleTime) /*attribute:color Composition:Overwrite
-      AlphaComposition:Overwrite SampleMode:Custom Mode:PerComponent ColorMode:ColorAndAlpha
-      channels:XYZ */\n{\n    float t = SampleTime;\n    float4 value = 0.0f;\n   
-      value = SampleGradient(Color, t);\n    color = value.rgb;\n    alpha = value.a;\n}\nvoid
-      EulerIntegration(inout float3 position, float3 velocity, float deltaTime)\n{\n   
-      position += velocity * deltaTime;\n}\n\n\r\n\r\n[numthreads(NB_THREADS_PER_GROUP,1,1)]\r\nvoid
+      * Intensity;\n    \n    velocity += (value / mass) * deltaTime;\n}\nvoid SetAttribute_D5151642(inout
+      float scaleX, inout float scaleY, inout float scaleZ, float3 Scale) /*attribute:scale
+      Composition:Overwrite Source:Slot Random:Off channels:XYZ */\n{\n    scaleX
+      = Scale.x;\n    scaleY = Scale.y;\n    scaleZ = Scale.z;\n}\nvoid AttributeFromCurve_39BD5D15(inout
+      float3 color, inout float alpha, float Color, float SampleTime) /*attribute:color
+      Composition:Overwrite AlphaComposition:Overwrite SampleMode:Custom Mode:PerComponent
+      ColorMode:ColorAndAlpha channels:XYZ */\n{\n    float t = SampleTime;\n   
+      float4 value = 0.0f;\n    value = SampleGradient(Color, t);\n    color = value.rgb;\n   
+      alpha = value.a;\n}\nvoid EulerIntegration(inout float3 position, float3 velocity,
+      float deltaTime)\n{\n    position += velocity * deltaTime;\n}\n\n\r\n\r\n[numthreads(NB_THREADS_PER_GROUP,1,1)]\r\nvoid
       CSMain(uint3 groupId          : SV_GroupID,\r\n            uint3 groupThreadId   
       : SV_GroupThreadID)\r\n{\r\n\tuint id = groupThreadId.x + groupId.x * NB_THREADS_PER_GROUP
       + groupId.y * dispatchWidth * NB_THREADS_PER_GROUP;\r\n\tuint index = id;\r\n\tif
@@ -304,10 +303,10 @@ VisualEffectResource:
       tmp_bv, deltaTime_a);\n\t\t\t}\n\t\t\t{\n\t\t\t    float tmp_bc = attributes.lifetime
       * (float)0.850000024;\n\t\t\t    float tmp_be = max(tmp_bc, (float)0);\n\t\t\t   
       float tmp_bg = min(tmp_be, (float)1);\n\t\t\t    float tmp_bi = tmp_bg * (float)-10;\n\t\t\t   
-      float tmp_bj = (float)10 + tmp_bi;\n\t\t\t    Turbulence_18D(attributes.position, 
+      float tmp_bj = (float)10 + tmp_bi;\n\t\t\t    Turbulence_0(attributes.position, 
       /*inout */attributes.velocity, attributes.mass, float4x4(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1),
-      float4x4(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1), tmp_bj, (float)1, (float)1, (int)1,
-      (float)0.5, (float)2, deltaTime_a);\n\t\t\t}\n\t\t\t{\n\t\t\t    SetAttribute_D5151642(
+      float4x4(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1), tmp_bj, (float)1, (int)1, (float)0.5,
+      (float)2, deltaTime_a);\n\t\t\t}\n\t\t\t{\n\t\t\t    SetAttribute_D5151642(
       /*inout */attributes.scaleX,  /*inout */attributes.scaleY,  /*inout */attributes.scaleZ,
       float3(0.0500000007, 0.0500000007, 0.0500000007));\n\t\t\t}\n\t\t\t{\n\t\t\t   
       float tmp_z = (float)attributes.particleId;\n\t\t\t    float tmp_bb = tmp_z
@@ -361,9 +360,9 @@ VisualEffectResource:
       float tmp_bc = attributes.lifetime * (float)0.850000024;\n\t\t    float tmp_be
       = max(tmp_bc, (float)0);\n\t\t    float tmp_bg = min(tmp_be, (float)1);\n\t\t   
       float tmp_bi = tmp_bg * (float)-10;\n\t\t    float tmp_bj = (float)10 + tmp_bi;\n\t\t   
-      Turbulence_18D(attributes.position,  /*inout */attributes.velocity, attributes.mass,
+      Turbulence_0(attributes.position,  /*inout */attributes.velocity, attributes.mass,
       float4x4(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1), float4x4(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1),
-      tmp_bj, (float)1, (float)1, (int)1, (float)0.5, (float)2, deltaTime_a);\n\t\t}\n\t\t{\n\t\t   
+      tmp_bj, (float)1, (int)1, (float)0.5, (float)2, deltaTime_a);\n\t\t}\n\t\t{\n\t\t   
       SetAttribute_D5151642( /*inout */attributes.scaleX,  /*inout */attributes.scaleY, 
       /*inout */attributes.scaleZ, float3(0.0500000007, 0.0500000007, 0.0500000007));\n\t\t}\n\t\t{\n\t\t   
       float tmp_z = (float)attributes.particleId;\n\t\t    float tmp_bb = tmp_z /
@@ -3195,7 +3194,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Parent: {fileID: 114350483966674976}
   m_Children: []
-  m_UIPosition: {x: -58, y: -36}
+  m_UIPosition: {x: -141, y: -253}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots: []
@@ -4250,14 +4249,13 @@ MonoBehaviour:
   m_InputSlots:
   - {fileID: 8926484042661615058}
   - {fileID: 8926484042661615071}
-  - {fileID: 8926484042661615072}
   - {fileID: 8926484042661615073}
   - {fileID: 8926484042661615074}
   - {fileID: 8926484042661615075}
   - {fileID: 8926484042661615076}
   m_OutputSlots: []
   m_Disabled: 0
-  Mode: 1
+  Mode: 0
   NoiseType: 0
 --- !u!114 &8926484042661615058
 MonoBehaviour:

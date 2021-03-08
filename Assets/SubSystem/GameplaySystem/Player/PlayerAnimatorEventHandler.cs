@@ -10,6 +10,8 @@ public class PlayerAnimatorEventHandler : MonoBehaviour
     [Label] public IntEvent onAttackSound;
     [Label] public SimpleEvent onSpecialAnimation;
     [Label] public SimpleEvent onNormalAnimation;
+    [Label] public SimpleEvent onUnlockDash;
+    [Label("Action")] public SimpleEvent[] onActions;
 
     public void DoStep() => onStep?.Invoke();
     public void DoRecordAttack(int val) => onRecordAttack?.Invoke(val);
@@ -17,4 +19,6 @@ public class PlayerAnimatorEventHandler : MonoBehaviour
     public void DoAttackSound(int val) => onAttackSound?.Invoke(val);
     public void DoSpecialAnimation() => onSpecialAnimation?.Invoke();
     public void DoNormalAnimation() => onNormalAnimation?.Invoke();
+    public void DoUnlockDash() => onUnlockDash?.Invoke();
+    public void DoAction(int index) => onActions[index]?.Invoke();
 }

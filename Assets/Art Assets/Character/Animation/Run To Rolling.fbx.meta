@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: ce2e7ac98acd6fc419a273885e2e4818
+guid: 4a3e630e412660f45a12b88e8e12504c
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable:
   - first:
-      74: 2667949614841947897
-    second: Slash0
+      74: -203655887218126122
+    second: Run To Rolling
   externalObjects: {}
   materials:
     materialImportMode: 0
@@ -35,13 +35,13 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Slash0
+      name: Run To Rolling
       takeName: mixamo.com
       internalID: 0
-      firstFrame: 9
-      lastFrame: 56
+      firstFrame: 14
+      lastFrame: 73
       wrapMode: 0
-      orientationOffsetY: -80.39
+      orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
@@ -50,81 +50,25 @@ ModelImporter:
       loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1
-      loopBlendPositionXZ: 1
+      loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 1
+      keepOriginalPositionXZ: 0
       heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.0994512
-        functionName: DoAttackSound
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: ef5390795ec806545bfe7820a8be13fa,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.16447368
-        functionName: DoSpecialAnimation
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: ef5390795ec806545bfe7820a8be13fa,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.22797929
-        functionName: DoUnlockDash
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: ef5390795ec806545bfe7820a8be13fa,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.30254102
-        functionName: DoAction
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: ef5390795ec806545bfe7820a8be13fa,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.32980904
-        functionName: DoRecordAttack
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: ef5390795ec806545bfe7820a8be13fa,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.37086093
-        functionName: DoRecordAttack
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: ef5390795ec806545bfe7820a8be13fa,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.40178537
-        functionName: DoEndAttack
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: ef5390795ec806545bfe7820a8be13fa,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.43095514
-        functionName: DoAction
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: ef5390795ec806545bfe7820a8be13fa,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.611399
+      - time: 0.029605264
         functionName: DoNormalAnimation
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: ef5390795ec806545bfe7820a8be13fa,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.48934755
+        functionName: DoUnlockDash
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: ef5390795ec806545bfe7820a8be13fa,
           type: 3}

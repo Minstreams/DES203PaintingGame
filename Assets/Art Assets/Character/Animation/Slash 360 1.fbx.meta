@@ -50,10 +50,10 @@ ModelImporter:
       loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
+      loopBlendPositionXZ: 1
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
+      keepOriginalPositionXZ: 1
       heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
@@ -101,6 +101,22 @@ ModelImporter:
         messageOptions: 0
       - time: 0.57085675
         functionName: DoNormalAnimation
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: ef5390795ec806545bfe7820a8be13fa,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.07772021
+        functionName: DoUnlockDash
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: ef5390795ec806545bfe7820a8be13fa,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.45595855
+        functionName: DoAction
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: ef5390795ec806545bfe7820a8be13fa,
           type: 3}

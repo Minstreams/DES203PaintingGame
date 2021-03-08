@@ -49,11 +49,11 @@ ModelImporter:
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 1
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
+      keepOriginalPositionXZ: 1
       heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
@@ -61,6 +61,14 @@ ModelImporter:
       events:
       - time: 0.09210526
         functionName: DoAttackSound
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: ef5390795ec806545bfe7820a8be13fa,
+          type: 3}
+        floatParameter: 0
+        intParameter: 1
+        messageOptions: 0
+      - time: 0.26644737
+        functionName: DoSpecialAnimation
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: ef5390795ec806545bfe7820a8be13fa,
           type: 3}
@@ -93,6 +101,14 @@ ModelImporter:
         messageOptions: 0
       - time: 0.536188
         functionName: DoEndAttack
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: ef5390795ec806545bfe7820a8be13fa,
+          type: 3}
+        floatParameter: 0
+        intParameter: 1
+        messageOptions: 0
+      - time: 0.6882158
+        functionName: DoNormalAnimation
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: ef5390795ec806545bfe7820a8be13fa,
           type: 3}

@@ -38,27 +38,99 @@ ModelImporter:
       name: Heavy Attack 1
       takeName: mixamo.com
       internalID: 0
-      firstFrame: 0
+      firstFrame: 13
       lastFrame: 95
       wrapMode: 0
-      orientationOffsetY: 0
+      orientationOffsetY: -134.3
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
-      loopBlendOrientation: 0
+      loopBlendOrientation: 1
       loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
+      loopBlendPositionXZ: 1
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
+      keepOriginalPositionXZ: 1
       heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.15627018
+        functionName: DoAction
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: ef5390795ec806545bfe7820a8be13fa,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.1663545
+        functionName: DoSpecialAnimation
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: ef5390795ec806545bfe7820a8be13fa,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.17739296
+        functionName: DoAttackSound
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: ef5390795ec806545bfe7820a8be13fa,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.194096
+        functionName: DoRecordAttack
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: ef5390795ec806545bfe7820a8be13fa,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.22797927
+        functionName: DoRecordAttack
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: ef5390795ec806545bfe7820a8be13fa,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.26375443
+        functionName: DoEndAttack
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: ef5390795ec806545bfe7820a8be13fa,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.3044693
+        functionName: DoAction
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: ef5390795ec806545bfe7820a8be13fa,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.470105
+        functionName: DoUnlockDash
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: ef5390795ec806545bfe7820a8be13fa,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.53950775
+        functionName: DoNormalAnimation
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: ef5390795ec806545bfe7820a8be13fa,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
