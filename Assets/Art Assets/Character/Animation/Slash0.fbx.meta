@@ -91,7 +91,7 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.32980904
+      - time: 0.32300633
         functionName: DoRecordAttack
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: ef5390795ec806545bfe7820a8be13fa,
@@ -125,6 +125,14 @@ ModelImporter:
         messageOptions: 0
       - time: 0.611399
         functionName: DoNormalAnimation
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: ef5390795ec806545bfe7820a8be13fa,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.3450065
+        functionName: DoRecordAttack
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: ef5390795ec806545bfe7820a8be13fa,
           type: 3}

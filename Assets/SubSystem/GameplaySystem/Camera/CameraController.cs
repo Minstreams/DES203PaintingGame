@@ -17,7 +17,7 @@ public class CameraController : MonoBehaviour
     // References
     GameplaySystemSetting Setting => GameplaySystem.Setting;
     PlayerAvatarController CurrentPlayer => GameplaySystem.CurrentPlayer;
-    Vector3 PlayerFocusPoint => GameplaySystem.CurrentPlayer.transform.position + Setting.playerFocusHeight * Vector3.up;
+    Vector3 PlayerFocusPoint => GameplaySystem.CurrentPlayer.FocusPoint;
 
     // Fields
     Camera cam;

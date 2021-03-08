@@ -48,6 +48,7 @@ public class GDestroyable : GAttackable
             }
         }
     }
+    public bool IsDead => Health <= 0;
     #endregion
 
     protected virtual void Start()

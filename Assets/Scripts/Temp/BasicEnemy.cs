@@ -6,7 +6,7 @@ using GameSystem;
 public class BasicEnemy : GDestroyable
 {
     protected Rigidbody rig;
-    void Awake()
+    protected virtual void Awake()
     {
         rig = GetComponent<Rigidbody>();
     }

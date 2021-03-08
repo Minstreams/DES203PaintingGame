@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using GameSystem;
+using GameSystem.Setting;
 
 [RequireComponent(typeof(PlayerAvatar))]
 public class PlayerAvatarController : MonoBehaviour
@@ -10,7 +11,10 @@ public class PlayerAvatarController : MonoBehaviour
     [Label] public float runningForce;
     [Label] public float dashForce;
 
+    GameplaySystemSetting Setting => GameplaySystem.Setting;
+
     public PlayerAvatar Avatar { get; private set; }
+    public Vector3 FocusPoint => transform.position + Setting.playerFocusHeight * Vector3.up;
 
     void Awake()
     {

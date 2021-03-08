@@ -73,5 +73,12 @@ namespace GameSystem.Setting
         [Label] public Color zonePointColor;
         [Label] public Color zonePathColor;
         [Label] public Color zoneWallColor;
+
+        [Separator]
+        [MinsHeader("Enemy", SummaryType.SubTitle, -1)]
+        [MinsHeader("GUI Colors")]
+        [Label] public Color nestCenterColor;
+        [Label] public Color nestPatrolAreaColor;
+        [Label] public Color nestChaseAreaColor;
     }
 }

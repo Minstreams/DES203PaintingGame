@@ -68,3 +68,6 @@ MonoBehaviour:
   zonePointColor: {r: 0.18396229, g: 1, b: 1, a: 0.40392157}
   zonePathColor: {r: 0, g: 1, b: 1, a: 0.33333334}
   zoneWallColor: {r: 1, g: 0, b: 0, a: 0.3254902}
+  nestCenterColor: {r: 0.7264151, g: 0, b: 0, a: 1}
+  nestPatrolAreaColor: {r: 0.3764706, g: 1, b: 0, a: 0.34117648}
+  nestChaseAreaColor: {r: 0, g: 0, b: 0, a: 1}
