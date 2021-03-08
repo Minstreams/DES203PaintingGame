@@ -20,7 +20,7 @@ MonoBehaviour:
   camInterpolatingRateMouseRotation: 0.2
   camDefaultRelativePostiion: {x: 0.2, y: 0, z: -1.5}
   camDefaultFov: 60
-  camReactDefaultPower: 0
+  camReactDefaultPower: 0.2
   attackPowerRateY: 0.196
   groundDrag: 2
   hasPinkCrystal: 0
