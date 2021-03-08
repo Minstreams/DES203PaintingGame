@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 2e32785cd014eba4ab03d12c11bc8ac3
+guid: 0bd85fb7bf93fdb42a119cb252d1e933
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable:
   - first:
-      74: 2667949614841947897
-    second: Slash
+      74: -203655887218126122
+    second: Slash 360 1
   externalObjects: {}
   materials:
     materialImportMode: 0
@@ -35,20 +35,20 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Slash
+      name: Slash 360 1
       takeName: mixamo.com
       internalID: 0
-      firstFrame: 19
-      lastFrame: 45
+      firstFrame: 0
+      lastFrame: 75
       wrapMode: 0
-      orientationOffsetY: 63.8
+      orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
-      loopBlendOrientation: 1
+      loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0

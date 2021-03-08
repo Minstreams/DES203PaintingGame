@@ -1127,12 +1127,48 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onStartAttack:
+  onRecordAttack:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 764300779541679545}
+        m_MethodName: OnRecordAttack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onEndAttack:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 764300779541679545}
+        m_MethodName: OnEndAttack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onAttackSound:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 764300779541679545}
+        m_MethodName: OnAttackSound
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &764300778545269050
 GameObject:
   m_ObjectHideFlags: 0
@@ -2910,6 +2946,9 @@ MonoBehaviour:
   onAttackedDir:
     m_PersistentCalls:
       m_Calls: []
+  onAttackedPower:
+    m_PersistentCalls:
+      m_Calls: []
   maxHealth: 5
   defaultHealth: 5
   onDamaged:
@@ -2921,11 +2960,15 @@ MonoBehaviour:
   onDie:
     m_PersistentCalls:
       m_Calls: []
+  onTeabagged:
+    m_PersistentCalls:
+      m_Calls: []
   movingOffGroundFactor: 0.38
   turningSpeedThreshold: 0.1
   turningRatePerSecond: 0.993
   groundOverlapSphereOffset: {x: 0, y: 0, z: 0}
   groundOverlapSphereRadius: 0.05
+  model: {fileID: 764300778528432029}
   onMoving:
     m_PersistentCalls:
       m_Calls:
@@ -2964,6 +3007,14 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   brush: {fileID: 8515851935506220529}
+  attackerPointOffsetY: 1.26
+  attackInfos:
+  - attackDamage: 1
+    attackPower: 0.2
+    attackSound: {fileID: 764300778175775083}
+  - attackDamage: 1
+    attackPower: 2
+    attackSound: {fileID: 764300778175775083}
   onDebug:
     m_PersistentCalls:
       m_Calls:
@@ -3203,9 +3254,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8278938811194158995}
+  - component: {fileID: 3250168030728789797}
   m_Layer: 13
   m_Name: AttackableTrigger
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3224,6 +3276,20 @@ Transform:
   m_Father: {fileID: 764300779541679550}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &3250168030728789797
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7552752229950707808}
+  m_Material: {fileID: 13400000, guid: 101dcad8200e4b84e9943f1d29d0110e, type: 2}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.3
+  m_Height: 1.7
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.85, z: 0}
 --- !u!1 &9054469222540532630
 GameObject:
   m_ObjectHideFlags: 0
@@ -3248,7 +3314,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9054469222540532630}
-  m_LocalRotation: {x: -0.0037989472, y: -0.00026625022, z: 0.5953628, w: 0.803448}
+  m_LocalRotation: {x: -0.003812191, y: -0.000052180265, z: 0.63956296, w: 0.76872927}
   m_LocalPosition: {x: 0.009069215, y: 0.1128845, z: 0.022745984}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3256,7 +3322,7 @@ Transform:
   - {fileID: 1427918041613428590}
   m_Father: {fileID: 764300778466855407}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -0.33200002, y: -0.284, z: 79.52}
 --- !u!114 &8515851935506220529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3269,4 +3335,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28564e486e1d550468f345474eb9fe0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DamagePoint: {fileID: 1427918041613428590}
+  damagePoint: {fileID: 1427918041613428590}

@@ -12,21 +12,16 @@ public class GAttackable : GSavable
     [MinsHeader("G Attackable", SummaryType.Title, -1)]
     [MinsHeader("This Component can be attacked.", SummaryType.CommentCenter)]
     [Label] public FloatEvent onAttacked;
-    [Label] public Vec2Event onAttackedDir;
+    [Label] public Vec3Event onAttackedDir;
+    [Label] public FloatEvent onAttackedPower;
 
-    public virtual void OnAttacked(float damage, Vector2 direction)
+    public virtual Vector3 AttackPoint => transform.position;
+
+    public virtual void OnAttacked(float damage, float power, Vector3 direction)
     {
         onAttacked?.Invoke(damage);
         onAttackedDir?.Invoke(direction);
+        onAttackedPower?.Invoke(power);
         GameplaySystem.CurrentCamera.ReactBack();
-    }
-
-    protected virtual void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("DamageZone"))
-        {
-            var dz = collision.GetComponent<DamageZone>();
-            if (dz.attacker != gameObject) OnAttacked(dz.damage, ((Vector2)(dz.transform.localToWorldMatrix * dz.direction)).normalized);
-        }
     }
 }

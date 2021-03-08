@@ -5,32 +5,30 @@ using GameSystem;
 
 public class BasicEnemy : GDestroyable
 {
-    Rigidbody2D rig;
-    private void Awake()
+    protected Rigidbody rig;
+    void Awake()
     {
-        rig = GetComponent<Rigidbody2D>();
+        rig = GetComponent<Rigidbody>();
     }
 
-    [Label] public bool chasing;
-    [Label] public float force;
-    [Label] public float backforce;
-    private void Update()
-    {
-        if (chasing)
-            rig.AddForce(((Vector2)(GameplaySystem.CurrentPlayer.transform.position + Vector3.up * 1.6f - transform.position)).normalized * force, ForceMode2D.Force);
-    }
+    //private void Update()
+    //{
+    //    //if (chasing)
+    //    //    rig.AddForce(((GameplaySystem.CurrentPlayer.transform.position + Vector3.up * 1.6f - transform.position)).normalized * force, ForceMode2D.Force);
+    //}
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    if (collision.collider.CompareTag("Player"))
+    //    {
+    //        GameplaySystem.CurrentPlayer.Avatar.OnAttacked(1, rig.velocity.normalized);
+    //        rig.velocity = -((Vector2)(GameplaySystem.CurrentPlayer.transform.position + Vector3.up * 1.6f - transform.position)).normalized * backforce;
+    //    }
+    //}
+    protected override void OnDamaged(float damage, float power, Vector3 direction)
     {
-        if (collision.collider.CompareTag("Player"))
-        {
-            GameplaySystem.CurrentPlayer.Avatar.OnAttacked(1, rig.velocity.normalized);
-            rig.velocity = -((Vector2)(GameplaySystem.CurrentPlayer.transform.position + Vector3.up * 1.6f - transform.position)).normalized * backforce;
-        }
-    }
-    public override void OnAttacked(float damage, Vector2 direction)
-    {
-        base.OnAttacked(damage, direction);
-        rig.velocity = direction * backforce;
+        base.OnDamaged(damage, power, direction);
+        rig.velocity = direction * power;
+        Debug.DrawRay(transform.position, direction, Color.yellow, 1);
     }
 }

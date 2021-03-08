@@ -7,8 +7,8 @@ public class GDestroyable : GAttackable
 {
     #region 【Parameters】
     [Separator]
-    [MinsHeader("G Destroyable", SummaryType.Title,-1)]
-    [MinsHeader("This Component can be destroyed.",SummaryType.CommentCenter)]
+    [MinsHeader("G Destroyable", SummaryType.Title, -1)]
+    [MinsHeader("This Component can be destroyed.", SummaryType.CommentCenter)]
     [Label] public float maxHealth;
     [Label] public float defaultHealth;
     #endregion
@@ -17,6 +17,7 @@ public class GDestroyable : GAttackable
     [Label] public FloatEvent onDamaged;
     [Label] public FloatEvent onHealed;
     [Label] public SimpleEvent onDie;
+    [Label] public SimpleEvent onTeabagged;
     #endregion
 
     #region 【Properties】
@@ -53,10 +54,27 @@ public class GDestroyable : GAttackable
     {
         _health = defaultHealth;
     }
-    public override void OnAttacked(float damage, Vector2 direction)
+    public override void OnAttacked(float damage, float power, Vector3 direction)
     {
-        base.OnAttacked(damage, direction);
+        base.OnAttacked(damage, power, direction);
+        if (Health > 0)
+        {
+            OnDamaged(damage, power, direction);
+        }
+        else
+        {
+            OnTeabagged(damage, power, direction);
+        }
+    }
+    protected virtual void OnDamaged(float damage, float power, Vector3 direction)
+    {
         Health -= damage;
+
+    }
+    // 被鞭尸时
+    protected virtual void OnTeabagged(float damage, float power, Vector3 direction)
+    {
+        onTeabagged?.Invoke();
     }
 
     protected virtual void Die()

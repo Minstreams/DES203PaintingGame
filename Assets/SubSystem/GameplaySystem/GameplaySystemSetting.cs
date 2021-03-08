@@ -19,6 +19,9 @@ namespace GameSystem.Setting
         [Label(true)] public float camDefaultFov;
         [Label] public float camReactDefaultPower;
 
+        [MinsHeader("Combat")]
+        [LabelRange] public float attackPowerRateY;
+
         // Temp
         [MinsHeader("Data", SummaryType.Header)]
         [Label] public float groundDrag = 2f;

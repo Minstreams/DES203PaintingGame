@@ -21,10 +21,12 @@ namespace GameSystem
         static void OnGameStart()
         {
             // 在System场景加载后调用
-            // TODO: 设定不同物理层的碰撞权限
-            //var living = LayerMask.NameToLayer("Living");
-            //var attackable = LayerMask.NameToLayer("Attackable");
-            //Physics.IgnoreLayerCollision(living, attackable);
+            var living = LayerMask.NameToLayer("Living");
+            var attackable = LayerMask.NameToLayer("Attackable");
+            Physics.IgnoreLayerCollision(living, attackable);
+
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
         }
 
 
@@ -39,9 +41,42 @@ namespace GameSystem
         }
 
 
-        public static void GenerateDamageLine(Vector3 p0, Vector3 p1)
+        // Combat
+        static readonly HashSet<GAttackable> attackedObjects = new HashSet<GAttackable>();
+        static readonly int attackMask = 1 << LayerMask.NameToLayer("Attackable");
+        public static void GenerateDamageLine(ref List<Vector3> attackPoints, float damage, float power, GAttackable attacker)
         {
-            Debug.DrawLine(p0, p1, Color.red, 1);
+            attackedObjects.Clear();
+            var ap = attacker.AttackPoint;
+
+            void ProcessHits(RaycastHit[] hits)
+            {
+                foreach (var h in hits)
+                {
+                    var attackable = h.collider.GetComponentInParent<GAttackable>();
+                    if (attackable != null && attackable != attacker && !attackedObjects.Contains(attackable))
+                    {
+                        var dir = h.point - ap;
+                        dir.y *= Setting.attackPowerRateY;
+                        attackable.OnAttacked(damage, power, dir.normalized);
+
+                        attackedObjects.Add(attackable);
+                    }
+                }
+            }
+
+            for (int i = attackPoints.Count - 1; i > 0; --i)
+            {
+                var delta = attackPoints[i - 1] - attackPoints[i];
+                var hits = Physics.RaycastAll(attackPoints[i], delta, delta.magnitude, attackMask, QueryTriggerInteraction.Collide);
+                ProcessHits(hits);
+
+                delta = attackPoints[i] - ap;
+                hits = Physics.RaycastAll(ap, delta, delta.magnitude, attackMask, QueryTriggerInteraction.Collide);
+                ProcessHits(hits);
+
+                Debug.DrawLine(attackPoints[i - 1], attackPoints[i], Color.red, 1);
+            }
         }
     }
 }

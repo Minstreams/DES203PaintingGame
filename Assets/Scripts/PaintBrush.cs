@@ -6,5 +6,7 @@ using UnityEngine;
 public class PaintBrush : MonoBehaviour
 {
     [MinsHeader("Paint Brush", SummaryType.Title)]
-    [Label] public Transform DamagePoint;
+    [Label] public Transform damagePoint;
+
+    public Vector3 DamagePoint => damagePoint.position;
 }
