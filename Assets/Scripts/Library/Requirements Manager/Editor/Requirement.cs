@@ -9,8 +9,9 @@
         [Label] public RequirementPriority priority;
         [Label] public RequirementStatus status;
         [Label] public string responsiblePerson;
+        [Label] public string comment;
+        [Label] public string feedback;
     }
-
     [System.Flags]
     public enum RequirementPriority
     {

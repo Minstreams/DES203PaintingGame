@@ -43,6 +43,11 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
+        if (CurrentPlayer == null)
+        {
+            enabled = false;
+            return;
+        }
         ResetCameraSetting();
         camRotation = CurrentPlayer.transform.rotation;
         t = 1 - Mathf.Pow(1 - Setting.camInterpolatingRate, Time.fixedDeltaTime);
