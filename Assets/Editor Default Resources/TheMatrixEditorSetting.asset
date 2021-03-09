@@ -21,7 +21,7 @@ MonoBehaviour:
     type: 3}
   alwaysShowCameraPanelInSceneView: 0
   alwaysShowCameraPreviewInSceneView: 1
-  cameraPitchAlwayEditable: 0
+  cameraPitchAlwayEditable: 1
   snapValue: 1
   angleSnapValue: 10
   entryPointCaptureSize: 0.2
