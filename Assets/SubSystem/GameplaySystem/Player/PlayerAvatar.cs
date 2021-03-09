@@ -17,6 +17,7 @@ public class PlayerAvatar : GCharacter
     [System.Serializable]
     public struct AttackInfo
     {
+        [Label] public string name;
         [Label] public float attackDamage;
         [Label] public float attackPower;
         [Label] public AudioSource attackSound;
