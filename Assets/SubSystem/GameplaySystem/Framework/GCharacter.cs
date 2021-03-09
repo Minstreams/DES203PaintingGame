@@ -161,9 +161,10 @@ public class GCharacter : GDestroyable
         rig.AddForce(IMovingForce * (OnGround ? 1 : movingOffGroundFactor), ForceMode.Force);
         var v = new Vector3(rig.velocity.x, 0, rig.velocity.z);
         anim.SetFloat("Speed", Vector3.Dot(v, transform.forward));
-        if (v.sqrMagnitude > turningSpeedThreshold)
+        
+        if (IMovingForce.sqrMagnitude > turningSpeedThreshold)
         {
-            var angle = Vector3.SignedAngle(transform.forward, v, Vector3.up);
+            var angle = Vector3.SignedAngle(transform.forward, IMovingForce, Vector3.up);
             anim.SetFloat("Turn", angle);
             transform.Rotate(Vector3.up, angle * (1 - Mathf.Pow(1 - turningRatePerSecond, Time.deltaTime)), Space.World);
         }
