@@ -45,7 +45,7 @@ namespace GameSystem.Requirements
                 }
 
                 scrollPos = GUILayout.BeginScrollView(scrollPos);
-                    Undo.RecordObject(Data,"Edit Requirements Data");
+                Undo.RecordObject(Data, "Edit Requirements Data");
                 EditorGUI.BeginChangeCheck();
                 GUILayout.Label("Name:");
                 SelectedRequirement.name = EditorGUILayout.TextField(SelectedRequirement.name);

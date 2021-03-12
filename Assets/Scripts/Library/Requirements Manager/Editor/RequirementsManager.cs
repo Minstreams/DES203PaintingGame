@@ -113,11 +113,13 @@ namespace GameSystem.Requirements
 
 
             var scrollRect = new Rect(0, topRectHeight, windowRect.size.x, windowRect.size.y - topRectHeight);
-            GUI.Box(scrollRect, GUIContent.none, "window");
-            scrollPos = GUI.BeginScrollView(scrollRect, scrollPos, new Rect(scrollPos, scrollRect.size));
+            var viewHeight = reqList.Count * (Data.reqRectMargin.y + Data.reqLabelHeight);
+            var viewRect = new Rect(0, 0, scrollRect.width - (scrollRect.height > viewHeight ? 0 : 13), viewHeight);
+            GUI.Box(new Rect(scrollRect.x, scrollRect.y, viewRect.width, scrollRect.height), GUIContent.none, "window");
+            scrollPos = GUI.BeginScrollView(scrollRect, scrollPos, viewRect);
             {
-                var reqRect = new Rect(Data.reqRectMargin, new Vector2(scrollRect.width - Data.reqRectMargin.x * 2, Data.reqLabelHeight));
-                foreach (var req in Data.requirementList)
+                var reqRect = new Rect(Data.reqRectMargin, new Vector2(viewRect.width - Data.reqRectMargin.x * 2, Data.reqLabelHeight));
+                foreach (var req in reqList)
                 {
                     RequirementField(reqRect, req);
                     reqRect.y += Data.reqRectMargin.y + Data.reqLabelHeight;
