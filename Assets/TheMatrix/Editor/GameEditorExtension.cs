@@ -17,7 +17,7 @@ public class GameEditorExtension : EditorWindow
     [MenuItem("MatrixTool/Open Tool Window 打开工具箱 #F1", false, 0)]
     public static void OpenToolWindow()
     {
-        var comfirmWindow = EditorWindow.GetWindow<GameEditorExtension>(DialogTitle);
+        GetWindow<GameEditorExtension>(DialogTitle);
     }
     /// <summary>
     /// 导航到系统配置文件
