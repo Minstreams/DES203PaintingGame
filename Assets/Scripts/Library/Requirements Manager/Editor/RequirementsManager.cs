@@ -11,6 +11,31 @@ namespace GameSystem.Requirements
         public static RequirementsManagerData Data => data == null ? data = (RequirementsManagerData)EditorGUIUtility.Load("RequirementsManagerData.asset") : data;
         static RequirementsManagerData data;
 
+        public static RequirementsManagerLocalData LocalData
+        {
+            get
+            {
+                if (localData == null)
+                {
+                    if (!AssetDatabase.IsValidFolder("Assets/Editor Default Resources/Local"))
+                    {
+                        AssetDatabase.CreateFolder("Assets/Editor Default Resources", "Local");
+                    }
+                    if (!System.IO.File.Exists("Assets/Editor Default Resources/Local/RequirementsManagerLocalData.asset"))
+                    {
+                        localData = CreateInstance<RequirementsManagerLocalData>();
+                        AssetDatabase.CreateAsset(localData, "Assets/Editor Default Resources/Local/RequirementsManagerLocalData.asset");
+                    }
+                    else
+                    {
+                        localData = (RequirementsManagerLocalData)EditorGUIUtility.Load("Local/RequirementsManagerLocalData.asset");
+                    }
+                }
+                return localData;
+            }
+        }
+        static RequirementsManagerLocalData localData;
+
         public static RequirementsManager activeManager;
 
         public static RequirementsManagerInspector Inspector
@@ -73,7 +98,11 @@ namespace GameSystem.Requirements
             var windowRect = new Rect(Vector2.zero, position.size);
 
             var topRect = new Rect(0, 0, windowRect.size.x, topRectHeight);
-
+            GUILayout.BeginArea(topRect);
+            {
+                LocalData.localName = GUILayout.TextField(LocalData.localName);
+            }
+            GUILayout.EndArea();
 
 
             var scrollRect = new Rect(0, topRectHeight, windowRect.size.x, windowRect.size.y - topRectHeight);

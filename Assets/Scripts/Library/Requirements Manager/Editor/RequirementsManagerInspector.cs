@@ -10,6 +10,7 @@ namespace GameSystem.Requirements
         static RequirementsManager Manager => RequirementsManager.activeManager;
         static Requirement SelectedRequirement => RequirementsManager.activeManager?.selectedReq;
         static RequirementsManagerData Data => RequirementsManager.Data;
+        static RequirementsManagerLocalData LocalData => RequirementsManager.LocalData;
 
         Vector2 scrollPos;
 
@@ -101,7 +102,14 @@ namespace GameSystem.Requirements
                 GUILayout.Space(2);
                 GUILayout.BeginHorizontal();
                 {
-                    if (GUILayout.Button("Volunteer", Data.miniButtonSytle)) ;
+                    if (GUILayout.Button("Volunteer", Data.miniButtonSytle))
+                    {
+                        Undo.RecordObject(Data, "Volunteer to be responsible person");
+                        SelectedRequirement.responsiblePerson = LocalData.localName;
+                        ShowNotification(new GUIContent("Success. Ctrl + Z to undo."));
+                        EditorUtility.SetDirty(Data);
+                        Manager.Repaint();
+                    }
                     GUILayout.Label("Responsible Person", Data.miniHeaderStyle);
                     GUILayout.Label(SelectedRequirement.responsiblePerson, Data.singlelineStyle);
                 }
