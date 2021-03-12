@@ -21,10 +21,11 @@ MonoBehaviour:
     responsiblePerson: Minke
     comment: 
     feedback: 
+    timestamp: 63751110222.09602
   - name: model.exe
     description: description ad  aS dA dA sdAS dasdaSd ASd ASd ASd As ASd ASdasdas
       ASd ASd ASd AS ASd asda sdaSAdasd Asd s AS as AS dASd sa sasdas D
-    path: /Art Assets/Temp/Human/Human
+    path: /Art Assets/Temp/Human/Humans
     priority: 1
     status: 1
     responsiblePerson: Minke
@@ -35,6 +36,7 @@ MonoBehaviour:
 
 '
     feedback: 
+    timestamp: 63751112766.87696
   - name: TEvv
     description: description
     path: /Art Assets/Temp/Materials/AttackTrail.mat
@@ -43,14 +45,16 @@ MonoBehaviour:
     responsiblePerson: 
     comment: 
     feedback: 
+    timestamp: 0
   - name: Gevsd
     description: description
     path: BB
     priority: 2
     status: 4
-    responsiblePerson: 
-    comment: 
+    responsiblePerson: Sakura
+    comment: sasdadwdsssasdasdasdasdasasdasaaaaa
     feedback: 
+    timestamp: 63751114459.75038
   - name: Action
     description: 'descriptiona
 
@@ -59,26 +63,29 @@ MonoBehaviour:
       a'
     path: /Art Assets/Temp/Materials/AttackTrail.mat
     priority: 4
-    status: 2
-    responsiblePerson: October
-    comment: dsfdsf
+    status: 1
+    responsiblePerson: Sakura
+    comment: dsfdsfasa
     feedback: 
+    timestamp: 63751114314.76173
   - name: Acytrere
     description: description
     path: 
     priority: 2
     status: 1
-    responsiblePerson: 
+    responsiblePerson: Minke
     comment: 
     feedback: 
+    timestamp: 63751114503.84749
   - name: Gege
     description: description
     path: 
     priority: 2
     status: 1
-    responsiblePerson: 
+    responsiblePerson: Sakura
     comment: 
     feedback: 
+    timestamp: 0
   - name: Tersds
     description: description
     path: 
@@ -87,6 +94,7 @@ MonoBehaviour:
     responsiblePerson: 
     comment: 
     feedback: 
+    timestamp: 0
   - name: Yrsdf
     description: description
     path: 
@@ -95,16 +103,19 @@ MonoBehaviour:
     responsiblePerson: 
     comment: 
     feedback: 
+    timestamp: 0
   managerIcon: {fileID: 2800000, guid: 951848ba8b6205940a9bd1b8fdd4d796, type: 3}
   managerTitle: Requirements
   inspectorIcon: {fileID: 2800000, guid: 0615fe8910911be4299d5604a54db99a, type: 3}
   inspectorTitle: Requirement Inspector
   reqLabelHeight: 24
   reqRectMargin: {x: 6, y: 3}
-  reqLabelStyle:
-    m_Name: label
+  notificationPointPos: {x: 131, y: -4, z: 16}
+  notificationPointColor: {r: 1, g: 0, b: 0, a: 0.78039217}
+  notificationPointStyle:
+    m_Name: 
     m_Normal:
-      m_Background: {fileID: 0}
+      m_Background: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
       m_ScaledBackgrounds: []
       m_TextColor: {r: 0.8235294, g: 0.8235294, b: 0.8235294, a: 1}
     m_Hover:
@@ -141,24 +152,24 @@ MonoBehaviour:
       m_Top: 0
       m_Bottom: 0
     m_Margin:
-      m_Left: 4
-      m_Right: 4
-      m_Top: 2
-      m_Bottom: 2
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
     m_Padding:
-      m_Left: 2
-      m_Right: 2
-      m_Top: 1
-      m_Bottom: 1
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
     m_Overflow:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
     m_Font: {fileID: 0}
-    m_FontSize: 12
+    m_FontSize: 0
     m_FontStyle: 0
-    m_Alignment: 3
+    m_Alignment: 4
     m_WordWrap: 0
     m_RichText: 0
     m_TextClipping: 1
@@ -166,9 +177,8 @@ MonoBehaviour:
     m_ContentOffset: {x: 0, y: 0}
     m_FixedWidth: 0
     m_FixedHeight: 0
-    m_StretchWidth: 1
+    m_StretchWidth: 0
     m_StretchHeight: 0
-  lineWidth: 2
   selectionStyle:
     m_Name: LightmapEditorSelectedHighlight
     m_Normal:
