@@ -134,8 +134,9 @@ namespace GameSystem.Requirements
                 GUILayout.Label("Comment", Data.headerStyle);
                 if (edittingComment)
                 {
+                    Undo.RecordObject(Data, "Edit Requirement Comment");
                     EditorGUI.BeginChangeCheck();
-                    SelectedRequirement.comment = GUILayout.TextArea(SelectedRequirement.comment, Data.multilineAreaStyle);
+                    SelectedRequirement.comment = EditorGUILayout.TextArea(SelectedRequirement.comment, Data.multilineAreaStyle);
                     if (EditorGUI.EndChangeCheck())
                     {
                         SelectedRequirement.UpdateTimestamp();

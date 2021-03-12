@@ -200,6 +200,10 @@ namespace GameSystem.Requirements
             {
                 fileExists.Add(r, System.IO.File.Exists("Assets" + r.path));
             }
+
+            if (!reqList.Contains(selectedReq)) selectedReq = null;
+
+            Repaint();
         }
         public void NewRequirement()
         {

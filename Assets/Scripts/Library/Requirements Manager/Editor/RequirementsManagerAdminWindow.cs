@@ -19,6 +19,10 @@ namespace GameSystem.Requirements
             {
                 Selection.activeObject = Data;
             }
+            if (GUILayout.Button("See Local Data"))
+            {
+                Selection.activeObject = RequirementsManager.LocalData;
+            }
             if (Manager == null) return;
             if (GUILayout.Button("New"))
             {
@@ -30,32 +34,39 @@ namespace GameSystem.Requirements
             }
             if (SelectedRequirement == null) return;
             {
+                if (GUILayout.Button("Delete"))
+                {
+                    if (Data.requirementList.Contains(SelectedRequirement))
+                    {
+                        Data.requirementList.Remove(SelectedRequirement);
+                        Manager.RefreshList();
+                        return;
+                    }
+                }
+
                 scrollPos = GUILayout.BeginScrollView(scrollPos);
+                    Undo.RecordObject(Data,"Edit Requirements Data");
                 EditorGUI.BeginChangeCheck();
                 GUILayout.Label("Name:");
-                SelectedRequirement.name = GUILayout.TextField(SelectedRequirement.name);
+                SelectedRequirement.name = EditorGUILayout.TextField(SelectedRequirement.name);
                 GUILayout.Label("Description:");
-                SelectedRequirement.description = GUILayout.TextArea(SelectedRequirement.description);
+                SelectedRequirement.description = EditorGUILayout.TextArea(SelectedRequirement.description);
                 GUILayout.Label("Path:");
                 var oldPath = SelectedRequirement.path;
-                EditorGUI.BeginChangeCheck();
-                SelectedRequirement.path = GUILayout.TextField(SelectedRequirement.path);
-                if (EditorGUI.EndChangeCheck())
-                {
-                    Manager.UpdateSelectedTimestamp(oldPath);
-                }
+                SelectedRequirement.path = EditorGUILayout.TextField(SelectedRequirement.path);
                 GUILayout.Label("Priority:");
                 SelectedRequirement.priority = (RequirementPriority)EditorGUILayout.EnumPopup(SelectedRequirement.priority);
                 GUILayout.Label("Status:");
                 SelectedRequirement.status = (RequirementStatus)EditorGUILayout.EnumPopup(SelectedRequirement.status);
                 GUILayout.Label("Responsible Person:");
-                SelectedRequirement.responsiblePerson = GUILayout.TextField(SelectedRequirement.responsiblePerson);
+                SelectedRequirement.responsiblePerson = EditorGUILayout.TextField(SelectedRequirement.responsiblePerson);
                 GUILayout.Label("Comment:");
-                SelectedRequirement.comment = GUILayout.TextArea(SelectedRequirement.comment);
+                SelectedRequirement.comment = EditorGUILayout.TextArea(SelectedRequirement.comment);
                 GUILayout.Label("Feedback:");
-                SelectedRequirement.feedback = GUILayout.TextArea(SelectedRequirement.feedback);
+                SelectedRequirement.feedback = EditorGUILayout.TextArea(SelectedRequirement.feedback);
                 if (EditorGUI.EndChangeCheck())
                 {
+                    Manager.UpdateSelectedTimestamp(oldPath);
                     SelectedRequirement.UpdateTimestamp();
                     Manager.Repaint();
                 }
