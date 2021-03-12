@@ -13,6 +13,7 @@ namespace GameSystem.Requirements
         static RequirementsManagerLocalData LocalData => RequirementsManager.LocalData;
 
         Vector2 scrollPos;
+        bool edittingComment;
 
         const string priorityTooltip = @"Priorities:
     Optional
@@ -69,6 +70,7 @@ namespace GameSystem.Requirements
                 {
                     if (GUILayout.Button("Navigate", Data.miniButtonSytle))
                     {
+                        edittingComment = false;
                         string path = "Assets" + SelectedRequirement.path;
                         if (!path.Contains("/"))
                         {
@@ -101,15 +103,19 @@ namespace GameSystem.Requirements
                 GUILayout.Space(2);
                 GUILayout.BeginHorizontal();
                 {
-                    if (GUILayout.Button("Volunteer", Data.miniButtonSytle) && SelectedRequirement.responsiblePerson != LocalData.localName)
+                    if (GUILayout.Button("Volunteer", Data.miniButtonSytle))
                     {
-                        Undo.RecordObject(Data, "Volunteer to be responsible person");
-                        SelectedRequirement.responsiblePerson = LocalData.localName;
-                        ShowNotification(new GUIContent("Success. Ctrl + Z to undo."));
-                        EditorUtility.SetDirty(Data);
-                        Manager.Repaint();
-                        SelectedRequirement.UpdateTimestamp();
-                        Manager.UpdateSelectedTimestamp();
+                        edittingComment = false;
+                        if (SelectedRequirement.responsiblePerson != LocalData.localName)
+                        {
+                            Undo.RecordObject(Data, "Volunteer to be responsible person");
+                            SelectedRequirement.responsiblePerson = LocalData.localName;
+                            ShowNotification(new GUIContent("Success. Ctrl + Z to undo."));
+                            EditorUtility.SetDirty(Data);
+                            Manager.Repaint();
+                            SelectedRequirement.UpdateTimestamp();
+                            Manager.UpdateSelectedTimestamp();
+                        }
                     }
                     GUILayout.Label("Responsible Person", Data.miniHeaderStyle);
                     GUILayout.Label(string.IsNullOrWhiteSpace(SelectedRequirement.responsiblePerson) ? "NOBODY" : SelectedRequirement.responsiblePerson, Data.singlelineStyle);
@@ -125,13 +131,23 @@ namespace GameSystem.Requirements
                 GUILayout.Label("Description", Data.headerStyle);
                 GUILayout.Label(SelectedRequirement.description, Data.multilineStyle);
 
-                EditorGUI.BeginChangeCheck();
                 GUILayout.Label("Comment", Data.headerStyle);
-                SelectedRequirement.comment = GUILayout.TextArea(SelectedRequirement.comment, Data.multilineAreaStyle);
-                if (EditorGUI.EndChangeCheck())
+                if (edittingComment)
                 {
-                    SelectedRequirement.UpdateTimestamp();
-                    Manager.UpdateSelectedTimestamp();
+                    EditorGUI.BeginChangeCheck();
+                    SelectedRequirement.comment = GUILayout.TextArea(SelectedRequirement.comment, Data.multilineAreaStyle);
+                    if (EditorGUI.EndChangeCheck())
+                    {
+                        SelectedRequirement.UpdateTimestamp();
+                        Manager.UpdateSelectedTimestamp();
+                    }
+                }
+                else
+                {
+                    if (GUILayout.Button(SelectedRequirement.comment, Data.multilineAreaStyle))
+                    {
+                        edittingComment = true;
+                    }
                 }
 
                 if (!string.IsNullOrWhiteSpace(SelectedRequirement.feedback))

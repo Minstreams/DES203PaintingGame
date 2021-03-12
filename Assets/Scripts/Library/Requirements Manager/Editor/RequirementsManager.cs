@@ -85,7 +85,7 @@ namespace GameSystem.Requirements
             GUI.color = GetPriorityColor(req);
             GUI.Label(namePos, new GUIContent(req.name), Data.nameBoxStyle);
 
-            if (LocalData.timestampDictionary.ContainsKey(req.path) && LocalData.timestampDictionary[req.path] < req.timestamp)
+            if (!LocalData.timestampDictionary.ContainsKey(req.path) || LocalData.timestampDictionary[req.path] < req.timestamp)
             {
                 var notiPos = new Rect(namePos.x + namePos.width - Data.notificationPointPos.x, namePos.y + Data.notificationPointPos.y, Data.notificationPointPos.z, Data.notificationPointPos.z);
                 GUI.color = Data.notificationPointColor;
