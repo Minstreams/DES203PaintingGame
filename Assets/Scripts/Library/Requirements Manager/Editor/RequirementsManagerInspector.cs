@@ -16,14 +16,14 @@ namespace GameSystem.Requirements
         bool edittingComment;
 
         const string priorityTooltip = @"Priorities:
-    Optional
-    Normal
-    Urgent";
+    【Optional】
+    【Normal】
+    【Urgent】";
         const string statusTooltip = @"Status：
-    Unfinished: No file at the expected path.
-    Unchecked: Wait for Minke to check it.
-    Checked: The asset is already applied to the game. There is still room for further iterative optimization.
-    Stable: Final version. No need to change.";
+    【Unfinished】: No file at the expected path.
+    【Unchecked】: Wait for Minke to check it.
+    【Checked】: The asset is already applied to the game. There is still room for further iterative optimization.
+    【Stable】: Final version. No need to change.";
         void OnGUI()
         {
             if (SelectedRequirement == null)
