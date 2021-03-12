@@ -24,19 +24,26 @@ namespace GameSystem.Requirements
             {
                 Manager.NewRequirement();
             }
-            if(GUILayout.Button("Refresh Manually"))
+            if (GUILayout.Button("Refresh Manually"))
             {
                 Manager.RefreshList();
             }
             if (SelectedRequirement == null) return;
             {
                 scrollPos = GUILayout.BeginScrollView(scrollPos);
+                EditorGUI.BeginChangeCheck();
                 GUILayout.Label("Name:");
                 SelectedRequirement.name = GUILayout.TextField(SelectedRequirement.name);
                 GUILayout.Label("Description:");
                 SelectedRequirement.description = GUILayout.TextArea(SelectedRequirement.description);
                 GUILayout.Label("Path:");
+                var oldPath = SelectedRequirement.path;
+                EditorGUI.BeginChangeCheck();
                 SelectedRequirement.path = GUILayout.TextField(SelectedRequirement.path);
+                if (EditorGUI.EndChangeCheck())
+                {
+                    Manager.UpdateSelectedTimestamp(oldPath);
+                }
                 GUILayout.Label("Priority:");
                 SelectedRequirement.priority = (RequirementPriority)EditorGUILayout.EnumPopup(SelectedRequirement.priority);
                 GUILayout.Label("Status:");
@@ -47,6 +54,11 @@ namespace GameSystem.Requirements
                 SelectedRequirement.comment = GUILayout.TextArea(SelectedRequirement.comment);
                 GUILayout.Label("Feedback:");
                 SelectedRequirement.feedback = GUILayout.TextArea(SelectedRequirement.feedback);
+                if (EditorGUI.EndChangeCheck())
+                {
+                    SelectedRequirement.UpdateTimestamp();
+                    Manager.Repaint();
+                }
                 GUILayout.EndScrollView();
             }
         }

@@ -22,8 +22,9 @@ namespace GameSystem.Requirements
         [MinsHeader("General")]
         [Label] public float reqLabelHeight = 16;
         [Label] public Vector2 reqRectMargin = new Vector2(4, 8);
-        [Label] public GUIStyle reqLabelStyle;
-        [Label] public float lineWidth = 2;
+        [Label] public Vector3 notificationPointPos;
+        [Label] public Color notificationPointColor;
+        [Label] public GUIStyle notificationPointStyle;
 
         [MinsHeader("Selection")]
         [Label] public GUIStyle selectionStyle;

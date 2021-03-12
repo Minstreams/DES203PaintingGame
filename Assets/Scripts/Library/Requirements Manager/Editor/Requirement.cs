@@ -14,10 +14,19 @@ namespace GameSystem.Requirements
         [Label] public string responsiblePerson;
         [Label] public string comment;
         [Label] public string feedback;
+        [Label] public double timestamp;
 
+        public Requirement()
+        {
+            UpdateTimestamp();
+        }
         public int CompareTo(object obj)
         {
             return string.Compare(path, (obj as Requirement).path);
+        }
+        public void UpdateTimestamp()
+        {
+            timestamp = (DateTime.UtcNow - DateTime.MinValue).TotalSeconds;
         }
     }
     [System.Flags]

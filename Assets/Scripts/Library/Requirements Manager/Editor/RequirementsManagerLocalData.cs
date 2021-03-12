@@ -8,5 +8,6 @@ namespace GameSystem.Requirements
     public class RequirementsManagerLocalData : ScriptableObject
     {
         [Label] public string localName = "Sakura";
+        public TimestampDictionary timestampDictionary = new TimestampDictionary();
     }
 }

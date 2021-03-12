@@ -98,24 +98,23 @@ namespace GameSystem.Requirements
                 }
                 GUILayout.EndHorizontal();
 
-                EditorGUI.BeginChangeCheck();
                 GUILayout.Space(2);
                 GUILayout.BeginHorizontal();
                 {
-                    if (GUILayout.Button("Volunteer", Data.miniButtonSytle))
+                    if (GUILayout.Button("Volunteer", Data.miniButtonSytle) && SelectedRequirement.responsiblePerson != LocalData.localName)
                     {
                         Undo.RecordObject(Data, "Volunteer to be responsible person");
                         SelectedRequirement.responsiblePerson = LocalData.localName;
                         ShowNotification(new GUIContent("Success. Ctrl + Z to undo."));
                         EditorUtility.SetDirty(Data);
                         Manager.Repaint();
+                        SelectedRequirement.UpdateTimestamp();
+                        Manager.UpdateSelectedTimestamp();
                     }
                     GUILayout.Label("Responsible Person", Data.miniHeaderStyle);
-                    GUILayout.Label(SelectedRequirement.responsiblePerson, Data.singlelineStyle);
+                    GUILayout.Label(string.IsNullOrWhiteSpace(SelectedRequirement.responsiblePerson) ? "NOBODY" : SelectedRequirement.responsiblePerson, Data.singlelineStyle);
                 }
                 GUILayout.EndHorizontal();
-                if (EditorGUI.EndChangeCheck()) Manager.Repaint();
-
 
                 GUILayout.Space(4);
                 GUILayout.Box(GUIContent.none, "ProfilerDetailViewBackground");
@@ -126,8 +125,14 @@ namespace GameSystem.Requirements
                 GUILayout.Label("Description", Data.headerStyle);
                 GUILayout.Label(SelectedRequirement.description, Data.multilineStyle);
 
+                EditorGUI.BeginChangeCheck();
                 GUILayout.Label("Comment", Data.headerStyle);
                 SelectedRequirement.comment = GUILayout.TextArea(SelectedRequirement.comment, Data.multilineAreaStyle);
+                if (EditorGUI.EndChangeCheck())
+                {
+                    SelectedRequirement.UpdateTimestamp();
+                    Manager.UpdateSelectedTimestamp();
+                }
 
                 if (!string.IsNullOrWhiteSpace(SelectedRequirement.feedback))
                 {
