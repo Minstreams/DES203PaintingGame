@@ -81,6 +81,7 @@ namespace GameSystem.Requirements
                         {
                             SelectedRequirement.UpdateTimestamp();
                             Manager.UpdateSelectedTimestamp();
+                            EditorUtility.SetDirty(Data);
                         }
                     }
                     else
@@ -148,11 +149,11 @@ namespace GameSystem.Requirements
                             Undo.RecordObject(Data, "Volunteer to be responsible person");
                             SelectedRequirement.responsiblePerson = LocalData.localName;
                             ShowNotification(new GUIContent("Success. Ctrl + Z to undo."));
-                            EditorUtility.SetDirty(Data);
                             Manager.RefreshFilters();
                             SelectedRequirement.UpdateTimestamp();
                             Manager.UpdateSelectedTimestamp();
                             Manager.Repaint();
+                            EditorUtility.SetDirty(Data);
                         }
                     }
                     GUILayout.Label("Responsible Person", Data.miniHeaderStyle);

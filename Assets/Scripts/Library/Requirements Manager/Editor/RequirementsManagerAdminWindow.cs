@@ -18,9 +18,13 @@ namespace GameSystem.Requirements
 
         void OnSelectionChange()
         {
+            if (Manager == null) return;
             var path = AssetDatabase.GetAssetPath(Selection.activeObject);
-            if (path.StartsWith("Assets/")) currentPath = path.Substring(6);
-            if (!AssetDatabase.IsValidFolder(path)) currentPath = currentPath.Substring(0, currentPath.LastIndexOf("/"));
+            if (path.StartsWith("Assets/"))
+            {
+                currentPath = path.Substring(6);
+                if (!AssetDatabase.IsValidFolder(path)) currentPath = currentPath.Substring(0, currentPath.LastIndexOf("/"));
+            }
             Repaint();
         }
 
@@ -119,6 +123,7 @@ namespace GameSystem.Requirements
                         SelectedRequirement.UpdateTimestamp();
                         Manager.RefreshFilters();
                         Manager.Repaint();
+                        EditorUtility.SetDirty(Data);
                     }
                     GUILayout.EndScrollView();
                 }
