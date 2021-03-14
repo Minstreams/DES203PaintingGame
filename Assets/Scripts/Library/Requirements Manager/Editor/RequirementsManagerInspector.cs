@@ -7,8 +7,8 @@ namespace GameSystem.Requirements
 {
     public class RequirementsManagerInspector : EditorWindow
     {
-        static RequirementsManager Manager => RequirementsManager.activeManager;
-        static Requirement SelectedRequirement => RequirementsManager.activeManager?.selectedReq;
+        static RequirementsManager Manager => RequirementsManager.ActiveManager;
+        static Requirement SelectedRequirement => RequirementsManager.ActiveManager?.selectedReq;
         static RequirementsManagerData Data => RequirementsManager.Data;
         static RequirementsManagerLocalData LocalData => RequirementsManager.LocalData;
 
@@ -66,6 +66,43 @@ namespace GameSystem.Requirements
                 GUILayout.Box(GUIContent.none, "ProfilerDetailViewBackground");
                 GUILayout.Space(-12);
 
+                scrollPos = GUILayout.BeginScrollView(scrollPos);
+                {
+                    GUILayout.Label("Description", Data.headerStyle);
+                    GUILayout.Label(SelectedRequirement.description, Data.multilineStyle);
+
+                    GUILayout.Label("Comment", Data.headerStyle);
+                    if (edittingComment)
+                    {
+                        Undo.RecordObject(Data, "Edit Requirement Comment");
+                        EditorGUI.BeginChangeCheck();
+                        SelectedRequirement.comment = EditorGUILayout.TextArea(SelectedRequirement.comment, Data.multilineAreaStyle);
+                        if (EditorGUI.EndChangeCheck())
+                        {
+                            SelectedRequirement.UpdateTimestamp();
+                            Manager.UpdateSelectedTimestamp();
+                        }
+                    }
+                    else
+                    {
+                        if (GUILayout.Button(SelectedRequirement.comment, Data.multilineAreaStyle))
+                        {
+                            edittingComment = true;
+                        }
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(SelectedRequirement.feedback))
+                    {
+                        GUILayout.Label("Feedback", Data.headerStyle);
+                        GUILayout.Label(SelectedRequirement.feedback, Data.multilineStyle);
+                    }
+                }
+                GUILayout.EndScrollView();
+
+                GUILayout.FlexibleSpace();
+                GUILayout.Box(GUIContent.none, "ProfilerDetailViewBackground");
+                GUILayout.Space(-12);
+
                 GUILayout.BeginHorizontal();
                 {
                     if (GUILayout.Button("Navigate", Data.miniButtonSytle))
@@ -112,52 +149,17 @@ namespace GameSystem.Requirements
                             SelectedRequirement.responsiblePerson = LocalData.localName;
                             ShowNotification(new GUIContent("Success. Ctrl + Z to undo."));
                             EditorUtility.SetDirty(Data);
-                            Manager.Repaint();
+                            Manager.RefreshFilters();
                             SelectedRequirement.UpdateTimestamp();
                             Manager.UpdateSelectedTimestamp();
+                            Manager.Repaint();
                         }
                     }
                     GUILayout.Label("Responsible Person", Data.miniHeaderStyle);
                     GUILayout.Label(string.IsNullOrWhiteSpace(SelectedRequirement.responsiblePerson) ? "NOBODY" : SelectedRequirement.responsiblePerson, Data.singlelineStyle);
                 }
                 GUILayout.EndHorizontal();
-
                 GUILayout.Space(4);
-                GUILayout.Box(GUIContent.none, "ProfilerDetailViewBackground");
-                GUILayout.Space(-12);
-
-                scrollPos = GUILayout.BeginScrollView(scrollPos);
-
-                GUILayout.Label("Description", Data.headerStyle);
-                GUILayout.Label(SelectedRequirement.description, Data.multilineStyle);
-
-                GUILayout.Label("Comment", Data.headerStyle);
-                if (edittingComment)
-                {
-                    Undo.RecordObject(Data, "Edit Requirement Comment");
-                    EditorGUI.BeginChangeCheck();
-                    SelectedRequirement.comment = EditorGUILayout.TextArea(SelectedRequirement.comment, Data.multilineAreaStyle);
-                    if (EditorGUI.EndChangeCheck())
-                    {
-                        SelectedRequirement.UpdateTimestamp();
-                        Manager.UpdateSelectedTimestamp();
-                    }
-                }
-                else
-                {
-                    if (GUILayout.Button(SelectedRequirement.comment, Data.multilineAreaStyle))
-                    {
-                        edittingComment = true;
-                    }
-                }
-
-                if (!string.IsNullOrWhiteSpace(SelectedRequirement.feedback))
-                {
-                    GUILayout.Label("Feedback", Data.headerStyle);
-                    GUILayout.Label(SelectedRequirement.feedback, Data.multilineStyle);
-                }
-
-                GUILayout.EndScrollView();
             }
         }
 

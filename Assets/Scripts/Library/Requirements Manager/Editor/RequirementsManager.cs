@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using System.Text.RegularExpressions;
 
 namespace GameSystem.Requirements
 {
     public class RequirementsManager : EditorWindow
     {
         const string windowOpenLocker = "RequirementsManagerLocker";
+        const string allStr = "All";
+
         public static RequirementsManagerData Data => data == null ? data = (RequirementsManagerData)EditorGUIUtility.Load("RequirementsManagerData.asset") : data;
         static RequirementsManagerData data;
 
@@ -36,13 +39,13 @@ namespace GameSystem.Requirements
         }
         static RequirementsManagerLocalData localData;
 
-        public static RequirementsManager activeManager;
+        public static RequirementsManager ActiveManager { get; set; }
 
         public static RequirementsManagerInspector Inspector
         {
             get
             {
-                if (activeManager == null) return null;
+                if (ActiveManager == null) return null;
                 if (inspector == null)
                 {
                     inspector = GetWindow<RequirementsManagerInspector>();
@@ -54,13 +57,38 @@ namespace GameSystem.Requirements
         static RequirementsManagerInspector inspector;
 
         // Fields ==================================================
-        public List<Requirement> reqList = new List<Requirement>();
         public Requirement selectedReq;
 
+        List<Requirement> reqList = new List<Requirement>();
         Dictionary<Requirement, bool> fileExists = new Dictionary<Requirement, bool>();
 
         Vector2 scrollPos;
-        const float topRectHeight = 64;
+
+        float topRectHeight => Data.basicHeight + (filterFoldout ? Data.filterHeight : 0) + (sorterFoldout ? Data.sorterHeight : 0);
+
+        bool filterFoldout;
+        string filterPath;
+        bool ifFilterLocalPath;
+        string filterKeyword;
+        List<string> filterPersons = new List<string>();
+        int filterPersonIndex;
+        RequirementStatus filterStatus;
+        RequirementPriority filterPriority;
+        readonly Regex extEx = new Regex(".*\\.([^\\.]+)$");
+        List<string> filterExtensions = new List<string>();
+        int filterExtensionIndex;
+
+        bool sorterFoldout;
+        LinkedList<System.Comparison<Requirement>> sorters = new LinkedList<System.Comparison<Requirement>>();
+        bool sorterStatusInverted;
+        LinkedListNode<System.Comparison<Requirement>> sorterStatus;
+        bool sorterPriorityInverted;
+        LinkedListNode<System.Comparison<Requirement>> sorterPriority;
+        bool sorterNameInverted;
+        LinkedListNode<System.Comparison<Requirement>> sorterName;
+        bool sorterPathInverted;
+        LinkedListNode<System.Comparison<Requirement>> sorterPath;
+
 
         void RequirementField(Rect pos, Requirement req)
         {
@@ -99,15 +127,189 @@ namespace GameSystem.Requirements
             GUI.color = Color.white;
         }
 
+        void OnEnable()
+        {
+            ActiveManager = this;
+            RefreshFilters();
+            RefreshList();
+            ClearInvalidTimestamp();
+
+            sorterStatus = new LinkedListNode<System.Comparison<Requirement>>((l, r) =>
+            {
+                var res = l.status.CompareTo(r.status) + (fileExists[l] ? 0 : -1) + (fileExists[r] ? 0 : 1);
+                return sorterStatusInverted ? -res : res;
+            });
+            sorters.AddFirst(sorterStatus);
+            sorterPriority = new LinkedListNode<System.Comparison<Requirement>>((l, r) =>
+            {
+                var res = l.priority.CompareTo(r.priority);
+                return sorterPriorityInverted ? -res : res;
+            });
+            sorters.AddFirst(sorterPriority);
+            sorterName = new LinkedListNode<System.Comparison<Requirement>>((l, r) =>
+            {
+                var res = l.name.CompareTo(r.name);
+                return sorterNameInverted ? -res : res;
+            });
+            sorters.AddFirst(sorterName);
+            sorterPath = new LinkedListNode<System.Comparison<Requirement>>((l, r) =>
+            {
+                var res = l.path.CompareTo(r.path);
+                return sorterPathInverted ? -res : res;
+            });
+            sorters.AddFirst(sorterPath);
+        }
+
+        void OnSelectionChange()
+        {
+            var path = AssetDatabase.GetAssetPath(Selection.activeObject);
+            if (path.StartsWith("Assets/")) filterPath = path.Substring(6);
+            if (!AssetDatabase.IsValidFolder(path)) filterPath = filterPath.Substring(0, filterPath.LastIndexOf("/"));
+            if (ifFilterLocalPath) RefreshList();
+            Repaint();
+        }
+        bool OnFilter(Requirement req)
+        {
+            if (ifFilterLocalPath && filterPath.StartsWith("/") && !req.path.StartsWith(filterPath)) return false;
+            if (!string.IsNullOrWhiteSpace(filterKeyword) && !req.name.Contains(filterKeyword)) return false;
+            if (filterPersonIndex > 0 && !string.IsNullOrWhiteSpace(req.responsiblePerson) && filterPersons[filterPersonIndex] != req.responsiblePerson) return false;
+            if (filterStatus > 0 && !filterStatus.HasFlag(req.status)) return false;
+            if (filterPriority > 0 && !filterPriority.HasFlag(req.priority)) return false;
+            if (filterExtensionIndex > 0)
+            {
+                var match = extEx.Match(req.path);
+                if (!match.Success || filterExtensions[filterExtensionIndex] != match.Groups[1].Value)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        int OnCompare(Requirement l, Requirement r)
+        {
+            foreach (var s in sorters)
+            {
+                var res = s.Invoke(l, r);
+                if (res == 0) continue;
+                return res;
+            }
+            return 0;
+        }
+
+        void SorterField(string label, ref bool inverted, LinkedListNode<System.Comparison<Requirement>> sorter)
+        {
+            GUILayout.BeginHorizontal(Data.sorterButtonStyle);
+            {
+                if (GUILayout.Button(label, Data.sorterLabelStyle))
+                {
+                    inverted = !inverted;
+                    sorters.Remove(sorter);
+                    sorters.AddFirst(sorter);
+                }
+                GUI.color = sorters.First == sorter ? Data.sorterFirstColor : Data.sorterNormalColor;
+                GUILayout.Label(GUIContent.none, inverted ? Data.sorterInvertedStyle : Data.sorterNormalStyle);
+                GUI.color = Color.white;
+            }
+            GUILayout.EndHorizontal();
+        }
+
         void OnGUI()
         {
-
             var windowRect = new Rect(Vector2.zero, position.size);
 
             var topRect = new Rect(0, 0, windowRect.size.x, topRectHeight);
             GUILayout.BeginArea(topRect);
             {
-                LocalData.localName = GUILayout.TextField(LocalData.localName);
+                GUILayout.Label("Requirements Manager", Data.nameStyle);
+                GUILayout.BeginHorizontal();
+                {
+                    GUILayout.Label("Your name", Data.miniHeaderStyle);
+                    LocalData.localName = GUILayout.TextField(LocalData.localName);
+                }
+                GUILayout.EndHorizontal();
+
+                GUILayout.Space(6);
+                GUILayout.Box(GUIContent.none, "ProfilerDetailViewBackground");
+                GUILayout.Space(-12);
+
+                GUILayout.BeginHorizontal();
+                {
+                    filterFoldout = EditorGUILayout.Foldout(filterFoldout, "Filters", true, Data.foldoutStyle);
+                    EditorGUI.BeginChangeCheck();
+
+                    if (ifFilterLocalPath)
+                    {
+                        GUI.color = Data.filterLocalColor;
+                        GUILayout.Label(filterPath, Data.filterPathStyle);
+                    }
+                    else GUILayout.FlexibleSpace();
+
+                    if (GUILayout.Button(GUIContent.none, ifFilterLocalPath ? Data.filterLocalStyle : Data.filterWorldStyle))
+                    {
+                        ifFilterLocalPath = !ifFilterLocalPath;
+                        RefreshList();
+                    }
+                    GUI.color = Color.white;
+
+                    if (GUILayout.Button("Reset", Data.miniButtonSytle))
+                    {
+                        ifFilterLocalPath = false;
+                        filterKeyword = "";
+                        filterPersonIndex = 0;
+                        filterStatus = 0;
+                        filterPriority = 0;
+                        filterExtensionIndex = 0;
+                    }
+                    GUILayout.Space(3);
+                }
+                GUILayout.EndHorizontal();
+                if (filterFoldout)
+                {
+                    GUILayout.BeginHorizontal();
+                    {
+                        GUILayout.Space(Data.indentWidth);
+                        GUILayout.Label("Keyword", GUILayout.ExpandWidth(false));
+                        filterKeyword = GUILayout.TextField(filterKeyword, GUILayout.ExpandWidth(true));
+                        GUILayout.Label("Person", GUILayout.ExpandWidth(false));
+                        filterPersonIndex = EditorGUILayout.Popup(filterPersonIndex, filterPersons.ToArray(), GUILayout.MaxWidth(Data.filterOptionWidth));
+                    }
+                    GUILayout.EndHorizontal();
+                    GUILayout.BeginHorizontal();
+                    {
+                        GUILayout.Space(Data.indentWidth);
+                        GUILayout.Label("Status", GUILayout.ExpandWidth(false));
+                        filterStatus = (RequirementStatus)EditorGUILayout.EnumFlagsField((RequirementStatusFilter)filterStatus, GUILayout.MaxWidth(Data.filterOptionWidth));
+                        GUILayout.FlexibleSpace();
+                        GUILayout.Label("Priority", GUILayout.ExpandWidth(false));
+                        filterPriority = (RequirementPriority)EditorGUILayout.EnumFlagsField((RequirementPriorityFilter)filterPriority, GUILayout.MaxWidth(Data.filterOptionWidth));
+                        GUILayout.FlexibleSpace();
+                        GUILayout.Label("Format", GUILayout.ExpandWidth(false));
+                        filterExtensionIndex = EditorGUILayout.Popup(filterExtensionIndex, filterExtensions.ToArray(), GUILayout.MaxWidth(Data.filterOptionWidth));
+                    }
+                    GUILayout.EndHorizontal();
+
+                    if (EditorGUI.EndChangeCheck()) RefreshList();
+                }
+
+                GUILayout.Space(4);
+                GUILayout.Box(GUIContent.none, "ProfilerDetailViewBackground");
+                GUILayout.Space(-12);
+                sorterFoldout = EditorGUILayout.Foldout(sorterFoldout, "Sorters", true, Data.foldoutStyle);
+                if (sorterFoldout)
+                {
+                    EditorGUI.BeginChangeCheck();
+                    GUILayout.BeginHorizontal();
+                    {
+                        GUILayout.Space(Data.indentWidth);
+                        SorterField("Status", ref sorterStatusInverted, sorterStatus);
+                        SorterField("Priority", ref sorterPriorityInverted, sorterPriority);
+                        SorterField("Name", ref sorterNameInverted, sorterName);
+                        SorterField("Path", ref sorterPathInverted, sorterPath);
+                    }
+                    GUILayout.EndHorizontal();
+                    if (EditorGUI.EndChangeCheck()) RefreshList();
+                }
             }
             GUILayout.EndArea();
 
@@ -126,18 +328,6 @@ namespace GameSystem.Requirements
                 }
             }
             GUI.EndScrollView();
-        }
-
-        void OnEnable()
-        {
-            activeManager = this;
-            RefreshList();
-            ClearInvalidTimestamp();
-        }
-
-        void OnSelectionChange()
-        {
-            Repaint();
         }
 
         #region API
@@ -189,31 +379,77 @@ namespace GameSystem.Requirements
                 default: return "Stable";
             }
         }
+        public void RefreshFilters()
+        {
+            var filterPerson = filterPersons.Count > 0 ? filterPersons[filterPersonIndex] : allStr;
+            filterPersons.Clear();
+            filterPersons.Add(allStr);
+
+            var filterExtension = filterExtensions.Count > 0 ? filterExtensions[filterExtensionIndex] : allStr;
+            filterExtensions.Clear();
+            filterExtensions.Add(allStr);
+
+            foreach (var r in Data.requirementList)
+            {
+                if (!string.IsNullOrWhiteSpace(r.responsiblePerson) && !filterPersons.Contains(r.responsiblePerson))
+                {
+                    filterPersons.Add(r.responsiblePerson);
+                }
+                var match = extEx.Match(r.path);
+                if (match.Success && !filterExtensions.Contains(match.Groups[1].Value))
+                {
+                    filterExtensions.Add(match.Groups[1].Value);
+                }
+            }
+
+            filterPersonIndex = filterPersons.IndexOf(filterPerson);
+            if (filterPersonIndex < 0)
+            {
+                filterPersonIndex = 0;
+                RefreshList();
+            }
+
+            filterExtensionIndex = filterExtensions.IndexOf(filterExtension);
+            if (filterExtensionIndex < 0)
+            {
+                filterExtensionIndex = 0;
+                RefreshList();
+            }
+        }
         public void RefreshList()
         {
             fileExists.Clear();
-            reqList = new List<Requirement>(Data.requirementList);
+            reqList.Clear();
 
             // apply the filters
+            foreach (var r in Data.requirementList)
+            {
+                if (OnFilter(r))
+                {
+                    reqList.Add(r);
+                }
+            }
 
-
-            // detect file
+            // iterate filtered list
             foreach (var r in reqList)
             {
+                // detect file
                 fileExists.Add(r, System.IO.File.Exists("Assets" + r.path));
             }
 
-            if (!reqList.Contains(selectedReq)) selectedReq = null;
+            // sort
+            reqList.Sort(OnCompare);
 
-            Repaint();
+            // keep fields consistent
+            if (!reqList.Contains(selectedReq)) selectedReq = null;
         }
         public void NewRequirement()
         {
             var req = new Requirement();
             Data.requirementList.Add(req);
             selectedReq = req;
-            UpdateSelectedTimestamp();
             RefreshList();
+            Repaint();
         }
         public void UpdateSelectedTimestamp(string oldPath = null)
         {
@@ -222,6 +458,7 @@ namespace GameSystem.Requirements
                 if (LocalData.timestampDictionary.ContainsKey(oldPath))
                 {
                     LocalData.timestampDictionary.Remove(oldPath);
+                    EditorUtility.SetDirty(LocalData);
                 }
             }
             if (!string.IsNullOrWhiteSpace(selectedReq.path))
@@ -235,6 +472,7 @@ namespace GameSystem.Requirements
                 {
                     LocalData.timestampDictionary.Add(selectedReq.path, timestamp);
                 }
+                EditorUtility.SetDirty(LocalData);
             }
         }
         public void ClearInvalidTimestamp()
@@ -247,7 +485,6 @@ namespace GameSystem.Requirements
                     paths.Add(r.path);
                 }
             }
-
             for (int i = LocalData.timestampDictionary.Count - 1; i >= 0; --i)
             {
                 if (!paths.Contains(LocalData.timestampDictionary.Keys[i]))
@@ -255,9 +492,9 @@ namespace GameSystem.Requirements
                     LocalData.timestampDictionary.Remove(LocalData.timestampDictionary.Keys[i]);
                 }
             }
+            EditorUtility.SetDirty(LocalData);
         }
         #endregion
-
 
         #region Static Window Functions
         [InitializeOnLoadMethod]
@@ -275,7 +512,5 @@ namespace GameSystem.Requirements
             window.titleContent = new GUIContent(Data.managerTitle, Data.managerIcon);
         }
         #endregion
-
     }
-
 }

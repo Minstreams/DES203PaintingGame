@@ -8,7 +8,7 @@ namespace GameSystem.Requirements
     {
         [Label] public string name = "new requirement";
         [Label] public string description = "description";
-        [Label] public string path;
+        [Label] public string path = "/";
         [Label] public RequirementPriority priority = RequirementPriority.normal;
         [Label] public RequirementStatus status = RequirementStatus.@unchecked;
         [Label] public string responsiblePerson;
@@ -29,17 +29,31 @@ namespace GameSystem.Requirements
             timestamp = (DateTime.UtcNow - DateTime.MinValue).TotalSeconds;
         }
     }
-    [System.Flags]
     public enum RequirementPriority
     {
         optional = 1,
         normal = 2,
         urgent = 4,
     }
-    [System.Flags]
+    public enum RequirementPriorityFilter
+    {
+        all = 0,
+        optional = 1,
+        normal = 2,
+        urgent = 4,
+    }
+
     public enum RequirementStatus
     {
         @unchecked = 1,
+        @checked = 2,
+        stable = 4,
+    }
+    [System.Flags]
+    public enum RequirementStatusFilter
+    {
+        all = 0,
+        unfinishedAndUnchecked = 1,
         @checked = 2,
         stable = 4,
     }

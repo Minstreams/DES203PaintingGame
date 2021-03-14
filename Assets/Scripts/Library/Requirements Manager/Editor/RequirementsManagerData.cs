@@ -59,6 +59,24 @@ namespace GameSystem.Requirements
         [Label] public GUIStyle responsiblePersonStyle;
         [Label] public Texture responsiblePersonTex;
 
+        [MinsHeader("Top Area")]
+        [Label] public float basicHeight;
+        [Label] public float indentWidth;
+        [Label] public GUIStyle foldoutStyle;
+        [Label] public float filterHeight;
+        [Label] public float filterOptionWidth;
+        [Label] public Color filterLocalColor;
+        [Label] public GUIStyle filterLocalStyle;
+        [Label] public GUIStyle filterWorldStyle;
+        [Label] public GUIStyle filterPathStyle;
+        [Label] public float sorterHeight;
+        [Label] public GUIStyle sorterButtonStyle;
+        [Label] public GUIStyle sorterLabelStyle;
+        [Label] public GUIStyle sorterNormalStyle;
+        [Label] public GUIStyle sorterInvertedStyle;
+        [Label] public Color sorterFirstColor;
+        [Label] public Color sorterNormalColor;
+
         [Separator]
         [MinsHeader("Inspector", SummaryType.Title, -1)]
         [Label] public GUIStyle nameStyle;

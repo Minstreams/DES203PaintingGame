@@ -35,7 +35,7 @@ namespace GameSystem.Requirements
             base.OnInspectorGUI();
             if (EditorGUI.EndChangeCheck())
             {
-                RequirementsManager.activeManager?.Repaint();
+                RequirementsManager.ActiveManager?.Repaint();
                 RequirementsManager.Inspector?.Repaint();
             }
 
@@ -49,12 +49,12 @@ namespace GameSystem.Requirements
                 try
                 {
                     fieldList[fieldIndex].SetValue(Data, new GUIStyle(styleString) {/* name = fieldListTextArray[fieldIndex]*/ });
-                    RequirementsManager.activeManager?.Repaint();
+                    RequirementsManager.ActiveManager?.Repaint();
                     RequirementsManager.Inspector?.Repaint();
                 }
                 catch
                 {
-                    RequirementsManager.activeManager?.ShowNotification(new GUIContent("Invalid"));
+                    RequirementsManager.ActiveManager?.ShowNotification(new GUIContent("Invalid"));
                 }
             }
         }
