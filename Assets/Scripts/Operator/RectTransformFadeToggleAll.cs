@@ -38,7 +38,12 @@ namespace GameSystem.Operator
             else
             {
                 var fadeouts = GetComponentsInChildren<RectTransformFadeout>(true);
-                foreach (var f in fadeouts) f.gameObject.SetActive(true);
+                foreach (var f in fadeouts)
+                {
+                    f.StopAllCoroutines();
+                    f.gameObject.SetActive(false);
+                    f.gameObject.SetActive(true);
+                }
             }
         }
     }

@@ -49,10 +49,13 @@ namespace GameSystem.Operator
         [ContextMenu("Invoke")]
         public void Invoke()
         {
-            if (!isActiveAndEnabled) return;
             StopAllCoroutines();
             var fout = GetComponent<RectTransformFadeout>();
             if (fout != null) fout.StopAllCoroutines();
+
+            colorOutput?.Invoke(endColor);
+            gameObject.SetActive(true);
+
             StartCoroutine(invoke(time));
         }
         public void Invoke(float time)
