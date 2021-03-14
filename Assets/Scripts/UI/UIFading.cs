@@ -12,95 +12,178 @@ namespace GameSystem.Operator
     {
         [MinsHeader("UI Fading", SummaryType.TitleYellow, 0)]
         [MinsHeader("To perform a fade-in or fade-out effect on an ui element.", SummaryType.CommentCenter, 1)]
-        [LabelRange(-1, 1)] public float offsetX;
-        [LabelRange(-1, 1)] public float offsetY;
-        [LabelRange(-1, 1)] public float offsetZ;
-        [Label] public AnimationCurve curve = AnimationCurve.Linear(0, 0, 1, 1);
-        [Label] public float time = 1;
         [Label] public bool hasColorEffect;
-        [ConditionalShow("hasColorEffect")] public Color inColor = Color.clear;
         [ConditionalShow("hasColorEffect")] public Color normalColor = Color.black;
-        [ConditionalShow("hasColorEffect")] public Color outColor = Color.clear;
         [ConditionalShow("hasColorEffect")] public ColorEvent colorOutput;
 
-        float scale;
-        Vector3 offset;
-        Vector3 targetPos;
+        [MinsHeader("Fade-in")]
+        [ConditionalShow("hasColorEffect")] public Color inColor = Color.clear;
+        [Label] public Vector3 inOffset;
+        [Label] public AnimationCurve inCurve = AnimationCurve.Linear(0, 0, 1, 1);
+        [Label] public float inTime = 1;
+        [Label] public SimpleEvent inStart;
+        [Label] public SimpleEvent inFinish;
 
-        void Start()
+        [MinsHeader("Fade-out")]
+        [ConditionalShow("hasColorEffect")] public Color outColor = Color.clear;
+        [Label] public Vector3 outOffset;
+        [Label] public AnimationCurve outCurve = AnimationCurve.Linear(0, 0, 1, 1);
+        [Label] public float outTime = 1;
+        [Label] public SimpleEvent outStart;
+        [Label] public SimpleEvent outFinish;
+
+        Vector3 originPos;
+        bool fadingIn;
+        Vector3 inScreenOffset;
+        bool fadingOut;
+        Vector3 outScreenOffset;
+
+        bool initialized;
+
+        void Initialize()
         {
-            scale = transform.lossyScale.x;
-            offset = new Vector3(offsetX * Screen.width * scale, offsetY * Screen.height * scale, offsetZ * Screen.height * scale);
-            targetPos = transform.position;
+            originPos = transform.position;
+            var scale = transform.lossyScale.x;
+            inScreenOffset = new Vector3(inOffset.x * Screen.width * scale, inOffset.y * Screen.height * scale, inOffset.z * Screen.height * scale);
+            outScreenOffset = new Vector3(outOffset.x * Screen.width * scale, outOffset.y * Screen.height * scale, outOffset.z * Screen.height * scale);
+            initialized = true;
         }
 
-        [Label] public SimpleEvent onStart;
-        [Label] public SimpleEvent onFinish;
-
         // Input
-        [ContextMenu("Invoke")]
-        public void Invoke()
+        [ContextMenu("Fadein")]
+        public void Fadein()
         {
+            Fadein(inTime);
+        }
+        public void Fadein(float time)
+        {
+            if (!initialized) Initialize();
+
             StopAllCoroutines();
-            var fout = GetComponent<RectTransformFadeout>();
-            if (fout != null) fout.StopAllCoroutines();
+            if (fadingOut) OnFadedout();
 
             colorOutput?.Invoke(normalColor);
             gameObject.SetActive(true);
 
-            StartCoroutine(invoke(time));
-        }
-        public void Invoke(float time)
-        {
-            StartCoroutine(invoke(time));
+            fadingIn = true;
+            inStart?.Invoke();
+            StartCoroutine(fadein(time));
         }
 
-        IEnumerator invoke(float time)
+        IEnumerator fadein(float time)
         {
-            onStart?.Invoke();
             float timer = 0;
             while (timer < 1)
             {
-                float t = curve.Evaluate(timer);
-                transform.position = targetPos + (1 - t) * offset;
+                float t = inCurve.Evaluate(timer);
+                transform.position = originPos + (1 - t) * inScreenOffset;
                 if (hasColorEffect) colorOutput?.Invoke(Color.Lerp(inColor, normalColor, t));
                 timer += Time.deltaTime / time;
                 yield return 0;
             }
-            transform.position = targetPos;
+            transform.position = originPos;
             if (hasColorEffect) colorOutput?.Invoke(normalColor);
-            onFinish?.Invoke();
+            OnFadedin();
         }
+        void OnFadedin()
+        {
+            inFinish?.Invoke();
+            fadingIn = false;
+        }
+
+        [ContextMenu("Fadeout")]
+        public void Fadeout()
+        {
+            Fadeout(outTime);
+        }
+        public void Fadeout(float time)
+        {
+            if (!initialized) Initialize();
+
+            StopAllCoroutines();
+            if (fadingIn) OnFadedin();
+
+            colorOutput?.Invoke(normalColor);
+            gameObject.SetActive(true);
+
+            fadingOut = true;
+            outStart?.Invoke();
+            StartCoroutine(fadeout(time));
+        }
+        IEnumerator fadeout(float time)
+        {
+            float timer = 0;
+            while (timer < 1)
+            {
+                float t = outCurve.Evaluate(timer);
+                transform.position = originPos + t * outScreenOffset;
+                if (hasColorEffect) colorOutput?.Invoke(Color.Lerp(normalColor, outColor, t));
+                timer += Time.deltaTime / time;
+                yield return 0;
+            }
+            transform.position = originPos;
+            if (hasColorEffect) colorOutput?.Invoke(outColor);
+            OnFadedout();
+        }
+        void OnFadedout()
+        {
+            outFinish?.Invoke();
+            gameObject.SetActive(false);
+            fadingOut = false;
+        }
+
 
 #if UNITY_EDITOR
         void OnDrawGizmosSelected()
         {
             var c = Gizmos.color;
+
             var rect = GetComponent<RectTransform>().rect;
             var scale = transform.lossyScale.x;
-            var offset = new Vector3(offsetX * Screen.width, offsetY * Screen.height, offsetZ * Screen.height) * scale;
             var size = new Vector3(rect.width, rect.height) * scale;
             var pos = transform.position;
             Vector3 centerOffset = (Vector2.one * 0.5f - GetComponent<RectTransform>().pivot) * rect.size * scale;
+
+            var inScreenOffset = new Vector3(inOffset.x * Screen.width, inOffset.y * Screen.height, inOffset.z * Screen.height) * scale;
+            var outScreenOffset = new Vector3(outOffset.x * Screen.width, outOffset.y * Screen.height, outOffset.z * Screen.height) * scale;
+
             if (UnityEditor.EditorApplication.isPlaying)
             {
                 Gizmos.color = new Color(1, 0, 1);
                 Gizmos.DrawWireCube(pos + centerOffset, size);
                 Gizmos.DrawWireSphere(pos, 5 * scale);
-                pos = targetPos;
+                pos = originPos;
             }
+
             var center = pos + centerOffset;
-            var target = center + offset;
+            var inTarget = center + inScreenOffset;
+            var outTarget = center + outScreenOffset;
+
             Gizmos.color = Color.cyan;
-            Gizmos.DrawWireCube(center + offset, size);
+            Gizmos.DrawWireCube(center + inScreenOffset, size);
+
+            Gizmos.color = new Color(1, 0.3f, 0);
+            Gizmos.DrawWireCube(center + outScreenOffset, size);
+
             size *= 0.5f;
             Gizmos.color = new Color(0.5f, 0.5f, 1);
-            Gizmos.DrawLine(pos, pos + offset);
-            Gizmos.DrawLine(center + size, target + size);
-            Gizmos.DrawLine(center - size, target - size);
+
+            Gizmos.DrawLine(pos, pos + inScreenOffset);
+            Gizmos.DrawLine(center + size, inTarget + size);
+            Gizmos.DrawLine(center - size, inTarget - size);
+
+            Gizmos.DrawLine(pos, pos + outScreenOffset);
+            Gizmos.DrawLine(center + size, outTarget + size);
+            Gizmos.DrawLine(center - size, outTarget - size);
+
             size.x = -size.x;
-            Gizmos.DrawLine(center + size, target + size);
-            Gizmos.DrawLine(center - size, target - size);
+
+            Gizmos.DrawLine(center + size, inTarget + size);
+            Gizmos.DrawLine(center - size, inTarget - size);
+
+            Gizmos.DrawLine(center + size, outTarget + size);
+            Gizmos.DrawLine(center - size, outTarget - size);
+
             Gizmos.color = c;
         }
 #endif

@@ -21,7 +21,10 @@ public class LabelDrawer : PropertyDrawer
             initialized = true;
         }
         DrawLabel(position, property, Attr.Label, Attr.Const, drawerOverride);
+
+        LabelClipBoard.PopupMenu(position, property);
     }
+
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
         return GetHeight(property, label, drawerOverride);
