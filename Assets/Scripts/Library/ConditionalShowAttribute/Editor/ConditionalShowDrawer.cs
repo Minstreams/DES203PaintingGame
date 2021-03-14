@@ -28,7 +28,7 @@ public class ConditionalShowDrawer : PropertyDrawer
     {
         if (!initialized)
         {
-            if (property.type.EndsWith("Event")) drawerOverride = new UnityEditorInternal.UnityEventDrawer();
+            if (property.type.EndsWith("Event")) drawerOverride = new LabelEventDrawer();
             if (property.type.EndsWith("Map")) drawerOverride = System.Reflection.Assembly.GetExecutingAssembly().CreateInstance(property.type + "Drawer") as PropertyDrawer;
             initialized = true;
         }
