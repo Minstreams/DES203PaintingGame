@@ -24,7 +24,7 @@ public class SkullNest : MonoBehaviour
     float[] radius;
     int patrolPointIndex;
 
-    void Start()
+    void Awake()
     {
         skulls = new HashSet<Skull>(GetComponentsInChildren<Skull>());
         patrolPointIndex = 0;

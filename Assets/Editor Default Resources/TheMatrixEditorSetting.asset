@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36bf4857919ba1743846793ca76a1f45, type: 3}
   m_Name: TheMatrixEditorSetting
   m_EditorClassIdentifier: 
-  fullTest: 1
+  fullTest: 0
   saveData: 0
   debug: 1
   sideScrollingCameraPointPrefab: {fileID: 928533210815114227, guid: 2b958d88ce1caec4887903bf65e3b45f,

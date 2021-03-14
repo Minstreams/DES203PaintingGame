@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 94.66959, g: 63.494427, b: 99.42646, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4106,21 +4106,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 764300779541679545, guid: 9cef6a6fd5128574b886899c4b79dd7f,
-        type: 3}
-      propertyPath: attackInfos.Array.data[0].attackPower
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 764300779541679545, guid: 9cef6a6fd5128574b886899c4b79dd7f,
-        type: 3}
-      propertyPath: attackInfos.Array.data[1].attackPower
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 764300779541679546, guid: 9cef6a6fd5128574b886899c4b79dd7f,
-        type: 3}
-      propertyPath: jumpForce
-      value: 400
-      objectReference: {fileID: 0}
     - target: {fileID: 764300779541679550, guid: 9cef6a6fd5128574b886899c4b79dd7f,
         type: 3}
       propertyPath: m_RootOrder

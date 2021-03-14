@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PaintingParticle
+  m_Name: AttackParticle
   m_Shader: {fileID: -6465566751694194690, guid: e6bd16ed0cccd124f86f121b2b4bbc25,
     type: 3}
   m_ShaderKeywords: _BLENDMODE_ALPHA _SURFACE_TYPE_TRANSPARENT
@@ -165,7 +165,7 @@ Material:
     - _AlphaDstBlend: 10
     - _AlphaSrcBlend: 1
     - _Anisotropy: 0
-    - _BaseIntensity: 168
+    - _BaseIntensity: 0.9
     - _BlendMode: 0
     - _CoatMask: 0
     - _CullMode: 2
@@ -222,7 +222,7 @@ Material:
     - _Ior: 1.5
     - _IridescenceMask: 1
     - _IridescenceThickness: 1
-    - _LerpRate: 0.1
+    - _LerpRate: 0.217
     - _LightIntensity: 1000
     - _LinkDetailsWithBase: 1
     - _MaterialID: 1
@@ -277,17 +277,17 @@ Material:
     - _TransparentDepthPrepassEnable: 0
     - _TransparentSortPriority: 0
     - _TransparentWritingMotionVec: 0
-    - _TransparentZWrite: 1
+    - _TransparentZWrite: 0
     - _UVBase: 0
     - _UVDetail: 0
     - _UVEmissive: 0
     - _UseEmissiveIntensity: 1
     - _UseShadowThreshold: 0
-    - _ZTestDepthEqualForOpaque: 2
+    - _ZTestDepthEqualForOpaque: 0
     - _ZTestGBuffer: 4
     - _ZTestModeDistortion: 4
-    - _ZTestTransparent: 2
-    - _ZWrite: 1
+    - _ZTestTransparent: 0
+    - _ZWrite: 0
     m_Colors:
     - Color_E0DAE907: {r: 1, g: 1, b: 1, a: 0}
     - _BaseColor: {r: 0, g: 0, b: 0, a: 0}
