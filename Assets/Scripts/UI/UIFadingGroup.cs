@@ -14,15 +14,16 @@ namespace GameSystem.Operator
         [MinsHeader("To control a group of UI fading operators.", SummaryType.CommentCenter, 1)]
         [Label("Active on Start"), SerializeField] bool active;
         [Label] public bool overrideTargets;
-        [ConditionalShow("givenTargets", Label = "Target ")] public UIFading[] targets;
+        [ConditionalShow("overrideTargets", Label = "Target ")] public UIFading[] targets;
         [MinsHeader("Events")]
         [Label] public SimpleEvent onFadein;
         [Label] public SimpleEvent onFadeout;
 
-
-        void Awake()
+        void Start()
         {
             if (!overrideTargets) targets = GetComponentsInChildren<UIFading>(true);
+            if (active) Fadein();
+            else foreach (var f in targets) f.gameObject.SetActive(false);
         }
 
         // Input

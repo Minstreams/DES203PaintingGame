@@ -362,6 +362,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Menu Panel
       objectReference: {fileID: 0}
+    - target: {fileID: 703774675998529500, guid: b15e209ae8bcbb64c8c035699c0003e0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 703774675998529501, guid: b15e209ae8bcbb64c8c035699c0003e0,
         type: 3}
       propertyPath: m_Pivot.x
@@ -592,6 +597,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Title
       objectReference: {fileID: 0}
+    - target: {fileID: 5040448923873080597, guid: 460645e7cc344014193fe339b974c207,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 460645e7cc344014193fe339b974c207, type: 3}
 --- !u!224 &2108484645641923361 stripped
@@ -607,6 +617,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8055210285834178056}
     m_Modifications:
+    - target: {fileID: 6564083947814851478, guid: 409f51c1749a4f24e92e4e86969b1e2a,
+        type: 3}
+      propertyPath: m_Text
+      value: Return to main menu
+      objectReference: {fileID: 0}
     - target: {fileID: 6564083949522280294, guid: 409f51c1749a4f24e92e4e86969b1e2a,
         type: 3}
       propertyPath: m_Pivot.x
@@ -717,6 +732,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Return to main menu
       objectReference: {fileID: 0}
+    - target: {fileID: 6564083949522280295, guid: 409f51c1749a4f24e92e4e86969b1e2a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6564083949522280296, guid: 409f51c1749a4f24e92e4e86969b1e2a,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -762,6 +782,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8055210285834178056}
     m_Modifications:
+    - target: {fileID: 6564083947814851478, guid: 409f51c1749a4f24e92e4e86969b1e2a,
+        type: 3}
+      propertyPath: m_Text
+      value: Resume
+      objectReference: {fileID: 0}
     - target: {fileID: 6564083949522280294, guid: 409f51c1749a4f24e92e4e86969b1e2a,
         type: 3}
       propertyPath: m_Pivot.x
@@ -872,6 +897,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Resume
       objectReference: {fileID: 0}
+    - target: {fileID: 6564083949522280295, guid: 409f51c1749a4f24e92e4e86969b1e2a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6564083949522280296, guid: 409f51c1749a4f24e92e4e86969b1e2a,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -920,7 +950,12 @@ PrefabInstance:
     - target: {fileID: 8380881324841169400, guid: dc31f14dd82f8f54c9ebb6a1e7ca1a34,
         type: 3}
       propertyPath: m_Name
-      value: SubTitle Map
+      value: Subtitle Map
+      objectReference: {fileID: 0}
+    - target: {fileID: 8380881324841169400, guid: dc31f14dd82f8f54c9ebb6a1e7ca1a34,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8380881324841169401, guid: dc31f14dd82f8f54c9ebb6a1e7ca1a34,
         type: 3}

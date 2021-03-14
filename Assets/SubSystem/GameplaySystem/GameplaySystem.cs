@@ -24,9 +24,6 @@ namespace GameSystem
             var living = LayerMask.NameToLayer("Living");
             var attackable = LayerMask.NameToLayer("Attackable");
             Physics.IgnoreLayerCollision(living, attackable);
-
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
         }
 
 

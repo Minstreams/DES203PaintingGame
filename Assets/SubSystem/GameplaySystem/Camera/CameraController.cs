@@ -13,6 +13,7 @@ public class CameraController : MonoBehaviour
     public SideScrollingCameraPoint CameraPointLeft { get; set; } = null;
     public SideScrollingCameraPoint CameraPointRight { get; set; } = null;
     public bool IsSideScrollingMode => ActiveSideScrollingZoneSet.Count > 0;
+    public Camera Cam { get; private set; }
 
     // References
     GameplaySystemSetting Setting => GameplaySystem.Setting;
@@ -20,7 +21,6 @@ public class CameraController : MonoBehaviour
     Vector3 PlayerFocusPoint => GameplaySystem.CurrentPlayer.FocusPoint;
 
     // Fields
-    Camera cam;
     float t;
 
     Vector3 camRelativePositionSetting;
@@ -38,7 +38,7 @@ public class CameraController : MonoBehaviour
     void Awake()
     {
         GameplaySystem.CurrentCamera = this;
-        cam = GetComponent<Camera>();
+        Cam = GetComponent<Camera>();
     }
 
     void Start()
@@ -80,7 +80,7 @@ public class CameraController : MonoBehaviour
             // Apply interpolation
             transform.rotation = Quaternion.Slerp(transform.rotation, camRotation, t);
             camRelativePosition = Vector3.Lerp(camRelativePosition, targetRelativePosition, t);
-            cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, targetFov, t);
+            Cam.fieldOfView = Mathf.Lerp(Cam.fieldOfView, targetFov, t);
         }
         transform.position = PlayerFocusPoint + transform.rotation * camRelativePosition;
     }
@@ -98,7 +98,7 @@ public class CameraController : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, camRotation, Setting.camInterpolatingRateMouseRotation);
         float t = 1 - Mathf.Pow(1 - Setting.camInterpolatingRate, Time.deltaTime);
         camRelativePosition = Vector3.Lerp(camRelativePosition, camRelativePositionSetting, t);
-        cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, camFovSetting, t);
+        Cam.fieldOfView = Mathf.Lerp(Cam.fieldOfView, camFovSetting, t);
 
         transform.position = PlayerFocusPoint + transform.rotation * camRelativePosition;
     }

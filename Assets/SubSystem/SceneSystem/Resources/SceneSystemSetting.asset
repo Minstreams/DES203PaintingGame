@@ -16,9 +16,5 @@ MonoBehaviour:
     list:
     - Logo
     - StartMenu
-    - EnteringMuseum
     - Museum
-    - EnteringPainting
-    - ExitingPainting
-    - Painting1
     - Painting1

@@ -59,7 +59,4 @@ public class FPSController : MonoBehaviour
         float res = Mathf.Lerp(distortionRange.x, distortionRange.y, (dis - distanceRange.x) / (distanceRange.y - distanceRange.x));
         partMat.SetFloat("_DistortionStrength", res);
     }
-
-
-
 }

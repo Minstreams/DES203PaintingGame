@@ -3015,7 +3015,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49621dd4b75646949b200b4c01737317, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 200
+  jumpForce: 400
   walkingForce: 500
   runningForce: 700
   dashForce: 300
@@ -3208,11 +3208,13 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   attackInfos:
-  - attackDamage: 1
-    attackPower: 0.2
+  - name: 
+    attackDamage: 1
+    attackPower: 4
     attackSound: {fileID: 764300778175775083}
-  - attackDamage: 1
-    attackPower: 2
+  - name: 
+    attackDamage: 1
+    attackPower: 8
     attackSound: {fileID: 764300778175775083}
   onDebug:
     m_PersistentCalls:

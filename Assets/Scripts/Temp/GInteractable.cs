@@ -3,43 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using GameSystem;
 
-public class GInteractable : MonoBehaviour
+public class GInteractable : GAttackable
 {
-    [Label] public TextMesh tipTextMesh;
+    [MinsHeader("G Interactable", SummaryType.Title, -1)]
+    [MinsHeader("This Component can be interacted.", SummaryType.CommentCenter)]
+    [Label] public TextMesh tipTextMesh;    // to Show Text in side Scrolling mode
     [Label] public string tipText;
     [Label] public SimpleEvent onInteracted;
 
-    bool pendingInteract;
-    void OnTriggerEnter2D(Collider2D collision)
+    public void ShowTipText()
     {
-        if (collision.CompareTag("Player"))
-        {
-            pendingInteract = true;
-            tipTextMesh.text = $"[{InputSystem.Setting.MainKeys[InputKey.Interact].ToString()}] {tipText}";
-        }
+        tipTextMesh.text = $"[{InputSystem.Setting.MainKeys[InputKey.Interact]}] {tipText}";
     }
-    void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            pendingInteract = false;
-            tipTextMesh.text = null;
-        }
-    }
-    protected virtual void Start()
+    public void HideTipText()
     {
         tipTextMesh.text = null;
     }
-
-    void Update()
-    {
-        if (pendingInteract && InputSystem.GetKeyDown(InputKey.Interact))
-        {
-            OnInteracted();
-        }
-    }
-
-    protected virtual void OnInteracted()
+    public virtual void Interact()
     {
         onInteracted?.Invoke();
     }

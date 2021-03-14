@@ -13,9 +13,9 @@ public class Crystal : GInteractable
         Yellow,
     }
     public CrystalType ctype;
-    protected override void OnInteracted()
+    public override void Interact()
     {
-        base.OnInteracted();
+        base.Interact();
         gameObject.SetActive(false);
         switch (ctype)
         {
