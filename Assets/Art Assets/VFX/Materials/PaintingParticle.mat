@@ -165,7 +165,7 @@ Material:
     - _AlphaDstBlend: 10
     - _AlphaSrcBlend: 1
     - _Anisotropy: 0
-    - _BaseIntensity: 1
+    - _BaseIntensity: 0.8
     - _BlendMode: 0
     - _CoatMask: 0
     - _CullMode: 2
@@ -222,7 +222,7 @@ Material:
     - _Ior: 1.5
     - _IridescenceMask: 1
     - _IridescenceThickness: 1
-    - _LerpRate: 0.1
+    - _LerpRate: 0.321
     - _LightIntensity: 1000
     - _LinkDetailsWithBase: 1
     - _MaterialID: 1
