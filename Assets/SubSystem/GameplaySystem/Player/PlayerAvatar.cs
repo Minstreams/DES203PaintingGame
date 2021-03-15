@@ -30,6 +30,15 @@ public class PlayerAvatar : GCharacter
         base.Attack();
     }
 
+    public void Block()
+    {
+        anim.SetBool("Block", true);
+    }
+    public void EndBlock()
+    {
+        anim.SetBool("Block", false);
+    }
+
     List<Vector3> attackPoints = new List<Vector3>();
     public override Vector3 AttackPoint => transform.position + Vector3.up * attackerPointOffsetY;
     int currentIndex = -1;

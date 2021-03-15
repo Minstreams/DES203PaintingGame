@@ -33,6 +33,10 @@ public class SceneSystemEditor : Editor
             SetBuildScenes();
             EditorUtility.DisplayDialog("SceneSystem", "Scenes in build Setted!", "Cool~");
         }
+        if (GUILayout.Button("Edit Scene List"))
+        {
+            Selection.activeObject = AssetDatabase.LoadAssetAtPath("Assets/SubSystem/SceneSystem/SceneCode.cs", typeof(Object));
+        }
     }
     static string[] scenesInSceneFolder;
     public static void UpdateScenesInSceneFolder()

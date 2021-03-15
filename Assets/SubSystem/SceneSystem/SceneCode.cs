@@ -2,6 +2,7 @@
 {
     /// <summary>
     /// 游戏场景枚举，定义了游戏中的所有场景
+    /// All scenes in this game
     /// </summary>
     public enum SceneCode
     {

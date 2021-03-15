@@ -63,6 +63,8 @@ public class PlayerAvatarController : MonoBehaviour
         if (InputSystem.GetKeyDown(InputKey.Jump)) Avatar.Jump(jumpForce);
         if (InputSystem.GetKeyDown(InputKey.Interact)) SetInputTrigger("Interact");
         if (InputSystem.GetKeyDown(InputKey.Attack)) Avatar.Attack();
+        if (InputSystem.GetKeyDown(InputKey.Block)) Avatar.Block();
+        if (InputSystem.GetKeyUp(InputKey.Block)) Avatar.EndBlock();
     }
     public void UnlockDash() => dashLocked = false;
 }

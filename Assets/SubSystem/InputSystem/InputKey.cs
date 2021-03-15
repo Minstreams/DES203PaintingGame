@@ -16,6 +16,7 @@ namespace GameSystem
         Attack,
         Interact,
         Pause,
+        Block,
     }
 
     [System.Serializable]
