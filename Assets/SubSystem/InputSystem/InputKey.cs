@@ -12,8 +12,10 @@ namespace GameSystem
         Left,
         Right,
         Jump,
+        Run,
         Attack,
-        Action,
+        Interact,
+        Pause,
     }
 
     [System.Serializable]

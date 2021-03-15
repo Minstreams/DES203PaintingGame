@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -13,14 +14,14 @@ TagManager:
   - UI
   - 
   - 
-  - PostProcessing
-  - Player
+  - Reflection Probes
   - Ground
-  - DamageZone
+  - Living
+  - InvisibleWall
   - Interactable
-  - Enemy
-  - 
-  - 
+  - Attackable
+  - DamageZone
+  - SideScrollingZone
   - 
   - 
   - 

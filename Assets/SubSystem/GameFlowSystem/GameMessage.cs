@@ -13,5 +13,6 @@
         GameOver,
         Pause,
         Resume,
+        Portal,
     }
 }

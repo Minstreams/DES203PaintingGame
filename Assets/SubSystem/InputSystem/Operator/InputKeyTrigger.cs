@@ -12,9 +12,9 @@ namespace GameSystem.Operator
         [MinsHeader("InputKeyTrigger", SummaryType.TitleOrange, 0)]
         [MinsHeader("", SummaryType.CommentCenter, 1)]
         [Label] public InputKey key;
-        public SimpleEvent onKey;
-        public SimpleEvent onKeyDown;
-        public SimpleEvent onKeyUp;
+        [Label] public SimpleEvent onKey;
+        [Label] public SimpleEvent onKeyDown;
+        [Label] public SimpleEvent onKeyUp;
 
         void Update()
         {

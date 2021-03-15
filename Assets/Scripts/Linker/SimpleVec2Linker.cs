@@ -19,9 +19,9 @@ namespace GameSystem.Linker
 
         // Output
         [MinsHeader("Output", SummaryType.Header, 3)]
-        public Vec2Event output;
-        public FloatEvent xOutput;
-        public FloatEvent yOutput;
+        [Label] public Vec2Event output;
+        [Label] public FloatEvent xOutput;
+        [Label] public FloatEvent yOutput;
 
         // Input
         [ContextMenu("Invoke")]

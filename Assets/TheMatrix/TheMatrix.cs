@@ -34,6 +34,15 @@ namespace GameSystem
         /// </summary>
         public static TheMatrixSetting Setting => setting == null ? setting = Resources.Load<TheMatrixSetting>("TheMatrixSetting") : setting;
         static TheMatrixSetting setting;
+
+#if UNITY_EDITOR
+        /// <summary>
+        /// References for editor setting
+        /// </summary>
+        public static TheMatrixEditorSetting EditorSetting => editorSetting == null ? editorSetting = (TheMatrixEditorSetting)UnityEditor.EditorGUIUtility.Load("TheMatrixEditorSetting.asset") : editorSetting;
+        static TheMatrixEditorSetting editorSetting;
+#endif
+
         /// <summary>
         /// 游戏初始化委托，在进入System场景时调用
         /// </summary>
@@ -58,7 +67,7 @@ namespace GameSystem
             DontDestroyOnLoad(gameObject);
             OnGameStart?.Invoke();
 #if UNITY_EDITOR
-            if (!Setting.saveData)
+            if (!EditorSetting.saveData)
             {
                 foreach (SavableObject so in Setting.dataAutoSave)
                 {
@@ -73,7 +82,7 @@ namespace GameSystem
         void OnDestroy()
         {
 #if UNITY_EDITOR
-            if (!Setting.saveData)
+            if (!EditorSetting.saveData)
             {
                 foreach (SavableObject so in Setting.dataAutoSave)
                 {

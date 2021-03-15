@@ -26,6 +26,8 @@ public class LabelRangeDrawer : PropertyDrawer
         EditorGUI.Slider(propRect, property, Attr.Left, Attr.Right, label);
 
         GUI.color = tc;
+
+        LabelClipBoard.PopupMenu(position, property);
     }
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {

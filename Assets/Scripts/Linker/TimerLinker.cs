@@ -28,8 +28,8 @@ namespace GameSystem.Linker
 
         // Output
         [MinsHeader("Output", SummaryType.Header, 3)]
-        public FloatEvent output;
-        public SimpleEvent onFinish;
+        [Label] public FloatEvent output;
+        [Label] public SimpleEvent onFinish;
 
 
         // Input

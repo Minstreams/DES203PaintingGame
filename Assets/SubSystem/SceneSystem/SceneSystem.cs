@@ -16,7 +16,17 @@ namespace GameSystem
 
         // API---------------------------------
         public static string GetScene(SceneCode sceneCode) => Setting.sceneCodeMap[sceneCode];
-        public static void LoadScene(SceneCode sceneCode) => SceneManager.LoadScene(GetScene(sceneCode));
+        public static void LoadScene(SceneCode sceneCode)
+        {
+            if (TheMatrix.Instance == null)
+            {
+                SceneManager.LoadScene(GetScene(sceneCode));
+            }
+            else
+            {
+                StartCoroutine(LoadSceneCoroutine(sceneCode));
+            }
+        }
         public static void ConfirmLoadScene() => loadConfirmed = true;
         public static IEnumerator LoadSceneCoroutine(SceneCode sceneCode)
         {

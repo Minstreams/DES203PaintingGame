@@ -23,6 +23,7 @@ public class LabelRangeAttribute : PropertyAttribute
     public float Left;
     public float Right;
 
+    public LabelRangeAttribute() : this(0, 1) { }
     public LabelRangeAttribute(float left, float right)
     {
         this.Disable = true;

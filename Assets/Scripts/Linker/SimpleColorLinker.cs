@@ -19,7 +19,7 @@ namespace GameSystem.Linker
 
         // Output
         [MinsHeader("Output", SummaryType.Header, 3)]
-        public ColorEvent output;
+        [Label] public ColorEvent output;
 
         // Input
         [ContextMenu("Invoke")]

@@ -14,7 +14,7 @@ namespace GameSystem.Linker
 
         // Output
         [MinsHeader("Output", SummaryType.Header, 3)]
-        public SimpleEvent output;
+        [Label] public SimpleEvent output;
 
         // Input
         [ContextMenu("Invoke")]

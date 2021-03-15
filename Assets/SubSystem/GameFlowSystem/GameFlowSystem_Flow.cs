@@ -63,63 +63,16 @@ namespace GameSystem
                 if (GetGameMessage(GameMessage.Start)) break;
             }
 
-            StartCoroutine(EnteringMuseum());
+            StartCoroutine(InGame());
         }
-        static IEnumerator EnteringMuseum()
-        {
-            yield return SceneSystem.LoadSceneCoroutine(SceneCode.enteringMuseum);
-            yield return 0;
 
-            ResetGameMessage();
-            while (true)
-            {
-                yield return 0;
-                if (GetGameMessage(GameMessage.Next)) break;
-            }
-
-            StartCoroutine(Museum());
-        }
-        static IEnumerator Museum()
+        static IEnumerator InGame()
         {
             yield return SceneSystem.LoadSceneCoroutine(SceneCode.museum);
             yield return 0;
 
-            ResetGameMessage();
-            while (true)
-            {
-                yield return 0;
-                if (GetGameMessage(GameMessage.Start))
-                {
-                    StartCoroutine(EnteringPainting(1));
-                    break;
-                }
-            }
-        }
-
-        static IEnumerator EnteringPainting(int index)
-        {
-            yield return SceneSystem.LoadSceneCoroutine(SceneCode.enteringPainting);
-            yield return 0;
-
-            ResetGameMessage();
-            while (true)
-            {
-                yield return 0;
-                if (GetGameMessage(GameMessage.Next)) break;
-            }
-
-            switch (index)
-            {
-                case 1:
-                    StartCoroutine(Painting1());
-                    break;
-                default: break;
-            }
-        }
-        static IEnumerator Painting1()
-        {
-            yield return SceneSystem.LoadSceneCoroutine(SceneCode.painting1);
-            yield return 0;
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
 
             ResetGameMessage();
             while (true)
@@ -127,23 +80,38 @@ namespace GameSystem
                 yield return 0;
                 if (GetGameMessage(GameMessage.Return))
                 {
-                    StartCoroutine(ExitingPainting());
+                    StartCoroutine(StartMenu());
+                    break;
+                }
+                if (GetGameMessage(GameMessage.Pause))
+                {
+                    StartCoroutine(Pause());
                     break;
                 }
             }
         }
-        static IEnumerator ExitingPainting()
+        static IEnumerator Pause()
         {
-            yield return SceneSystem.LoadSceneCoroutine(SceneCode.exitingPainting);
             yield return 0;
+
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
 
             ResetGameMessage();
             while (true)
             {
                 yield return 0;
-                if (GetGameMessage(GameMessage.Next)) break;
+                if (GetGameMessage(GameMessage.Return))
+                {
+                    StartCoroutine(StartMenu());
+                    break;
+                }
+                if (GetGameMessage(GameMessage.Resume))
+                {
+                    StartCoroutine(InGame());
+                    break;
+                }
             }
-            StartCoroutine(Museum());
         }
     }
 }

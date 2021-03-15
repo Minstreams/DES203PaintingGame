@@ -14,6 +14,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dataAutoSave: []
   targetFrameRate: 0
-  fullTest: 1
-  saveData: 0
-  debug: 1

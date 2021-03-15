@@ -7,17 +7,24 @@ public class LabelDrawer : PropertyDrawer
     LabelAttribute Attr => attribute as LabelAttribute;
     PropertyDrawer drawerOverride = null;
     bool initialized = false;
+
+    const float margin = 2;
+    const float paddingX = 4;
+    const float paddingY = 4;
+
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
         if (!initialized)
         {
-            if (property.type.EndsWith("Event")) drawerOverride = new UnityEditorInternal.UnityEventDrawer();
+            if (property.type.EndsWith("Event")) drawerOverride = new LabelEventDrawer();
             if (property.type.EndsWith("Map")) drawerOverride = System.Reflection.Assembly.GetExecutingAssembly().CreateInstance(property.type + "Drawer") as PropertyDrawer;
             initialized = true;
         }
-
         DrawLabel(position, property, Attr.Label, Attr.Const, drawerOverride);
+
+        LabelClipBoard.PopupMenu(position, property);
     }
+
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
         return GetHeight(property, label, drawerOverride);
@@ -46,10 +53,10 @@ public class LabelDrawer : PropertyDrawer
 
             float indentWidth = EditorGUI.indentLevel * 16;
 
-            Rect windowRect = new Rect(position.x + indentWidth, position.y + 2, position.width - indentWidth, position.height - 4);
+            Rect windowRect = new Rect(position.x + indentWidth, position.y + margin, position.width - indentWidth, position.height - margin);
             GUI.Box(windowRect, GUIContent.none, property.propertyType == SerializedPropertyType.Generic ? "FrameBox" : "button");
 
-            Rect propRect = new Rect(position.x + 4, position.y + 6, position.width - 8, position.height - 12);
+            Rect propRect = new Rect(position.x + paddingX, position.y + paddingY + margin, position.width - paddingX * 2, position.height - paddingY * 2 - margin);
             EditorGUI.PropertyField(propRect, property, new GUIContent(label), true);
         }
         else
@@ -61,6 +68,6 @@ public class LabelDrawer : PropertyDrawer
     public static float GetHeight(SerializedProperty property, GUIContent label, PropertyDrawer drawerOverride = null)
     {
         if (drawerOverride != null) return drawerOverride.GetPropertyHeight(property, label);
-        return EditorGUI.GetPropertyHeight(property, label) + 12;
+        return EditorGUI.GetPropertyHeight(property, label) + paddingY * 2 + margin;
     }
 }

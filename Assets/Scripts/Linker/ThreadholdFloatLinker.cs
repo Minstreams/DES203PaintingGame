@@ -15,8 +15,8 @@ namespace GameSystem.Linker
 
         // Output
         [MinsHeader("Output", SummaryType.Header, 3)]
-        public SimpleEvent onOverThreadhold;
-        public SimpleEvent onBelowThreadhold;
+        [Label] public SimpleEvent onOverThreadhold;
+        [Label] public SimpleEvent onBelowThreadhold;
 
 
         // Input

@@ -67,7 +67,6 @@ public class MinsHeaderAttribute : PropertyAttribute
             case SummaryType.PreTitleLinker: return "ChannelStripSendReturnBar";
             case SummaryType.PreTitleOperator: return "ChannelStripAttenuationBar";
             case SummaryType.PreTitleSavable: return "ChannelStripEffectBar";
-
         }
         return "label";
     }

@@ -7,12 +7,8 @@
     {
         logo,
         startMenu,
-        enteringMuseum,
         museum,
-        enteringPainting,
-        exitingPainting,
         painting1,
-        painting2
     }
     // EnumMap Class Definition (必须以Map作为名称结尾)
     [System.Serializable]

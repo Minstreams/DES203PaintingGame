@@ -64,7 +64,7 @@ namespace GameSystem
         public static void Log(string message)
         {
 #if UNITY_EDITOR
-            if (!TheMatrix.Setting.debug) return;
+            if (!TheMatrix.EditorSetting.debug) return;
 #endif
             message = "【" + TypeName + "】" + message;
             Debug.Log(message);
