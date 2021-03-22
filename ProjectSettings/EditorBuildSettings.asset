@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Painting1.unity
     guid: 2e1accc669add9745a2c764e0729b6a1
+  - enabled: 1
+    path: Assets/Scenes/CherryBlossomScene.unity
+    guid: 35b09ff3c1baa2041bd437b6d6233675
   m_configObjects: {}
