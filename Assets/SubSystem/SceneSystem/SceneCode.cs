@@ -10,6 +10,7 @@
         startMenu,
         museum,
         painting1,
+	CherryBlossom,
     }
     // EnumMap Class Definition (必须以Map作为名称结尾)
     [System.Serializable]
