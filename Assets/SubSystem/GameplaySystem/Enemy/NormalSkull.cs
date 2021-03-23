@@ -17,7 +17,7 @@ public class NormalSkull : Skull
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.CompareTag("Player"))
         {

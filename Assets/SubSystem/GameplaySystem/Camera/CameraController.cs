@@ -14,6 +14,7 @@ public class CameraController : MonoBehaviour
     public SideScrollingCameraPoint CameraPointRight { get; set; } = null;
     public bool IsSideScrollingMode => ActiveSideScrollingZoneSet.Count > 0;
     public Camera Cam { get; private set; }
+    public CameraOverrideZone OverrideZone { get; set; } = null;
 
     // References
     GameplaySystemSetting Setting => GameplaySystem.Setting;
@@ -93,11 +94,17 @@ public class CameraController : MonoBehaviour
         float iy = Input.GetAxis("Mouse Y") * InputSystem.Setting.mouseSensitivity.y;
 
         camRotation = Quaternion.AngleAxis(ix, Vector3.up) * camRotation * Quaternion.AngleAxis(iy, Vector3.left);
+        var relaPos = camRelativePositionSetting;
+        if (OverrideZone != null)
+        {
+            camRotation = Quaternion.Slerp(camRotation, OverrideZone.Rot, OverrideZone.rotLerpRate);
+            relaPos = Vector3.Lerp(relaPos, Quaternion.Inverse(transform.rotation) * (OverrideZone.Pos - PlayerFocusPoint), OverrideZone.posLerpRate);
+        }
 
         // Apply interpolation
         transform.rotation = Quaternion.Slerp(transform.rotation, camRotation, Setting.camInterpolatingRateMouseRotation);
         float t = 1 - Mathf.Pow(1 - Setting.camInterpolatingRate, Time.deltaTime);
-        camRelativePosition = Vector3.Lerp(camRelativePosition, camRelativePositionSetting, t);
+        camRelativePosition = Vector3.Lerp(camRelativePosition, relaPos, t);
         Cam.fieldOfView = Mathf.Lerp(Cam.fieldOfView, camFovSetting, t);
 
         transform.position = PlayerFocusPoint + transform.rotation * camRelativePosition;

@@ -10,9 +10,13 @@ public class PlayerAvatar : GCharacter
     [MinsHeader("Avatar of the player.", SummaryType.CommentCenter, -1)]
     [MinsHeader("Parameters")]
     [Label] public PaintBrush brush;
+    [Label] public BlockShield blockInner;
+    [Label] public BlockShield blockOutter;
     [Label] public float attackerPointOffsetY;
     [Label] public SimpleEvent onStartAttack;
     [Label] public SimpleEvent onEndAttack;
+    [Label] public SimpleEvent onBlock;
+    [Label] public SimpleEvent onEndBlock;
 
     [System.Serializable]
     public struct AttackInfo
@@ -33,10 +37,15 @@ public class PlayerAvatar : GCharacter
     public void Block()
     {
         anim.SetBool("Block", true);
+        blockOutter.BlockOnce();
+        blockInner.BlockStart();
+        onBlock?.Invoke();
     }
     public void EndBlock()
     {
         anim.SetBool("Block", false);
+        blockInner.BlockEnd();
+        onEndBlock?.Invoke();
     }
 
     List<Vector3> attackPoints = new List<Vector3>();

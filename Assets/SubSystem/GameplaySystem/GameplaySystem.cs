@@ -21,9 +21,20 @@ namespace GameSystem
         static void OnGameStart()
         {
             // 在System场景加载后调用
+            var @default = 0;
             var living = LayerMask.NameToLayer("Living");
             var attackable = LayerMask.NameToLayer("Attackable");
+            var shield = LayerMask.NameToLayer("Shield");
+            var projectile = LayerMask.NameToLayer("Projectile");
+            var ground = LayerMask.NameToLayer("Ground");
+            var invisibleWall = LayerMask.NameToLayer("InvisibleWall");
             Physics.IgnoreLayerCollision(living, attackable);
+            Physics.IgnoreLayerCollision(shield, @default);
+            Physics.IgnoreLayerCollision(shield, attackable);
+            Physics.IgnoreLayerCollision(shield, living);
+            Physics.IgnoreLayerCollision(shield, ground);
+            Physics.IgnoreLayerCollision(shield, invisibleWall);
+            Physics.IgnoreLayerCollision(projectile, invisibleWall);
         }
 
 
