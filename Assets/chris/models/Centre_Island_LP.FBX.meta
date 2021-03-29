@@ -3,7 +3,47 @@ guid: c3ac32a9f21612a49ba32223b1aaa827
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Crap_Hider
+    second: {fileID: 2100000, guid: cea3ffaffb85eef4c9a513515101bb31, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Gazebo_Floor
+    second: {fileID: 2100000, guid: fcd92a6dfa79aca4b81ed7dee56c8e63, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Gazebo_roof_Support
+    second: {fileID: 2100000, guid: 995080b1f10002d4daa57cc7baee14ce, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ground
+    second: {fileID: 2100000, guid: cef7cb9d3e12701469532373def8050e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pillars
+    second: {fileID: 2100000, guid: 836d92c7f27a0c145af88522b9a64d7c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Rocks
+    second: {fileID: 2100000, guid: c7f16073b8b856a41b7850b2ba320c62, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Roof
+    second: {fileID: 2100000, guid: 59ed131ec8684bb47904644e94419393, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Support_Beams
+    second: {fileID: 2100000, guid: 331c5d2ebe65e4d4bbc522db7dd9bce1, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
