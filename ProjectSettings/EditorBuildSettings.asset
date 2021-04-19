@@ -23,4 +23,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CherryBlossomScene.unity
     guid: 35b09ff3c1baa2041bd437b6d6233675
+  - enabled: 1
+    path: Assets/Scenes/Maze_Level.unity
+    guid: 5b5659d0827dd104bb5c7c7ec7e99dbc
+  - enabled: 1
+    path: Assets/Scenes/Climb_Level.unity
+    guid: fad25e4a1e670b948a0807225cd70133
+  - enabled: 1
+    path: Assets/Scenes/Castle_Level.unity
+    guid: e029b0316a47e9049845c84a83240879
   m_configObjects: {}
