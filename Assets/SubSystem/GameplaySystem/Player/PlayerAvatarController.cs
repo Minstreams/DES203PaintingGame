@@ -27,6 +27,8 @@ public class PlayerAvatarController : MonoBehaviour
     bool dashLocked = false;
     void Update()
     {
+        if (GameplaySystem.IsPaused) return;
+
         Vector3 input = Vector3.zero;
         if (InputSystem.GetKey(InputKey.Right)) input.x += 1;
         if (InputSystem.GetKey(InputKey.Left)) input.x -= 1;

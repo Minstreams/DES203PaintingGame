@@ -78,7 +78,7 @@ namespace GameSystem.UI
                 float t = inCurve.Evaluate(timer);
                 transform.position = originPos + (1 - t) * inScreenOffset;
                 if (hasColorEffect) colorOutput?.Invoke(Color.Lerp(inColor, normalColor, t));
-                timer += Time.deltaTime / time;
+                timer += Time.unscaledDeltaTime / time;
                 yield return 0;
             }
             transform.position = originPos;
@@ -118,7 +118,7 @@ namespace GameSystem.UI
                 float t = outCurve.Evaluate(timer);
                 transform.position = originPos + t * outScreenOffset;
                 if (hasColorEffect) colorOutput?.Invoke(Color.Lerp(normalColor, outColor, t));
-                timer += Time.deltaTime / time;
+                timer += Time.unscaledDeltaTime / time;
                 yield return 0;
             }
             transform.position = originPos;

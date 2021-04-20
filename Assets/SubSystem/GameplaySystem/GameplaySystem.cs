@@ -46,6 +46,7 @@ namespace GameSystem
 
         public static PlayerAvatarController CurrentPlayer { get; set; } = null;
         public static CameraController CurrentCamera { get; set; } = null;
+        public static bool IsPaused { get; set; } = false;
 
 
         public static float CalculateCameraPointWeight(float distance)

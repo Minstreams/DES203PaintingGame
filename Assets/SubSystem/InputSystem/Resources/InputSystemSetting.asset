@@ -17,4 +17,4 @@ MonoBehaviour:
   SideKeys:
     list: 11010000120100001401000013010000200000002f01000066000000650000001b00000000000000
   mouseSensitivity: {x: 2.867687, y: 3.5726924}
-  mouseInvertY: 1
+  mouseInvertY: 0
