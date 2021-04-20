@@ -40,6 +40,7 @@ namespace GameSystem
         static IEnumerator Logo()
         {
             SceneSystem.LoadScene(SceneCode.logo);
+            SceneSystem.ConfirmLoadScene();
             yield return 0;
 
             ResetGameMessage();

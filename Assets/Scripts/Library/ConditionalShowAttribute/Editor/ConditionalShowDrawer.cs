@@ -45,8 +45,6 @@ public class ConditionalShowDrawer : PropertyDrawer
             LabelDrawer.DrawLabel(position, property, Attr.Label, Attr.Const, drawerOverride);
             GUI.color = tc;
         }
-
-        LabelClipBoard.PopupMenu(position, property);
     }
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {

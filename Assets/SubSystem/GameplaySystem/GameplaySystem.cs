@@ -35,6 +35,11 @@ namespace GameSystem
             Physics.IgnoreLayerCollision(shield, ground);
             Physics.IgnoreLayerCollision(shield, invisibleWall);
             Physics.IgnoreLayerCollision(projectile, invisibleWall);
+
+            // Journal
+            journalUnlocked = new bool[Setting.journalPages.Length];
+            journalUnlocked[0] = true;
+            journalUnlocked[1] = true;
         }
 
 
@@ -85,6 +90,14 @@ namespace GameSystem
 
                 Debug.DrawLine(attackPoints[i - 1], attackPoints[i], Color.red, 1);
             }
+        }
+
+
+        // Journal
+        public static bool[] journalUnlocked;
+        public static void UnlockJournal(int index)
+        {
+            journalUnlocked[index] = true;
         }
     }
 }
