@@ -21,8 +21,6 @@ public class LabelDrawer : PropertyDrawer
             initialized = true;
         }
         DrawLabel(position, property, Attr.Label, Attr.Const, drawerOverride);
-
-        LabelClipBoard.PopupMenu(position, property);
     }
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
@@ -63,6 +61,8 @@ public class LabelDrawer : PropertyDrawer
             drawerOverride.OnGUI(position, property, new GUIContent(label));
 
         GUI.color = tc;
+
+        if (!property.displayName.StartsWith("Element")) LabelClipBoard.PopupMenu(position, property);
     }
 
     public static float GetHeight(SerializedProperty property, GUIContent label, PropertyDrawer drawerOverride = null)

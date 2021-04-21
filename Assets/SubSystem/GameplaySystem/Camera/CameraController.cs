@@ -88,10 +88,13 @@ public class CameraController : MonoBehaviour
     void Update()
     {
         if (IsSideScrollingMode) return;
+        if (GameplaySystem.IsPaused) return;
 
         // Third personal view
         float ix = Input.GetAxis("Mouse X") * InputSystem.Setting.mouseSensitivity.x;
         float iy = Input.GetAxis("Mouse Y") * InputSystem.Setting.mouseSensitivity.y;
+
+        if (InputSystem.Setting.mouseInvertY) iy = -iy;
 
         camRotation = Quaternion.AngleAxis(ix, Vector3.up) * camRotation * Quaternion.AngleAxis(iy, Vector3.left);
         var relaPos = camRelativePositionSetting;

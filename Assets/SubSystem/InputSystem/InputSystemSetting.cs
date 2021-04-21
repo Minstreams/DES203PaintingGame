@@ -23,6 +23,7 @@ namespace GameSystem.Setting
         [MinsHeader("Mouse", SummaryType.SubTitle, -1), Space(16)]
         [MinsHeader("ThirdPersonalView")]
         [Label] public Vector2 mouseSensitivity;
+        [Label] public bool mouseInvertY;
 
     }
 }

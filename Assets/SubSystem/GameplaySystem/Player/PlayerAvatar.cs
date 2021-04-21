@@ -29,8 +29,11 @@ public class PlayerAvatar : GCharacter
 
     [Label("Info")] public AttackInfo[] attackInfos;
 
+    float brushAppearTimer;
     public override void Attack()
     {
+        brushAppearTimer = GameplaySystem.Setting.brushAppearTime;
+        brush.ToHand();
         base.Attack();
     }
 
@@ -80,6 +83,14 @@ public class PlayerAvatar : GCharacter
     void Update()
     {
         onDebug?.Invoke($"onGround:{OnGround}");
+        if (brushAppearTimer > 0)
+        {
+            brushAppearTimer -= Time.deltaTime;
+            if (brushAppearTimer < 0)
+            {
+                brush.ToBack();
+            }
+        }
     }
 
     protected override void OnDrawGizmos()

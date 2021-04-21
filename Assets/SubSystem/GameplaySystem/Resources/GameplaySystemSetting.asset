@@ -22,6 +22,14 @@ MonoBehaviour:
   camDefaultFov: 60
   camReactDefaultPower: 0.2
   attackPowerRateY: 0.196
+  brushAppearTime: 2
+  journalPages:
+  - {fileID: 21300000, guid: d72088b5f5b60b04e9d7519409297c64, type: 3}
+  - {fileID: 21300000, guid: 7812c8c662901e349a223b62906ffcd6, type: 3}
+  - {fileID: 21300000, guid: 0c923449cde923a48908082ab139a22f, type: 3}
+  - {fileID: 21300000, guid: 36c714b6418b11141af0e9213a6bf728, type: 3}
+  - {fileID: 21300000, guid: b417703c0a8cb6644ad883fb7c4a13d8, type: 3}
+  - {fileID: 21300000, guid: b885eef4d0fee9d45bc9306c61abda80, type: 3}
   groundDrag: 2
   hasPinkCrystal: 0
   hasRedCrystal: 0

@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameSystem.Operator
+namespace GameSystem.UI
 {
     /// <summary>
     /// To perform a fade-in effect on an ui element.
     /// </summary>
-    [AddComponentMenu("|Operator/UIFading")]
-    public class UIFading : MonoBehaviour
+    [AddComponentMenu("|UI/UIFading")]
+    public class UIFading : UIFadable
     {
         [MinsHeader("UI Fading", SummaryType.TitleYellow, 0)]
         [MinsHeader("To perform a fade-in or fade-out effect on an ui element.", SummaryType.CommentCenter, 1)]
@@ -18,7 +18,7 @@ namespace GameSystem.Operator
 
         [MinsHeader("Fade-in")]
         [ConditionalShow("hasColorEffect")] public Color inColor = Color.clear;
-        [Label] public Vector3 inOffset;
+        [Label(true)] public Vector3 inOffset;
         [Label] public AnimationCurve inCurve = AnimationCurve.Linear(0, 0, 1, 1);
         [Label] public float inTime = 1;
         [Label] public SimpleEvent inStart;
@@ -26,7 +26,7 @@ namespace GameSystem.Operator
 
         [MinsHeader("Fade-out")]
         [ConditionalShow("hasColorEffect")] public Color outColor = Color.clear;
-        [Label] public Vector3 outOffset;
+        [Label(true)] public Vector3 outOffset;
         [Label] public AnimationCurve outCurve = AnimationCurve.Linear(0, 0, 1, 1);
         [Label] public float outTime = 1;
         [Label] public SimpleEvent outStart;
@@ -51,7 +51,7 @@ namespace GameSystem.Operator
 
         // Input
         [ContextMenu("Fadein")]
-        public void Fadein()
+        public override void Fadein()
         {
             Fadein(inTime);
         }
@@ -62,7 +62,7 @@ namespace GameSystem.Operator
             StopAllCoroutines();
             if (fadingOut) OnFadedout();
 
-            colorOutput?.Invoke(normalColor);
+            if (hasColorEffect) colorOutput?.Invoke(normalColor);
             gameObject.SetActive(true);
 
             fadingIn = true;
@@ -78,7 +78,7 @@ namespace GameSystem.Operator
                 float t = inCurve.Evaluate(timer);
                 transform.position = originPos + (1 - t) * inScreenOffset;
                 if (hasColorEffect) colorOutput?.Invoke(Color.Lerp(inColor, normalColor, t));
-                timer += Time.deltaTime / time;
+                timer += Time.unscaledDeltaTime / time;
                 yield return 0;
             }
             transform.position = originPos;
@@ -92,7 +92,7 @@ namespace GameSystem.Operator
         }
 
         [ContextMenu("Fadeout")]
-        public void Fadeout()
+        public override void Fadeout()
         {
             Fadeout(outTime);
         }
@@ -103,7 +103,7 @@ namespace GameSystem.Operator
             StopAllCoroutines();
             if (fadingIn) OnFadedin();
 
-            colorOutput?.Invoke(normalColor);
+            if (hasColorEffect) colorOutput?.Invoke(normalColor);
             gameObject.SetActive(true);
 
             fadingOut = true;
@@ -118,7 +118,7 @@ namespace GameSystem.Operator
                 float t = outCurve.Evaluate(timer);
                 transform.position = originPos + t * outScreenOffset;
                 if (hasColorEffect) colorOutput?.Invoke(Color.Lerp(normalColor, outColor, t));
-                timer += Time.deltaTime / time;
+                timer += Time.unscaledDeltaTime / time;
                 yield return 0;
             }
             transform.position = originPos;
@@ -130,6 +130,14 @@ namespace GameSystem.Operator
             outFinish?.Invoke();
             gameObject.SetActive(false);
             fadingOut = false;
+        }
+
+        [ContextMenu("Hide")]
+        public override void Hide()
+        {
+            StopAllCoroutines();
+            fadingIn = fadingOut = false;
+            gameObject.SetActive(false);
         }
 
 

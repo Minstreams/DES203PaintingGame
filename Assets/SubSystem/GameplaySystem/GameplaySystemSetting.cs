@@ -21,6 +21,10 @@ namespace GameSystem.Setting
 
         [MinsHeader("Combat")]
         [LabelRange] public float attackPowerRateY;
+        [Label] public float brushAppearTime;
+
+        [MinsHeader("Journal")]
+        [Label(true)] public Sprite[] journalPages;
 
         // Temp
         [MinsHeader("Data", SummaryType.Header)]

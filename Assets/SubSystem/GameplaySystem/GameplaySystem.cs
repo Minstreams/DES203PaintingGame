@@ -35,12 +35,18 @@ namespace GameSystem
             Physics.IgnoreLayerCollision(shield, ground);
             Physics.IgnoreLayerCollision(shield, invisibleWall);
             Physics.IgnoreLayerCollision(projectile, invisibleWall);
+
+            // Journal
+            journalUnlocked = new bool[Setting.journalPages.Length];
+            journalUnlocked[0] = true;
+            journalUnlocked[1] = true;
         }
 
 
 
         public static PlayerAvatarController CurrentPlayer { get; set; } = null;
         public static CameraController CurrentCamera { get; set; } = null;
+        public static bool IsPaused { get; set; } = false;
 
 
         public static float CalculateCameraPointWeight(float distance)
@@ -85,6 +91,14 @@ namespace GameSystem
 
                 Debug.DrawLine(attackPoints[i - 1], attackPoints[i], Color.red, 1);
             }
+        }
+
+
+        // Journal
+        public static bool[] journalUnlocked;
+        public static void UnlockJournal(int index)
+        {
+            journalUnlocked[index] = true;
         }
     }
 }

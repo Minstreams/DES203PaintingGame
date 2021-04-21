@@ -40,6 +40,7 @@ namespace GameSystem
         static IEnumerator Logo()
         {
             SceneSystem.LoadScene(SceneCode.logo);
+            SceneSystem.ConfirmLoadScene();
             yield return 0;
 
             ResetGameMessage();
@@ -63,14 +64,16 @@ namespace GameSystem
                 if (GetGameMessage(GameMessage.Start)) break;
             }
 
+            yield return SceneSystem.LoadSceneCoroutine(SceneCode.museum);
             StartCoroutine(InGame());
         }
 
         static IEnumerator InGame()
         {
-            yield return SceneSystem.LoadSceneCoroutine(SceneCode.museum);
             yield return 0;
 
+            GameplaySystem.IsPaused = false;
+            Time.timeScale = 1;
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
 
@@ -94,6 +97,8 @@ namespace GameSystem
         {
             yield return 0;
 
+            GameplaySystem.IsPaused = true;
+            Time.timeScale = 0;
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
 
