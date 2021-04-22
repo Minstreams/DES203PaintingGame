@@ -22,6 +22,7 @@ namespace GameSystem
         }
         static void OnGameStart()
         {
+            Time.timeScale = 1;
             // 在System场景加载后调用
 #if UNITY_EDITOR
             if (!TheMatrix.EditorSetting.fullTest) QuickTest();
