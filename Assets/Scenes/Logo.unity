@@ -559,7 +559,7 @@ GameObject:
   - component: {fileID: 699738769}
   - component: {fileID: 699738770}
   m_Layer: 0
-  m_Name: EnteringMuseum
+  m_Name: Start Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

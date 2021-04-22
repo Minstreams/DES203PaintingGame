@@ -37,6 +37,7 @@ namespace GameSystem
         }
         static void BeforeQuit()
         {
+            Time.timeScale = 1;
             SendGameMessage(GameMessage.Exit);
         }
 

@@ -2962,6 +2962,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 518101490516480000, guid: 9cef6a6fd5128574b886899c4b79dd7f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 764300779541679550, guid: 9cef6a6fd5128574b886899c4b79dd7f,
         type: 3}
       propertyPath: m_RootOrder
@@ -3234,7 +3239,7 @@ PrefabInstance:
     - target: {fileID: 3377733965528232186, guid: 393364329ebf0c54096a09d99563c234,
         type: 3}
       propertyPath: m_Name
-      value: Graphic Settings & Directional Light (1)
+      value: Graphic Settings & Directional Light
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 393364329ebf0c54096a09d99563c234, type: 3}
