@@ -39,6 +39,7 @@ namespace GameSystem
         }
         static IEnumerator Logo()
         {
+            Cursor.visible = false;
             SceneSystem.LoadScene(SceneCode.logo);
             SceneSystem.ConfirmLoadScene();
             yield return 0;
@@ -54,6 +55,11 @@ namespace GameSystem
         }
         static IEnumerator StartMenu()
         {
+            GameplaySystem.IsPaused = false;
+            Time.timeScale = 1;
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+
             SceneSystem.LoadScene(SceneCode.startMenu);
             yield return 0;
 
