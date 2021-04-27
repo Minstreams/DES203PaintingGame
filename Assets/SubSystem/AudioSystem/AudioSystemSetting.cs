@@ -11,5 +11,7 @@ namespace GameSystem.Setting
 
         [MinsHeader("Data", SummaryType.Header)]
         [Label] public AudioMixer mixer;
+
+        [Label] public AudioCodeMap audioMap;
     }
 }

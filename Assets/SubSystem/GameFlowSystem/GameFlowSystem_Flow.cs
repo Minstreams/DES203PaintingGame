@@ -55,12 +55,12 @@ namespace GameSystem
         }
         static IEnumerator StartMenu()
         {
+            yield return SceneSystem.LoadSceneCoroutine(SceneCode.startMenu);
+            
             GameplaySystem.IsPaused = false;
             Time.timeScale = 1;
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
-
-            SceneSystem.LoadScene(SceneCode.startMenu);
             yield return 0;
 
             ResetGameMessage();

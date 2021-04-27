@@ -10,9 +10,6 @@ namespace GameSystem
     /// </summary>
     public class AudioSystem : SubSystem<AudioSystemSetting>
     {
-        // Your code here
-
-
         [RuntimeInitializeOnLoadMethod]
         static void RuntimeInit()
         {
@@ -20,8 +17,10 @@ namespace GameSystem
         }
         static void OnGameStart()
         {
-            // 在System场景加载后调用
+            musicSource = TheMatrix.Instance.GetComponent<AudioSource>();
         }
+
+        static AudioSource musicSource;
 
 
         // API---------------------------------
@@ -34,6 +33,13 @@ namespace GameSystem
             float res;
             Setting.mixer.GetFloat(name, out res);
             return (res + 80) / 0.8f;
+        }
+        public static void ChangeMusic(AudioCode audioCode)
+        {
+            var clip = Setting.audioMap[audioCode];
+            if (musicSource.clip == clip) return;
+            musicSource.clip = clip;
+            musicSource.Play();
         }
     }
 }
