@@ -922,7 +922,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -5403248500071646444, guid: 2d35431cf4c41ca43ac1b927789b3b8a,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: 780434ba6366af34bb516e9d7079cc4a, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 3e0570274f38a0248ad48deb5226c543, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -1547,7 +1547,7 @@ MonoBehaviour:
   onStep:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 764300779274341018}
+      - m_Target: {fileID: 764300779274341013}
         m_MethodName: Play
         m_Mode: 1
         m_Arguments:
@@ -2041,7 +2041,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -450732450915370001, guid: 2d35431cf4c41ca43ac1b927789b3b8a,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: f38ebfa2820741c408462c3305a430ee, type: 3}
+  m_audioClip: {fileID: 8300000, guid: f88cec5dc0005a942b54ac8f439d2d37, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -2932,6 +2932,10 @@ MonoBehaviour:
   inputRange: {x: 0, y: 5}
   pitchRange: {x: 1.6, y: 0.95}
   volumeRange: {x: 0.2, y: 0.8}
+  clips:
+  - {fileID: 8300000, guid: cb31ce773e65dce409ceb3b53dd250f4, type: 3}
+  - {fileID: 8300000, guid: 5ad48394db793b94eae0849c85f5d0ed, type: 3}
+  - {fileID: 8300000, guid: e430d356cd29cbd4bb06af29606c1d2b, type: 3}
 --- !u!82 &764300779274341018
 AudioSource:
   m_ObjectHideFlags: 0
