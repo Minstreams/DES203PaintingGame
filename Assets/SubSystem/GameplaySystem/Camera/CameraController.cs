@@ -101,7 +101,7 @@ public class CameraController : MonoBehaviour
         if (OverrideZone != null)
         {
             camRotation = Quaternion.Slerp(camRotation, OverrideZone.Rot, OverrideZone.rotLerpRate);
-            relaPos = Vector3.Lerp(relaPos, Quaternion.Inverse(transform.rotation) * (OverrideZone.Pos - PlayerFocusPoint), OverrideZone.posLerpRate);
+            relaPos = Vector3.Lerp(relaPos + Quaternion.Inverse(OverrideZone.Rot) * OverrideZone.offset, Quaternion.Inverse(transform.rotation) * (OverrideZone.Pos - PlayerFocusPoint), OverrideZone.posLerpRate);
         }
 
         // Apply interpolation
