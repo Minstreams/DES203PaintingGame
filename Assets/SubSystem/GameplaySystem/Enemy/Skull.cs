@@ -43,6 +43,8 @@ public class Skull : GDestroyable
     void FixedUpdate()
     {
         var targetV = (targetPos - transform.position) * 1.5f * approachRate / approachTime;
+        targetV.x *= 0.5f;
+        targetV.z *= 0.5f;
         var force = (targetV - rig.velocity) * approachRate * rig.mass;
         var f = force.magnitude;
         if (f > maxForce * Time.deltaTime) force *= maxForce * Time.deltaTime / f;
