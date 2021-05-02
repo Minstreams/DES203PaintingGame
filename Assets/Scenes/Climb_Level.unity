@@ -249,6 +249,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 518101490516480000, guid: 9cef6a6fd5128574b886899c4b79dd7f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 764300779541679550, guid: 9cef6a6fd5128574b886899c4b79dd7f,
         type: 3}
       propertyPath: m_RootOrder
@@ -412,8 +417,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ascent_Landscape
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 026c10ce95f077e45a2ad2ed91d1b9ea,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 026c10ce95f077e45a2ad2ed91d1b9ea, type: 3}
+--- !u!1 &575508928 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 026c10ce95f077e45a2ad2ed91d1b9ea,
+    type: 3}
+  m_PrefabInstance: {fileID: 575508927}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &575508929
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 575508928}
+  m_Material: {fileID: 13400000, guid: dbf3e62e22f351149b5122321c6aded6, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 5060444177187149915, guid: 026c10ce95f077e45a2ad2ed91d1b9ea, type: 3}
 --- !u!1001 &1040926141
 PrefabInstance:
   m_ObjectHideFlags: 0
