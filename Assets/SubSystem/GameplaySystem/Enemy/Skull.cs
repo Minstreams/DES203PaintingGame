@@ -96,7 +96,21 @@ public class Skull : GDestroyable
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(transform.position, targetPos);
+#if UNITY_EDITOR
+        SkullNest nest;
+        if (UnityEditor.EditorApplication.isPlaying)
+        {
+            Gizmos.DrawLine(transform.position, targetPos);
+        }
+        else if ((nest = GetComponentInParent<SkullNest>()) != null)
+        {
+            Gizmos.DrawLine(transform.position, nest.Center);
+        }
+        else
+        {
+            Gizmos.color = Color.red;
+        }
+#endif
         Gizmos.DrawWireSphere(transform.position, Mathf.Sqrt(viewSqrDistance));
         Gizmos.color = Color.white;
     }
