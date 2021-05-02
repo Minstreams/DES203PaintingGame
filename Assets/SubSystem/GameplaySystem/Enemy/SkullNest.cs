@@ -61,6 +61,7 @@ public class SkullNest : MonoBehaviour
             {
                 foreach (var s in skullsBattling)
                 {
+                    if (s.IsDead) continue;
                     s.ToPatrolState();
                 }
             }
@@ -77,6 +78,7 @@ public class SkullNest : MonoBehaviour
         {
             foreach (var s in skulls)
             {
+                if (s.IsDead) continue;
                 if (skullsBattling.Contains(s)) continue;
                 if ((s.transform.position - Player.FocusPoint).sqrMagnitude < s.viewSqrDistance)
                 {
