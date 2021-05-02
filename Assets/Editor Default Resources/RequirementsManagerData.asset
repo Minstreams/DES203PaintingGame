@@ -17,20 +17,20 @@ MonoBehaviour:
     description: This logo will show at the beginning. Fade in and out in seconds.
     path: /Art Assets/UI/Logo.png
     priority: 2
-    status: 1
+    status: 4
     responsiblePerson: 
     comment: 
     feedback: 
-    timestamp: 63751292443.0144
+    timestamp: 63755155798.37145
   - name: Start Menu Image
     description: Background image of Start Menu
     path: /Art Assets/UI/StartMenu.png
     priority: 2
-    status: 1
+    status: 4
     responsiblePerson: 
     comment: 
     feedback: 
-    timestamp: 63751292665.9682
+    timestamp: 63755151819.88526
   - name: Weapon Handle
     description: Model of the weapon handle. With material & textures in it.
     path: /Art Assets/Weapon/WeaponHandle.fbx
@@ -49,7 +49,7 @@ MonoBehaviour:
     responsiblePerson: 
     comment: 
     feedback: 
-    timestamp: 63751356592.50891
+    timestamp: 63755155706.32769
   managerIcon: {fileID: 2800000, guid: 951848ba8b6205940a9bd1b8fdd4d796, type: 3}
   managerTitle: Requirements
   inspectorIcon: {fileID: 2800000, guid: 0615fe8910911be4299d5604a54db99a, type: 3}

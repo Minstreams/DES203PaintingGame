@@ -13,9 +13,9 @@ namespace GameSystem
         [RuntimeInitializeOnLoadMethod]
         static void RuntimeInit()
         {
-            TheMatrix.OnGameStart += OnGameStart;
+            TheMatrix.OnGameAwake += OnGameAwake;
         }
-        static void OnGameStart()
+        static void OnGameAwake()
         {
             musicSource = TheMatrix.Instance.GetComponent<AudioSource>();
         }
