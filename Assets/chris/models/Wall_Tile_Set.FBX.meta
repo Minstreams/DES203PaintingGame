@@ -3,7 +3,27 @@ guid: 2e5a3b4c52e7b2d48a0c0b35b9662c14
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Roof_Tile
+    second: {fileID: 2100000, guid: f4d5df8a099e56545836c91d954af6f0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Stone_walls
+    second: {fileID: 2100000, guid: 6eac92ef890cffa4a994e8bd1e2a77d6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wooden_Beams
+    second: {fileID: 2100000, guid: 5765b1fc2a25ebc4aa37c4c68ea22bfd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wooden_Walls
+    second: {fileID: 2100000, guid: 5765b1fc2a25ebc4aa37c4c68ea22bfd, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
