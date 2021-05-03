@@ -3,7 +3,17 @@ guid: 703e7d91afc34274cb7c7744322d7614
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Inner_Maze
+    second: {fileID: 2100000, guid: 495b0186ffca73749abdc6f73d05095f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Outer_Maze
+    second: {fileID: 2100000, guid: 0661adb404316884db7115897fb7b851, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

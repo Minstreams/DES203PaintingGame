@@ -3,7 +3,42 @@ guid: 4888db84a7e53db4792a046d3595e573
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Crap+Hider
+    second: {fileID: 2100000, guid: 4defac9fdb1c01342bf718f86bd67638, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pedastel_Base
+    second: {fileID: 2100000, guid: 9b62492faa9625e46a7a7a32744025e8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pedastel_stairs
+    second: {fileID: 2100000, guid: c60220280a105064f952f79398a6689d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Roof_Structure
+    second: {fileID: 2100000, guid: 8439296de200d43449fbe583f4a99341, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Roof_Tiles
+    second: {fileID: 2100000, guid: d255d5297ebaa0745b5314f4cc381c16, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Support
+    second: {fileID: 2100000, guid: 06a01e9957946e748831ba3a6e9fbabd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wall
+    second: {fileID: 2100000, guid: e31dacce4d4754f45bbd1d1cc4d398a7, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

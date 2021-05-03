@@ -3,7 +3,12 @@ guid: 5e32c152599c4f742983ba25d93ffba1
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Breakable Wall
+    second: {fileID: 2100000, guid: b337b57397b9a9d48b1a00a0a9b74a64, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
