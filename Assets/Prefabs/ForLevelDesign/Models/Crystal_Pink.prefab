@@ -1,0 +1,89 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6531362755564804338
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5904183372155470408}
+  - component: {fileID: 7367894400092294637}
+  - component: {fileID: 4730173387467897127}
+  m_Layer: 0
+  m_Name: Crystal_Pink
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5904183372155470408
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6531362755564804338}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+  m_LocalPosition: {x: -19.51, y: 6.64, z: -36.04}
+  m_LocalScale: {x: 43.150024, y: 43.150024, z: 100}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &7367894400092294637
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6531362755564804338}
+  m_Mesh: {fileID: 2534964839176971238, guid: 8b8935ce3bc77b047a52c76a46a243c6, type: 3}
+--- !u!23 &4730173387467897127
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6531362755564804338}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 2cbcee6647c508a4986ea11522657e72, type: 2}
+  - {fileID: 2100000, guid: 7af15c2a15386594eb0dcfbcc2f1a30b, type: 2}
+  - {fileID: 2100000, guid: 79a97c536e6440b4f98da4ea8c570d20, type: 2}
+  - {fileID: 2100000, guid: 59d999e817dfd26459542bdf66a8af04, type: 2}
+  - {fileID: 2100000, guid: 675327f2d43af714d81b2f7ee525da20, type: 2}
+  - {fileID: 2100000, guid: 87fd7193e2d6cd54f8d7a42201ebdfd7, type: 2}
+  - {fileID: 2100000, guid: 31dab41b92cbeb1418e452f43bb16a3f, type: 2}
+  - {fileID: 2100000, guid: c7a13015abfa0844a809bc63b3eba755, type: 2}
+  - {fileID: 2100000, guid: 380f47453c625374d9dcffae27c57ed4, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
