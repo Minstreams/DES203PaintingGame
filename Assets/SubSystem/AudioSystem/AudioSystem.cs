@@ -50,7 +50,8 @@ namespace GameSystem
         }
         public static void SetMusicVolume(float volume)
         {
-            musicSource.volume = volume;
+            if (musicSource != null)
+                musicSource.volume = volume;
         }
     }
 }

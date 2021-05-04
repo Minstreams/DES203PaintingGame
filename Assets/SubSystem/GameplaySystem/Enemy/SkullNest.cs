@@ -89,8 +89,8 @@ public class SkullNest : MonoBehaviour
                     skullsBattling.Add(s);
                     if (!battling)
                     {
-                        StopAllCoroutines();
-                        StartCoroutine(ToBattling());
+                        if (battlingCoroutine != null) StopCoroutine(battlingCoroutine);
+                        battlingCoroutine = StartCoroutine(ToBattling());
                     }
                 }
             }
@@ -99,6 +99,7 @@ public class SkullNest : MonoBehaviour
     }
 
     bool battling = false;
+    Coroutine battlingCoroutine;
     IEnumerator ToBattling()
     {
         battling = true;
