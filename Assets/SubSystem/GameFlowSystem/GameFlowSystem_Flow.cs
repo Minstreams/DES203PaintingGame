@@ -90,7 +90,7 @@ namespace GameSystem
                 if (GetGameMessage(GameMessage.Start)) break;
             }
 
-            yield return SceneSystem.LoadSceneCoroutine(SceneCode.museum);
+            yield return SceneSystem.LoadSceneCoroutine(SceneCode.CherryBlossom);
             OnEnterGame?.Invoke();
             StartCoroutine(InGame());
         }
