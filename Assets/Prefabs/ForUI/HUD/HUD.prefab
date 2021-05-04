@@ -548,21 +548,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 233613911303743075}
     m_Modifications:
-    - target: {fileID: 2068288793319403712, guid: 80a626a01999cd646aac08cebc1921e2,
-        type: 3}
-      propertyPath: inOffset.x
-      value: 380
-      objectReference: {fileID: 0}
-    - target: {fileID: 2068288793319403712, guid: 80a626a01999cd646aac08cebc1921e2,
-        type: 3}
-      propertyPath: outOffset.x
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 2068288793319403717, guid: 80a626a01999cd646aac08cebc1921e2,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2068288794561311428, guid: 80a626a01999cd646aac08cebc1921e2,
         type: 3}
       propertyPath: m_Pivot.x

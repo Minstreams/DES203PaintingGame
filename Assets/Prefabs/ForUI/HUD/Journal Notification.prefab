@@ -227,7 +227,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   inColor: {r: 0, g: 0, b: 0, a: 0}
-  inOffset: {x: 2, y: 0, z: 0}
+  inOffset: {x: 380, y: 0, z: 0}
   inCurve:
     serializedVersion: 2
     m_Curve:
@@ -282,7 +282,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   outColor: {r: 0, g: 0, b: 0, a: 0}
-  outOffset: {x: 1, y: 0, z: 0}
+  outOffset: {x: 200, y: 0, z: 0}
   outCurve:
     serializedVersion: 2
     m_Curve:

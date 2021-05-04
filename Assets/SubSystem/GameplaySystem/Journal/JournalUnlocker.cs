@@ -10,7 +10,12 @@ public class JournalUnlocker : MonoBehaviour
 
     void Start()
     {
-        if (unlockOnStart) Unlock();
+        if (unlockOnStart) StartCoroutine(DelayUnlock(2));
+    }
+    IEnumerator DelayUnlock(float time)
+    {
+        yield return new WaitForSeconds(time);
+        Unlock();
     }
 
     [ContextMenu("Journal")]
