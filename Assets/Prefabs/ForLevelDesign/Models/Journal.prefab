@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   journalIndex: -1
-  unlockOnStart: 1
+  unlockOnStart: 0
 --- !u!135 &4512483664429217771
 SphereCollider:
   m_ObjectHideFlags: 0
