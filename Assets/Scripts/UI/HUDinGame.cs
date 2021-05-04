@@ -62,12 +62,13 @@ public class HUDinGame : MonoBehaviour
 
     IEnumerator UpdateCrystal()
     {
+        yield return new WaitForSeconds(1.5f);
         for (int i = 0; i < 3; ++i)
         {
             if (GameplaySystem.crystalsHad[i] && !crystals[i].isOn)
             {
                 crystals[i].TurnOn();
-                yield return new WaitForSeconds(0.2f);
+                yield return new WaitForSeconds(0.5f);
             }
         }
         yield return 0;
