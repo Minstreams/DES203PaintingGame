@@ -46,7 +46,6 @@ namespace GameSystem
         /// <summary>
         /// 游戏初始化委托，在进入System场景时调用
         /// </summary>
-        public static event System.Action OnGameAwake;
         public static event System.Action OnGameStart;
         public static event System.Action OnQuitting;
 
@@ -62,7 +61,6 @@ namespace GameSystem
                 OnQuitting?.Invoke();
                 return canQuit;
             };
-            OnGameAwake?.Invoke();
         }
         void Start()
         {

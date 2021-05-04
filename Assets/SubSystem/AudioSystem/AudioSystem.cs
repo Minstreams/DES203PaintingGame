@@ -13,9 +13,9 @@ namespace GameSystem
         [RuntimeInitializeOnLoadMethod]
         static void RuntimeInit()
         {
-            TheMatrix.OnGameAwake += OnGameAwake;
+            TheMatrix.OnGameStart += OnGameStart;
         }
-        static void OnGameAwake()
+        static void OnGameStart()
         {
             musicSource = TheMatrix.Instance.GetComponent<AudioSource>();
         }
@@ -37,6 +37,7 @@ namespace GameSystem
         public static void ChangeMusic(AudioCode audioCode)
         {
             var clip = Setting.audioMap[audioCode];
+            if (musicSource == null) musicSource = TheMatrix.Instance.GetComponent<AudioSource>();
             if (musicSource.clip == clip) return;
             musicSource.clip = clip;
             musicSource.Play();
