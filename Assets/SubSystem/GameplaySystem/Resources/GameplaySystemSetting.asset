@@ -25,11 +25,12 @@ MonoBehaviour:
   attackPowerRateY: 0.196
   brushAppearTime: 2
   journalPages:
-  - {fileID: 21300000, guid: d72088b5f5b60b04e9d7519409297c64, type: 3}
-  - {fileID: 21300000, guid: 7812c8c662901e349a223b62906ffcd6, type: 3}
+  - {fileID: 21300000, guid: 404d45e6399538846896f4a4fac88fb4, type: 3}
+  - {fileID: 21300000, guid: 1d9e2b9cc18f2d84190a94ea9dcf479d, type: 3}
   - {fileID: 21300000, guid: 0c923449cde923a48908082ab139a22f, type: 3}
-  - {fileID: 21300000, guid: 36c714b6418b11141af0e9213a6bf728, type: 3}
-  - {fileID: 21300000, guid: b417703c0a8cb6644ad883fb7c4a13d8, type: 3}
-  - {fileID: 21300000, guid: b885eef4d0fee9d45bc9306c61abda80, type: 3}
+  - {fileID: 21300000, guid: 39e4cee0b3719764da143e2f36d07038, type: 3}
+  - {fileID: 21300000, guid: eb433cbbe130760428860dd2a1c86ac2, type: 3}
+  - {fileID: 21300000, guid: b31709708f67a274aa9734692cee5fac, type: 3}
+  - {fileID: 21300000, guid: 3725ed4f67a69b14cbb2f08bd690f279, type: 3}
   groundDrag: 2
   playerName: 
