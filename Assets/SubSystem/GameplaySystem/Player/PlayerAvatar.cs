@@ -18,7 +18,7 @@ public class PlayerAvatar : GCharacter
     [Label] public SimpleEvent onBlock;
     [Label] public SimpleEvent onEndBlock;
 
-    static float currentHealth = 0;
+    public static float currentHealth = 0;
 
     [System.Serializable]
     public struct AttackInfo
