@@ -96,6 +96,7 @@ public class PlayerAvatar : GCharacter
         currentHealth = Health;
     }
 
+
     #region 【Debug】
     [MinsHeader("Debug")]
     [Label] public StringEvent onDebug;
@@ -110,6 +111,11 @@ public class PlayerAvatar : GCharacter
                 brush.ToBack();
             }
         }
+    }
+    [ContextMenu("Test Harm")]
+    public void TestHarm()
+    {
+        OnAttacked(1, 10, Vector3.up);
     }
 
     protected override void OnDrawGizmos()
