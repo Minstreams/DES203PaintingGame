@@ -9,6 +9,7 @@ public class PaintingPortal : MonoBehaviour
     Vector3 PlayerPos => GameplaySystem.CurrentPlayer.transform.position;
 
     [MinsHeader("Painting Protal", SummaryType.Title, -1)]
+    [Label] public SimpleEvent onDisable;
     [Label] public int id;
     [Label] public string parameterName = "_DistortionIntensity";
     [Label] public SimpleEvent onPortal;
@@ -20,6 +21,9 @@ public class PaintingPortal : MonoBehaviour
     [MinsHeader("Portal")]
     [Label] public SceneCode targetScene;
     [Label] public int targetPortalId;
+
+    [Label] public bool requireJournal;
+    [ConditionalShow("requireJournal")] public int requiredJournalIndex;
 
 
     ParticleSystemRenderer pRenderer;
@@ -35,6 +39,10 @@ public class PaintingPortal : MonoBehaviour
         {
             GameplaySystem.CurrentPlayer.transform.position = outPoint.position;
             GameplaySystem.CurrentCamera.transform.position = GameplaySystem.CurrentPlayer.FocusPoint;
+        }
+        if (requireJournal && !GameplaySystem.journalUnlocked[requiredJournalIndex])
+        {
+            onDisable?.Invoke();
         }
     }
     void Update()
