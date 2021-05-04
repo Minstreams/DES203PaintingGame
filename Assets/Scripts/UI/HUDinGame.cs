@@ -9,6 +9,8 @@ public class HUDinGame : MonoBehaviour
     [Label] public HUDPetal[] petals;
     [Label] public UIFading journalNotificaition;
     [Label] public HUDPetal[] crystals;
+    [Label] public SimpleEvent lowHealth;
+    [Label] public SimpleEvent veryLowHealth;
 
     void Awake()
     {
@@ -28,7 +30,8 @@ public class HUDinGame : MonoBehaviour
     {
         float h = GameplaySystem.CurrentPlayer.Avatar.Health;
         int hMax = Mathf.FloorToInt(h);
-
+        if (h <= 1) veryLowHealth?.Invoke();
+        else if (h <= 2) lowHealth?.Invoke();
         StartCoroutine(UpdateHealth(hMax));
     }
     IEnumerator UpdateHealth(int hMax)
