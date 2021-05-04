@@ -144,6 +144,11 @@ namespace GameSystem
                 yield return 0;
                 if (GetGameMessage(GameMessage.Return))
                 {
+                    StartCoroutine(StartMenu());
+                    break;
+                }
+                if (GetGameMessage(GameMessage.Portal))
+                {
                     yield return SceneSystem.LoadSceneCoroutine(SceneCode.museum);
                     StartCoroutine(InGame());
                     break;

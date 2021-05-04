@@ -36,6 +36,7 @@ namespace GameSystem
         }
         public static void ChangeMusic(AudioCode audioCode)
         {
+            Log("Change Music: " + audioCode);
             var clip = Setting.audioMap[audioCode];
             if (musicSource == null) musicSource = TheMatrix.Instance.GetComponent<AudioSource>();
             if (audioCode == AudioCode.None)
@@ -43,7 +44,7 @@ namespace GameSystem
                 musicSource.Stop();
                 return;
             }
-            if (musicSource.clip == clip) return;
+            if (musicSource.isPlaying && musicSource.clip == clip) return;
             musicSource.clip = clip;
             musicSource.Play();
         }
