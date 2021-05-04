@@ -13,6 +13,7 @@ public class ProjectileSkull : Skull
         while (true)
         {
             yield return 0;
+            transform.LookAt(Player.BattlePoint);
             timer += Time.deltaTime;
             if (timer > attackInterval)
             {

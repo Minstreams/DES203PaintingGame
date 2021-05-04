@@ -52,6 +52,10 @@ public class Skull : GDestroyable
         rig.AddForce(force, ForceMode.Impulse);
         var speed = rig.velocity.magnitude;
         if (speed > maxSpeed) rig.velocity *= maxSpeed / speed;
+        if (rig.velocity.sqrMagnitude > 0.1f)
+        {
+            transform.LookAt(transform.position + rig.velocity);
+        }
     }
     public override void OnAttacked(float damage, float power, Vector3 direction)
     {

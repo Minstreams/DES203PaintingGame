@@ -24,6 +24,8 @@ public class SkullNest : MonoBehaviour
     float[] radius;
     int patrolPointIndex;
 
+    AudioSource aus;
+
     void Awake()
     {
         skulls = new HashSet<Skull>(GetComponentsInChildren<Skull>());
@@ -37,6 +39,7 @@ public class SkullNest : MonoBehaviour
             rots[i] = Random.rotation;
             radius[i] = Mathf.Pow(Random.value, power);
         }
+        aus = GetComponent<AudioSource>();
     }
     public Vector3 NewPatrolPoint()
     {
@@ -84,9 +87,64 @@ public class SkullNest : MonoBehaviour
                 {
                     s.ToBattleState();
                     skullsBattling.Add(s);
+                    if (!battling)
+                    {
+                        StopAllCoroutines();
+                        StartCoroutine(ToBattling());
+                    }
                 }
             }
             yield return interval;
         }
+    }
+
+    bool battling = false;
+    IEnumerator ToBattling()
+    {
+        battling = true;
+
+        // entering
+        for (float t = 0; t < 1; t += Time.deltaTime / 2)
+        {
+            yield return 0;
+            aus.volume = t;
+            AudioSystem.SetMusicVolume(1 - t);
+        }
+        aus.volume = 1;
+        AudioSystem.SetMusicVolume(0);
+
+        while (true)
+        {
+            yield return 0;
+            if (skullsBattling.Count > 0)
+            {
+                bool res = false;
+                foreach (var s in skullsBattling)
+                {
+                    if (!s.IsDead)
+                    {
+                        res = true;
+                        break;
+                    }
+                }
+                if (res) continue;
+            }
+            break;
+        }
+        battling = false;
+
+        for (float t = 0; t < 1; t += Time.deltaTime / 2)
+        {
+            yield return 0;
+            aus.volume = 1 - t;
+            AudioSystem.SetMusicVolume(t);
+        }
+        aus.volume = 0;
+        AudioSystem.SetMusicVolume(1);
+    }
+
+    private void OnDestroy()
+    {
+        AudioSystem.SetMusicVolume(1);
     }
 }

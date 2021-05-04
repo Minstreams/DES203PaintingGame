@@ -48,5 +48,9 @@ namespace GameSystem
             musicSource.clip = clip;
             musicSource.Play();
         }
+        public static void SetMusicVolume(float volume)
+        {
+            musicSource.volume = volume;
+        }
     }
 }
