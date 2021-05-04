@@ -37,6 +37,5 @@ public class Crystal : MonoBehaviour
                 GameplaySystem.GetCrystal(2);
                 break;
         }
-        gameObject.SetActive(false);
     }
 }
