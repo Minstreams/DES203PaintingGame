@@ -18,6 +18,8 @@ public class PlayerAvatar : GCharacter
     [Label] public SimpleEvent onBlock;
     [Label] public SimpleEvent onEndBlock;
 
+    static float currentHealth = 0;
+
     [System.Serializable]
     public struct AttackInfo
     {
@@ -81,6 +83,17 @@ public class PlayerAvatar : GCharacter
     {
         base.Die();
         GameFlowSystem.SendGameMessage(GameMessage.GameOver);
+    }
+
+    protected override void Awake()
+    {
+        base.Awake();
+        if (currentHealth > 0) _health = currentHealth;
+    }
+
+    void OnDestroy()
+    {
+        currentHealth = Health;
     }
 
     #region 【Debug】

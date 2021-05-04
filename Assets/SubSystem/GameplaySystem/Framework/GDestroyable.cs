@@ -22,7 +22,7 @@ public class GDestroyable : GAttackable
 
     #region 【Properties】
     // Fields
-    float _health;
+    protected float _health;
     // Properties
     public float Health
     {

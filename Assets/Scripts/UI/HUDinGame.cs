@@ -8,7 +8,7 @@ public class HUDinGame : MonoBehaviour
 {
     [Label] public HUDPetal[] petals;
     [Label] public UIFading journalNotificaition;
-    [Label] public GameObject[] crystals;
+    [Label] public HUDPetal[] crystals;
 
     void Start()
     {
@@ -25,11 +25,20 @@ public class HUDinGame : MonoBehaviour
         float h = GameplaySystem.CurrentPlayer.Avatar.Health;
         int hMax = Mathf.FloorToInt(h);
 
+        StartCoroutine(UpdateHealth(hMax));
+    }
+    IEnumerator UpdateHealth(int hMax)
+    {
         for (int i = 0; i < petals.Length; ++i)
         {
-            if (i < hMax && !petals[i].isOn) petals[i].TurnOn();
+            if (i < hMax && !petals[i].isOn)
+            {
+                petals[i].TurnOn();
+                yield return new WaitForSeconds(0.2f);
+            }
             else if (i >= hMax && petals[i].isOn) petals[i].TurnOff();
         }
+        yield return 0;
     }
 
     void OnDestroy()
@@ -44,9 +53,19 @@ public class HUDinGame : MonoBehaviour
 
     void OnCrystalGot()
     {
+        StartCoroutine(UpdateCrystal());
+    }
+
+    IEnumerator UpdateCrystal()
+    {
         for (int i = 0; i < 3; ++i)
         {
-            if (GameplaySystem.crystalsHad[i]) crystals[i].SetActive(true);
+            if (GameplaySystem.crystalsHad[i] && !crystals[i].isOn)
+            {
+                crystals[i].TurnOn();
+                yield return new WaitForSeconds(0.2f);
+            }
         }
+        yield return 0;
     }
 }

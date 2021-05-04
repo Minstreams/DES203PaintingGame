@@ -11,7 +11,8 @@ public class Crystal : MonoBehaviour
         Blue,
         Red,
     }
-    public CrystalType ctype;
+    [Label] public CrystalType ctype;
+    [Label] public SimpleEvent onPick;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -20,8 +21,10 @@ public class Crystal : MonoBehaviour
             Pick();
         }
     }
+    [ContextMenu("Pick")]
     public void Pick()
     {
+        onPick?.Invoke();
         switch (ctype)
         {
             case CrystalType.Pink:
