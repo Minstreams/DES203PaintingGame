@@ -8,6 +8,7 @@ namespace GameSystem
     /// </summary>
     public enum AudioCode
     {
+        None,
         StartMenu,
         Serenity,
     }

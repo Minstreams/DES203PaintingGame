@@ -22,3 +22,4 @@ MonoBehaviour:
     - Maze_Level
     - Climb_Level
     - Castle_Level
+    - GameOverScene

@@ -13,7 +13,7 @@ public class NormalSkull : Skull
         while (true)
         {
             yield return 0;
-            targetPos = Player.FocusPoint;
+            targetPos = Player.BattlePoint;
         }
     }
 

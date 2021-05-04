@@ -14,6 +14,7 @@
         MazeLevel,
         ClimbLevel,
         CastleLevel,
+        GameOver,
     }
     // EnumMap Class Definition (必须以Map作为名称结尾)
     [System.Serializable]

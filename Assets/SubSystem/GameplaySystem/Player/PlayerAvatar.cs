@@ -77,6 +77,12 @@ public class PlayerAvatar : GCharacter
         attackInfos[index].attackSound.Play();
     }
 
+    protected override void Die()
+    {
+        base.Die();
+        GameFlowSystem.SendGameMessage(GameMessage.GameOver);
+    }
+
     #region 【Debug】
     [MinsHeader("Debug")]
     [Label] public StringEvent onDebug;

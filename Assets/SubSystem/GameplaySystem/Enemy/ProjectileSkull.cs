@@ -17,7 +17,7 @@ public class ProjectileSkull : Skull
             if (timer > attackInterval)
             {
                 timer -= attackInterval;
-                var dir = (Player.FocusPoint - transform.position).normalized;
+                var dir = (Player.BattlePoint - transform.position).normalized;
                 Instantiate(projectilePrefab, transform.position + dir * ejectDistance, Quaternion.LookRotation(dir), null);
             }
         }

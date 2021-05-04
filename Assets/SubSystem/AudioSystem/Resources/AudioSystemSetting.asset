@@ -16,4 +16,5 @@ MonoBehaviour:
   audioMap:
     list:
     - {fileID: 8300000, guid: f96636430d502bc41a463066788cbd91, type: 3}
+    - {fileID: 8300000, guid: f96636430d502bc41a463066788cbd91, type: 3}
     - {fileID: 8300000, guid: dbcaeb321fb13c14b96240f401cd2935, type: 3}

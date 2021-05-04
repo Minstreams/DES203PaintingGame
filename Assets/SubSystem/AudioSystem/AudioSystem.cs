@@ -38,6 +38,11 @@ namespace GameSystem
         {
             var clip = Setting.audioMap[audioCode];
             if (musicSource == null) musicSource = TheMatrix.Instance.GetComponent<AudioSource>();
+            if (audioCode == AudioCode.None)
+            {
+                musicSource.Stop();
+                return;
+            }
             if (musicSource.clip == clip) return;
             musicSource.clip = clip;
             musicSource.Play();

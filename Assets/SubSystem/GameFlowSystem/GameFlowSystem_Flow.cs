@@ -56,7 +56,7 @@ namespace GameSystem
         static IEnumerator StartMenu()
         {
             yield return SceneSystem.LoadSceneCoroutine(SceneCode.startMenu);
-            
+
             GameplaySystem.IsPaused = false;
             Time.timeScale = 1;
             Cursor.visible = true;
@@ -97,6 +97,11 @@ namespace GameSystem
                     StartCoroutine(Pause());
                     break;
                 }
+                if (GetGameMessage(GameMessage.GameOver))
+                {
+                    StartCoroutine(GameOver());
+                    break;
+                }
             }
         }
         static IEnumerator Pause()
@@ -119,6 +124,27 @@ namespace GameSystem
                 }
                 if (GetGameMessage(GameMessage.Resume))
                 {
+                    StartCoroutine(InGame());
+                    break;
+                }
+            }
+        }
+        static IEnumerator GameOver()
+        {
+            yield return SceneSystem.LoadSceneCoroutine(SceneCode.GameOver);
+            yield return 0;
+
+            GameplaySystem.IsPaused = false;
+            Time.timeScale = 1;
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            ResetGameMessage();
+            while (true)
+            {
+                yield return 0;
+                if (GetGameMessage(GameMessage.Return))
+                {
+                    yield return SceneSystem.LoadSceneCoroutine(SceneCode.museum);
                     StartCoroutine(InGame());
                     break;
                 }

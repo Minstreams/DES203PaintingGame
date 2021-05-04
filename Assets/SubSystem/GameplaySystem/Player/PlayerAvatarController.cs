@@ -15,6 +15,7 @@ public class PlayerAvatarController : MonoBehaviour
 
     public PlayerAvatar Avatar { get; private set; }
     public Vector3 FocusPoint => transform.position + Setting.playerFocusHeight * Vector3.up;
+    public Vector3 BattlePoint => transform.position + Setting.playerBattleHeight * Vector3.up;
 
     void Awake()
     {

@@ -13,6 +13,7 @@ namespace GameSystem.Setting
         [Label(true)] public float invisibleWallDepth;
         [Label(true)] public float invisibleWallHeight;
         [Label] public float playerFocusHeight;
+        [Label] public float playerBattleHeight;
         [LabelRange] public float camInterpolatingRate;
         [LabelRange] public float camInterpolatingRateMouseRotation;
         [Label(true)] public Vector3 camDefaultRelativePostiion;

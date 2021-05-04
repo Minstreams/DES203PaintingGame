@@ -17,7 +17,7 @@ namespace GameSystem.Operator
 
         void Start()
         {
-            AudioSystem.ChangeMusic(audioCode);    
+            AudioSystem.ChangeMusic(audioCode);
         }
     }
 }
