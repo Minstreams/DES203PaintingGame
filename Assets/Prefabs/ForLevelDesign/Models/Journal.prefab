@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 6453397113366501719}
   - component: {fileID: 7935564571470911218}
   - component: {fileID: 5315442347262222904}
+  - component: {fileID: 1592069618507967615}
+  - component: {fileID: 4512483664429217771}
   m_Layer: 0
   m_Name: Journal
   m_TagString: Untagged
@@ -79,3 +81,30 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &1592069618507967615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5964106036058883053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 546da99dba255ef47a73c3afdf6ce912, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  journalIndex: -1
+  unlockOnStart: 1
+--- !u!135 &4512483664429217771
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5964106036058883053}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.59
+  m_Center: {x: 0.000000007856002, y: 0.0052675502, z: 0.7918449}

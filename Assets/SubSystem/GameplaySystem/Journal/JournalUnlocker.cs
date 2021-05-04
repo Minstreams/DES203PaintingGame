@@ -24,4 +24,12 @@ public class JournalUnlocker : MonoBehaviour
         if (journalIndex < 0) return;
         GameplaySystem.UnlockJournal(journalIndex);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Unlock();
+        }
+    }
 }

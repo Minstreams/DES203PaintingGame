@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GameSystem;
 
 // The weapon used by player
 public class PaintBrush : MonoBehaviour
@@ -9,6 +10,7 @@ public class PaintBrush : MonoBehaviour
     [Label] public Transform damagePoint;
     [Label] public Transform handPoint;
     [Label] public Transform backPoint;
+    [Label] public SimpleEvent onAppear;
 
     public Vector3 DamagePoint => damagePoint.position;
 
@@ -17,6 +19,12 @@ public class PaintBrush : MonoBehaviour
     void Start()
     {
         stickyPoint = backPoint;
+        GameplaySystem.onCrystalHad += UpdateCrystal;
+        UpdateCrystal();
+    }
+    void OnDestroy()
+    {
+        GameplaySystem.onCrystalHad -= UpdateCrystal;
     }
     void Update()
     {
@@ -26,10 +34,29 @@ public class PaintBrush : MonoBehaviour
     public void ToHand()
     {
         stickyPoint = handPoint;
+        onAppear?.Invoke();
     }
 
     public void ToBack()
     {
         stickyPoint = backPoint;
+        onAppear?.Invoke();
+    }
+    bool appeared = true;
+    public void UpdateCrystal()
+    {
+        if (GameplaySystem.crystalsHad[0])
+        {
+            if (!appeared)
+            {
+                gameObject.SetActive(true);
+                onAppear?.Invoke();
+            }
+        }
+        else
+        {
+            appeared = false;
+            gameObject.SetActive(false);
+        }
     }
 }

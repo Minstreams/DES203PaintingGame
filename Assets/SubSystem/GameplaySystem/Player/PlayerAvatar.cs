@@ -39,8 +39,17 @@ public class PlayerAvatar : GCharacter
         base.Attack();
     }
 
+    public void HeavyAttack()
+    {
+        brushAppearTimer = GameplaySystem.Setting.brushAppearTime;
+        brush.ToHand();
+        anim.SetTrigger("Heavy Attack");
+    }
+
     public void Block()
     {
+        brushAppearTimer = GameplaySystem.Setting.brushAppearTime;
+        brush.ToHand();
         anim.SetBool("Block", true);
         blockOutter.BlockOnce();
         blockInner.BlockStart();

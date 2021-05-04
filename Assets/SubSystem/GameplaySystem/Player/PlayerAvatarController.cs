@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using GameSystem;
 using GameSystem.Setting;
 
@@ -65,9 +66,38 @@ public class PlayerAvatarController : MonoBehaviour
         }
         if (InputSystem.GetKeyDown(InputKey.Jump)) Avatar.Jump(jumpForce);
         if (InputSystem.GetKeyDown(InputKey.Interact)) SetInputTrigger("Interact");
-        if (InputSystem.GetKeyDown(InputKey.Attack)) Avatar.Attack();
+        if (!GameplaySystem.crystalsHad[0]) return;
+        if (InputSystem.GetKeyDown(InputKey.Attack))
+        {
+            Avatar.Attack();
+            if (GameplaySystem.crystalsHad[2])
+            {
+                if (attackCoroutine != null) StopCoroutine(attackCoroutine);
+                attackCoroutine = StartCoroutine(AttackCoroutine());
+            }
+        }
+        if (!GameplaySystem.crystalsHad[1]) return;
         if (InputSystem.GetKeyDown(InputKey.Block)) Avatar.Block();
         if (InputSystem.GetKeyUp(InputKey.Block)) Avatar.EndBlock();
     }
     public void UnlockDash() => dashLocked = false;
+
+    Coroutine attackCoroutine;
+    IEnumerator AttackCoroutine()
+    {
+        float timer = 0.5f;
+        while (timer > 0)
+        {
+            yield return 0;
+            timer -= Time.deltaTime;
+            if (!InputSystem.GetKey(InputKey.Attack))
+            {
+                break;
+            }
+        }
+        if (timer < 0)
+        {
+            Avatar.HeavyAttack();
+        }
+    }
 }
