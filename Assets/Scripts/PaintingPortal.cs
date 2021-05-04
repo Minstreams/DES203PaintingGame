@@ -10,6 +10,7 @@ public class PaintingPortal : MonoBehaviour
 
     [MinsHeader("Painting Protal", SummaryType.Title, -1)]
     [Label] public SimpleEvent onDisable;
+    [Label] public SimpleEvent onEnable;
     [Label] public int id;
     [Label] public string parameterName = "_DistortionIntensity";
     [Label] public SimpleEvent onPortal;
@@ -32,6 +33,12 @@ public class PaintingPortal : MonoBehaviour
     {
         pRenderer = GetComponentInChildren<ParticleSystemRenderer>();
         SceneSystem.OnPendingLoadScene += OnPendingLoadScene;
+        GameplaySystem.onJournalUnlock += OnJournalUnlock;
+    }
+    void OnJournalUnlock()
+    {
+        if (!requireJournal) return;
+        if (GameplaySystem.journalUnlocked[requiredJournalIndex]) onEnable?.Invoke();
     }
     void Start()
     {
@@ -54,6 +61,7 @@ public class PaintingPortal : MonoBehaviour
     void OnDestroy()
     {
         SceneSystem.OnPendingLoadScene -= OnPendingLoadScene;
+        GameplaySystem.onJournalUnlock -= OnJournalUnlock;
     }
     void OnTriggerEnter(Collider other)
     {
