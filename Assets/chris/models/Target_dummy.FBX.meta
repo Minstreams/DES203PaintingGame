@@ -3,7 +3,22 @@ guid: 3a5625ac4b08e7e4dbf5ac02a4e6400d
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Dummy_Stand
+    second: {fileID: 2100000, guid: 7eabe366ef728494380b44bc9e08d247, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Dummy_Top
+    second: {fileID: 2100000, guid: c2262a9e2278ade488e6524237bc4d6a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Dummy_pole
+    second: {fileID: 2100000, guid: 3cbbfbc0473542d4491352d4b6a73881, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
