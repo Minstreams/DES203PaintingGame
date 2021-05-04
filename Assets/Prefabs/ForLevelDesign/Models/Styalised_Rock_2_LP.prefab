@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6196077806305941883}
   - component: {fileID: 7085068737627494110}
   - component: {fileID: 5023711729076658708}
+  - component: {fileID: 2777857373794109820}
   m_Layer: 0
   m_Name: Styalised_Rock_2_LP
   m_TagString: Untagged
@@ -79,3 +80,17 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &2777857373794109820
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6824980124756886465}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -4085320640518522477, guid: 3a9355456cf12aa44bb5cb299c1e6f17, type: 3}

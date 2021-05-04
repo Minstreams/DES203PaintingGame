@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8145619517843101542}
   - component: {fileID: 5090429178227579075}
   - component: {fileID: 7007637406624590857}
+  - component: {fileID: 7504825544694114161}
   m_Layer: 0
   m_Name: Styalised_Rock_LP
   m_TagString: Untagged
@@ -79,3 +80,17 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &7504825544694114161
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8809284309181959644}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -762520673200360514, guid: 383faa165d9a85041a871057c1581159, type: 3}
