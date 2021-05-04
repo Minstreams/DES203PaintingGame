@@ -7,6 +7,7 @@ public class JournalUnlocker : MonoBehaviour
 {
     [Label] public int journalIndex = -1;
     [Label] public bool unlockOnStart = true;
+    [Label] public SimpleEvent onPick;
 
     void Start()
     {
@@ -23,6 +24,7 @@ public class JournalUnlocker : MonoBehaviour
     {
         if (journalIndex < 0) return;
         GameplaySystem.UnlockJournal(journalIndex);
+        onPick?.Invoke();
     }
 
     private void OnTriggerEnter(Collider other)
