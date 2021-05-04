@@ -34,8 +34,9 @@ public class GCharacter : GDestroyable
     protected Animator anim;
     protected Rigidbody rig;
 
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         anim = GetComponentInChildren<Animator>();
         rig = GetComponent<Rigidbody>();
     }

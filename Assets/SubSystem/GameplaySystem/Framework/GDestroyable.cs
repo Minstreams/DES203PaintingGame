@@ -31,29 +31,38 @@ public class GDestroyable : GAttackable
         {
             if (value <= 0)
             {
-                if (_health > 0) Die();
-                _health = 0;
+                if (_health > 0)
+                {
+                    _health = 0;
+                    onDamaged?.Invoke(value);
+                    Die();
+                }
             }
             else
             {
-                if (value > _health)
-                {
-                    onHealed?.Invoke(value - _health);
-                }
-                else if (value < _health)
-                {
-                    onDamaged?.Invoke(_health - value);
-                }
+                float delta = value - _health;
                 _health = value;
+                if (delta > 0)
+                {
+                    onHealed?.Invoke(delta);
+                }
+                else if (delta < 0)
+                {
+                    onDamaged?.Invoke(-delta);
+                }
             }
         }
     }
     public bool IsDead => Health <= 0;
     #endregion
 
-    protected virtual void Start()
+
+    protected virtual void Awake()
     {
         _health = defaultHealth;
+    }
+    protected virtual void Start()
+    {
     }
     public override void OnAttacked(float damage, float power, Vector3 direction)
     {

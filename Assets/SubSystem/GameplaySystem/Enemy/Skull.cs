@@ -25,8 +25,9 @@ public class Skull : GDestroyable
     protected SkullNest nest;
     protected Vector3 targetPos;
 
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         rig = GetComponent<Rigidbody>();
         nest = GetComponentInParent<SkullNest>();
     }
