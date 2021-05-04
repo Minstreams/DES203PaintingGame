@@ -9,8 +9,14 @@ namespace GameSystem
     public enum AudioCode
     {
         None,
+        CombatOutside,
+        Castle,
+        CherryBlossom,
+        ClimbAndCombatTemple,
+        Forest,
+        Maze,
+        Museum,
         StartMenu,
-        Serenity,
     }
     // EnumMap Class Definition (必须以Map作为名称结尾)
     [System.Serializable]

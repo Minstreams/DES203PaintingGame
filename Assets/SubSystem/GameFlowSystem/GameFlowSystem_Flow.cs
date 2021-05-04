@@ -9,12 +9,32 @@ namespace GameSystem
     {
         // 游戏流程 -------------
         public static event Action OnFlowStart;
+        public static event Action OnEnterGame;
 
 #if UNITY_EDITOR
         static void QuickTest()
         {
             OnFlowStart?.Invoke();
             UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(0);
+            StartCoroutine(QuickTextCoroutine());
+            OnEnterGame?.Invoke();
+        }
+        static IEnumerator QuickTextCoroutine()
+        {
+            while (true)
+            {
+                yield return 0;
+                if (GetGameMessage(GameMessage.Pause))
+                {
+                    GameplaySystem.IsPaused = true;
+                    Time.timeScale = 0;
+                }
+                if (GetGameMessage(GameMessage.Resume))
+                {
+                    GameplaySystem.IsPaused = false;
+                    Time.timeScale = 1;
+                }
+            }
         }
 #endif
         static IEnumerator Start()
@@ -71,6 +91,7 @@ namespace GameSystem
             }
 
             yield return SceneSystem.LoadSceneCoroutine(SceneCode.museum);
+            OnEnterGame?.Invoke();
             StartCoroutine(InGame());
         }
 

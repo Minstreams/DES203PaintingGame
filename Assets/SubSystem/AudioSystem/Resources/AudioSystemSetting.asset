@@ -16,5 +16,11 @@ MonoBehaviour:
   audioMap:
     list:
     - {fileID: 8300000, guid: f96636430d502bc41a463066788cbd91, type: 3}
-    - {fileID: 8300000, guid: f96636430d502bc41a463066788cbd91, type: 3}
-    - {fileID: 8300000, guid: dbcaeb321fb13c14b96240f401cd2935, type: 3}
+    - {fileID: 8300000, guid: 117cf39706b00464ab3b8acf89091b6f, type: 3}
+    - {fileID: 8300000, guid: a8137a17bca513547afa4dfbb83904a7, type: 3}
+    - {fileID: 8300000, guid: af1b6d6b98fab904180b9733fe7c533e, type: 3}
+    - {fileID: 8300000, guid: db584e02eea773341b02a56f49128679, type: 3}
+    - {fileID: 8300000, guid: a14052e7ca7122a4693ed23e137e5231, type: 3}
+    - {fileID: 8300000, guid: 10319723fb10c9045b20d5ccd05c2aff, type: 3}
+    - {fileID: 8300000, guid: a3782a4c66f99d9449e45337fe7ded42, type: 3}
+    - {fileID: 8300000, guid: a3ccd427853721841a27dc80adb4ada3, type: 3}

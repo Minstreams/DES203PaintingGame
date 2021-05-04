@@ -16,10 +16,10 @@ public class TemporaryHUD : UIBase
         GUILayout.BeginHorizontal(boxStyle,GUILayout.MinHeight(32));
         {
             GUILayout.Label("");
-            if (GameplaySystem.Setting.hasPinkCrystal) GUILayout.Label("P", pink);
-            if (GameplaySystem.Setting.hasRedCrystal) GUILayout.Label("R", red);
-            if (GameplaySystem.Setting.hasGreenCrystal) GUILayout.Label("G", green);
-            if (GameplaySystem.Setting.hasYellowCrystal) GUILayout.Label("Y", yellow);
+            //if (GameplaySystem.Setting.hasPinkCrystal) GUILayout.Label("P", pink);
+            //if (GameplaySystem.Setting.hasRedCrystal) GUILayout.Label("R", red);
+            //if (GameplaySystem.Setting.hasGreenCrystal) GUILayout.Label("G", green);
+            //if (GameplaySystem.Setting.hasYellowCrystal) GUILayout.Label("Y", yellow);
         }
         GUILayout.EndHorizontal();
     }

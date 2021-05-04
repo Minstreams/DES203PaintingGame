@@ -17,6 +17,9 @@ namespace GameSystem
         static void RuntimeInit()
         {
             TheMatrix.OnGameStart += OnGameStart;
+            GameFlowSystem.OnEnterGame += OnEnterGame;
+            journalUnlocked = new bool[Setting.journalPages.Length];
+            crystalsHad = new bool[3];
         }
         static void OnGameStart()
         {
@@ -36,10 +39,14 @@ namespace GameSystem
             Physics.IgnoreLayerCollision(shield, invisibleWall);
             Physics.IgnoreLayerCollision(projectile, invisibleWall);
 
+        }
+        static void OnEnterGame()
+        {
             // Journal
             journalUnlocked = new bool[Setting.journalPages.Length];
-            journalUnlocked[0] = true;
-            journalUnlocked[1] = true;
+
+            // Crystals
+            crystalsHad = new bool[3];
         }
 
 
@@ -96,9 +103,31 @@ namespace GameSystem
 
         // Journal
         public static bool[] journalUnlocked;
+        public static System.Action onJournalUnlock;
         public static void UnlockJournal(int index)
         {
-            journalUnlocked[index] = true;
+            if (!journalUnlocked[index])
+            {
+                journalUnlocked[index] = true;
+                onJournalUnlock?.Invoke();
+            }
+        }
+
+        public static bool[] crystalsHad;
+        public static System.Action onCrystalHad;
+        /// <summary>
+        /// index:
+        ///     0: pink
+        ///     1: blue
+        ///     2: red
+        /// </summary>
+        public static void GetCrystal(int index)
+        {
+            if (!crystalsHad[index])
+            {
+                crystalsHad[index] = true;
+                onCrystalHad?.Invoke();
+            }
         }
     }
 }

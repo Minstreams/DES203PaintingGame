@@ -33,9 +33,6 @@ namespace GameSystem.Setting
 
 
         [MinsHeader("Player Data")]
-        [Label] public bool hasPinkCrystal;
-        [Label] public bool hasRedCrystal;
-        [Label] public bool hasGreenCrystal;
-        [Label] public bool hasYellowCrystal;
+        [Label] public string playerName;
     }
 }
