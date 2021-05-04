@@ -10,13 +10,17 @@ public class HUDinGame : MonoBehaviour
     [Label] public UIFading journalNotificaition;
     [Label] public HUDPetal[] crystals;
 
+    void Awake()
+    {
+        GameplaySystem.onJournalUnlock += OnJournalUnlock;
+        GameplaySystem.onCrystalHad += OnCrystalGot;
+    }
+
     void Start()
     {
         GameplaySystem.CurrentPlayer.Avatar.onDamaged.AddListener((delta) => OnHealthChange());
         GameplaySystem.CurrentPlayer.Avatar.onHealed.AddListener((delta) => OnHealthChange());
         OnHealthChange();
-        GameplaySystem.onJournalUnlock += OnJournalUnlock;
-        GameplaySystem.onCrystalHad += OnCrystalGot;
         OnCrystalGot();
     }
 

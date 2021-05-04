@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 546da99dba255ef47a73c3afdf6ce912, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  journalIndex: -1
+  journalIndex: 0
   unlockOnStart: 1
 --- !u!1 &491326262751041377
 GameObject:
@@ -382,7 +382,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 10000
+  m_Intensity: 0
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -427,7 +427,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 5500
   m_UseColorTemperature: 1
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 14.4, y: 44, z: 12, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0.53
@@ -451,12 +451,12 @@ MonoBehaviour:
   m_PointlightHDType: 0
   m_SpotLightShape: 0
   m_AreaLightShape: 0
-  m_Intensity: 10000
+  m_Intensity: 0
   m_EnableSpotReflector: 0
   m_LuxAtDistance: 1
   m_InnerSpotPercent: 0
   m_LightDimmer: 1
-  m_VolumetricDimmer: 16
+  m_VolumetricDimmer: 0
   m_LightUnit: 2
   m_FadeDistance: 10000
   m_AffectDiffuse: 1
@@ -739,18 +739,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3377733965528232185}
     m_Modifications:
-    - target: {fileID: 449410848, guid: c6597896367e1ce4fa4c6a66e98705ca, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -8.389999
-      objectReference: {fileID: 0}
-    - target: {fileID: 980367401, guid: c6597896367e1ce4fa4c6a66e98705ca, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -8.389999
-      objectReference: {fileID: 0}
-    - target: {fileID: 2026752586, guid: c6597896367e1ce4fa4c6a66e98705ca, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -8.389999
-      objectReference: {fileID: 0}
     - target: {fileID: 233613911303743072, guid: c6597896367e1ce4fa4c6a66e98705ca,
         type: 3}
       propertyPath: m_Name
@@ -866,16 +854,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1217756152526723456}
-    - target: {fileID: 233613911303743076, guid: c6597896367e1ce4fa4c6a66e98705ca,
-        type: 3}
-      propertyPath: m_RenderMode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 233613911303743076, guid: c6597896367e1ce4fa4c6a66e98705ca,
-        type: 3}
-      propertyPath: m_PlaneDistance
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6597896367e1ce4fa4c6a66e98705ca, type: 3}
 --- !u!224 &1249281026 stripped

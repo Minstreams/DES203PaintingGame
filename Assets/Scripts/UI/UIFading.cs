@@ -42,7 +42,7 @@ namespace GameSystem.UI
 
         void Initialize()
         {
-            originPos = transform.position;
+            originPos = transform.localPosition;
             var scale = transform.lossyScale.x;
             inScreenOffset = new Vector3(inOffset.x * Screen.width * scale, inOffset.y * Screen.height * scale, inOffset.z * Screen.height * scale);
             outScreenOffset = new Vector3(outOffset.x * Screen.width * scale, outOffset.y * Screen.height * scale, outOffset.z * Screen.height * scale);
@@ -76,12 +76,12 @@ namespace GameSystem.UI
             while (timer < 1)
             {
                 float t = inCurve.Evaluate(timer);
-                if (inScreenOffset != Vector3.zero) transform.position = originPos + (1 - t) * inScreenOffset;
+                if (inScreenOffset != Vector3.zero) transform.localPosition = originPos + (1 - t) * inScreenOffset;
                 if (hasColorEffect) colorOutput?.Invoke(Color.Lerp(inColor, normalColor, t));
                 timer += Time.unscaledDeltaTime / time;
                 yield return 0;
             }
-            if (inScreenOffset != Vector3.zero) transform.position = originPos;
+            if (inScreenOffset != Vector3.zero) transform.localPosition = originPos;
             if (hasColorEffect) colorOutput?.Invoke(normalColor);
             OnFadedin();
         }
@@ -116,12 +116,12 @@ namespace GameSystem.UI
             while (timer < 1)
             {
                 float t = outCurve.Evaluate(timer);
-                if (outScreenOffset != Vector3.zero) transform.position = originPos + t * outScreenOffset;
+                if (outScreenOffset != Vector3.zero) transform.localPosition = originPos + t * outScreenOffset;
                 if (hasColorEffect) colorOutput?.Invoke(Color.Lerp(normalColor, outColor, t));
                 timer += Time.unscaledDeltaTime / time;
                 yield return 0;
             }
-            if (outScreenOffset != Vector3.zero) transform.position = originPos;
+            if (outScreenOffset != Vector3.zero) transform.localPosition = originPos;
             if (hasColorEffect) colorOutput?.Invoke(outColor);
             OnFadedout();
         }
