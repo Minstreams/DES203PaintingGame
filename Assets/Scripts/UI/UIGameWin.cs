@@ -12,6 +12,8 @@ public class UIGameWin : MonoBehaviour
         if (PlayerAvatar.currentHealth > 0)
         {
             onWin?.Invoke();
-        }    
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
     }
 }
