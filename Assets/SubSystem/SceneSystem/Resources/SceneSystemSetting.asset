@@ -16,8 +16,8 @@ MonoBehaviour:
     list:
     - Logo
     - StartMenu
-    - Museum
-    - Painting1
+    - Logo
+    - Logo
     - CherryBlossomScene
     - Maze_Level
     - Climb_Level
