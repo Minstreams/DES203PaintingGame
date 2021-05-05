@@ -2019,6 +2019,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 513868231237381728, guid: 409f51c1749a4f24e92e4e86969b1e2a,
         type: 3}
+      propertyPath: inFinish.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 513868231237381728, guid: 409f51c1749a4f24e92e4e86969b1e2a,
+        type: 3}
       propertyPath: inFinish.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_BoolArgument
       value: 1
       objectReference: {fileID: 0}

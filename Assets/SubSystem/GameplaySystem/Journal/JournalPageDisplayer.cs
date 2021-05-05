@@ -15,27 +15,40 @@ public class JournalPageDisplayer : MonoBehaviour
     }
     void OnEnable()
     {
-        pageIndex = 0;
-        pageImage.sprite = Pages[0];
+        for (int i = 0; i < Unlocked.Length; ++i)
+        {
+            if (Unlocked[i])
+            {
+                pageIndex = i;
+                pageImage.sprite = Pages[i];
+                break;
+            }
+        }
     }
 
     public void NextPage()
     {
-        do
+        for (int i = pageIndex + 1; i < Unlocked.Length; ++i)
         {
-            ++pageIndex;
-            if (pageIndex >= Pages.Length) pageIndex = 0;
-        } while (!Unlocked[pageIndex]);
-        pageImage.sprite = Pages[pageIndex];
+            if (Unlocked[i])
+            {
+                pageIndex = i;
+                pageImage.sprite = Pages[i];
+                break;
+            }
+        }
     }
     public void PreviousPage()
     {
-        do
+        for (int i = pageIndex - 1; i >= 0; --i)
         {
-            --pageIndex;
-            if (pageIndex < 0) pageIndex = Pages.Length - 1;
-        } while (!Unlocked[pageIndex]);
-        pageImage.sprite = Pages[pageIndex];
+            if (Unlocked[i])
+            {
+                pageIndex = i;
+                pageImage.sprite = Pages[i];
+                break;
+            }
+        }
     }
 
 }

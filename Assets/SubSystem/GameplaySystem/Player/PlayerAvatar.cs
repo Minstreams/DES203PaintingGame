@@ -120,6 +120,7 @@ public class PlayerAvatar : GCharacter
                 brush.ToBack();
             }
         }
+        if (transform.position.y < -15.0f) Health = 0;
     }
     [ContextMenu("Test Harm")]
     public void TestHarm()

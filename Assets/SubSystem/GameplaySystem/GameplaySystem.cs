@@ -108,6 +108,7 @@ namespace GameSystem
         {
             if (!journalUnlocked[index])
             {
+                Log("Journal Unlock: " + index);
                 journalUnlocked[index] = true;
                 onJournalUnlock?.Invoke();
             }

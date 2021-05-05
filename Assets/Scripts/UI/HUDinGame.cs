@@ -51,6 +51,7 @@ public class HUDinGame : MonoBehaviour
     void OnDestroy()
     {
         GameplaySystem.onJournalUnlock -= OnJournalUnlock;
+        GameplaySystem.onCrystalHad -= OnCrystalGot;
     }
 
     void OnJournalUnlock()

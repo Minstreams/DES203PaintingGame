@@ -18,6 +18,7 @@ namespace GameSystem
             UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(0);
             StartCoroutine(QuickTextCoroutine());
             OnEnterGame?.Invoke();
+            GameplaySystem.crystalsHad[0] = true;
         }
         static IEnumerator QuickTextCoroutine()
         {
@@ -170,7 +171,7 @@ namespace GameSystem
                 }
                 if (GetGameMessage(GameMessage.Portal))
                 {
-                    yield return SceneSystem.LoadSceneCoroutine(SceneCode.museum);
+                    yield return SceneSystem.LoadSceneCoroutine(SceneCode.CherryBlossom);
                     StartCoroutine(InGame());
                     break;
                 }

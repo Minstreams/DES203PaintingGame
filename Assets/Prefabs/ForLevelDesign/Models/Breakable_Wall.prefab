@@ -5537,8 +5537,8 @@ MonoBehaviour:
   onAttackedPower:
     m_PersistentCalls:
       m_Calls: []
-  maxHealth: 3
-  defaultHealth: 3
+  maxHealth: 6
+  defaultHealth: 6
   onDamaged:
     m_PersistentCalls:
       m_Calls:
