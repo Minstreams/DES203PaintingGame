@@ -33,12 +33,14 @@ public class PaintBrush : MonoBehaviour
     }
     public void ToHand()
     {
+        if (stickyPoint == handPoint) return;
         stickyPoint = handPoint;
         onAppear?.Invoke();
     }
 
     public void ToBack()
     {
+        if (stickyPoint == backPoint) return;
         stickyPoint = backPoint;
         onAppear?.Invoke();
     }
